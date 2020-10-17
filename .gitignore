@@ -1,8 +1,12 @@
-/.cloud
-/.storage
-/custom_components
-/deps
-/home-assistant.log
-/home-assistant_v2.db
-/secrets.yaml
-/tts
+# Ignore folders.
+.cloud
+.storage
+.vscode
+deps
+tts
+www
+
+# Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
+home-assistant.log
+home-assistant_v2.db
+secrets.yaml
