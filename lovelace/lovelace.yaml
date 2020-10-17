@@ -13,6 +13,8 @@ resources:
     type: module
   - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
     type: module
+  # - url: /hacsfiles/stack-in-card/stack-in-card.js
+  #   type: module
   # - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
   #   type: module
   # - url: /hacsfiles/simple-weather-card/simple-weather-card-bundle.js
@@ -32,15 +34,17 @@ resources:
   - url: /hacsfiles/lovelace-hui-element/hui-element.js
     type: module
   # Custom
-  - url: /local/lovelace/counter-card.js
-    type: js
-  - url: /local/lovelace/hasl-departure-card.js
-    type: js
-  - url: /local/lovelace/hasl-trafikstatus-card.js
-    type: js
-  - url: /local/lovelace/chart-colors.js
-    type: js
-  - url: /local/lovelace/mm2-clock-card.js
-    type: module
+  # - url: /local/lovelace/counter-card.js
+  #   type: js
+  # - url: /local/lovelace/hasl-departure-card.js
+  #   type: js
+  # - url: /local/lovelace/hasl-trafikstatus-card.js
+  #   type: js
+  # - url: /local/lovelace/chart-colors.js
+  #   type: js
+  # - url: /local/lovelace/mm2-clock-card.js
+  #   type: module
   - url: /local/layout-card.js
+    type: module
+  - url: /local/stack-in-card.js
     type: module

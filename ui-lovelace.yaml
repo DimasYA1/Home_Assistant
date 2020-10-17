@@ -231,13 +231,6 @@ views:
       # - url: /hacsfiles/lovelace-rpi-monitor-card/rpi-monitor-card.js
       #   type: module
 
-# resources:
-#   - url: /local/mini-graph-card-bundle.js?v=0.9.4
-#     type: module
-
-#   - url: /hacsfiles/lovelace-rpi-monitor-card/rpi-monitor-card.js
-#     type: module
-
   - title: Погода
     icon: mdi:weather-partly-snowy-rainy
     
@@ -310,8 +303,7 @@ views:
           name: 'Upload'
           entity: sensor.speedtest_upload
           graph: line
-
-        
+     
   - title: СС 2531
     icon: mdi:usb-flash-drive
     
@@ -486,3 +478,97 @@ views:
             line_color: var(--accent-color)
             line_width: 8
             font_size: 70
+
+  - title: System
+    icon: mdi:desktop-classic
+    cards:
+
+      - type: vertical-stack
+        style: |
+          ha-card {
+            border: solid 1px var(--border-color);
+            font-family: var(--primary-font-family);
+            margin-top: 5px;
+            margin-bottom: 5px;
+          }
+
+        cards:
+
+          - type: custom:stack-in-card
+            cards: 
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:mini-graph-card'
+                  style: |
+                    ha-card {
+                      font-family: var(--primary-font-family);
+                      border-bottom: 2px solid var(--background-color);
+                    }
+                    .graph {
+                      padding-top: 15px;
+                      padding-bottom: 0px;
+                    }
+                    .info {
+                      padding-bottom: 0px;
+                    }
+                    .flex {
+                      padding-bottom: 10px;
+                    }
+                  entities: 
+                    - sensor.processor_use
+                    - entity: sensor.solar_elevation
+                      color: 'rgba(0,0,0,0.3)'
+                      line_width: 1
+                      show_line: false
+                      show_legend: false
+                      show_state: false
+                      show_points: false
+                      y_axis: secondary
+                  name: CPU
+                  align_state: center
+                  align_icon: right  # {{ align_icon|default('right') }}
+                  font_size: 60
+                  font_size_header: 11  # {{ font_size_header|default('11') }}
+                  hours_to_show: 24  # {{ hours_to_show|default('24') }}
+                  line_color: var(--accent-color)  # {{ line_color|default('var(--accent-color)') }}
+                  line_width: 4  # {{ line_width|default('4') }}
+                  animate: true
+                  points_per_hour: 0.5  # {{ points_per_hour|default('0.5') }}
+                  lower_bound_secondary: 0
+                  show:
+                    fill: fade
+                    graph: line  # {{ graph|default('line') }}
+                    extrema: false  # {{ extrema|default('false') }}
+                    icon: true # {{ show_icon|default('true') }}
+                    name: true # {{ show_name|default('true') }}
+                                 
+                # - !include 
+                #   # - lovelace/includes/graphs_embeded.yaml
+                #   # - ../includes/graphs_embeded.yaml
+            - entity: sensor.processor_use
+              name: CPU
+              hours_to_show: 12
+              points_per_hour: 4
+              line_color: var(--custom_graph_color_1)
+            #     - !include
+            #       - ../includes/graphs_embeded.yaml
+            #       - entity: sensor.memory_use_percent
+            #         name: Memory
+            #         hours_to_show: 12
+            #         points_per_hour: 4
+            #         line_color: var(--custom_graph_color_2)
+            #     - !include
+            #       - ../includes/graphs_embeded.yaml
+            #       - entity: sensor.disk_use_percent
+            #         name: Disk
+            #         hours_to_show: 12
+            #         points_per_hour: 4
+            #         line_color: var(--custom_graph_color_3)
+            # - type: entities
+            #   style: !include ../includes/style_entities_embeded.yaml
+            #   entities:
+            #     - sensor.cpu_speed
+            #     - sensor.cpu_temp
+            #     - sensor.db_size
+            #     - sensor.hass_io_uptime_pretty
+            #     - sensor.nuc_uptime
