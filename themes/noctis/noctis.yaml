@@ -102,17 +102,17 @@ noctis:
   mini-media-player-accent-color: 'var(--accent-color)'
 
 
-  # # Custom
-  # custom_heading: '#ffffff'
-  # custom_icon_light: '#ffffff'
-  # custom_icon_dark: '#ffffff'
-  # custom_card_background: 'var(--ha-card-background)'
-  # custom_motion_off: 'rgba(255,102,102,0.6)'
-  # custom_motion_detected: 'rgba(31,142,250,0.9)'
-  # custom_graph_color_1: 'rgba(247,53,67,1)'
-  # custom_graph_color_2: 'rgba(222,176,107,1)'
-  # custom_graph_color_3: 'rgba(0,202,139,1)'
-  # custom_graph_color_4: 'rgba(139,64,156,1)'
+  # Custom
+  custom_heading: '#ffffff'
+  custom_icon_light: '#ffffff'
+  custom_icon_dark: '#ffffff'
+  custom_card_background: 'var(--ha-card-background)'
+  custom_motion_off: 'rgba(255,102,102,0.6)'
+  custom_motion_detected: 'rgba(31,142,250,0.9)'
+  custom_graph_color_1: 'rgba(247,53,67,1)'
+  custom_graph_color_2: 'rgba(222,176,107,1)'
+  custom_graph_color_3: 'rgba(0,202,139,1)'
+  custom_graph_color_4: 'rgba(139,64,156,1)'
 
   # # Card-Mod
   # card-mod-theme: noctis
