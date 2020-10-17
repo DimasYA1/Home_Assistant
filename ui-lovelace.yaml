@@ -341,27 +341,7 @@ views:
              - entity: script.send_message_1
                name: Сервис уведомлений
              - entity: script.climate_report
-            #  - entity: sensor.unavailable_now_light
-            #  - entity: sensor.unavailable_now_switch             
-            #  - entity: sensor.unavailable_now_sensor             
-            #  - entity: sensor.unavailable_now_binary_sensor
   
-#################################################
-  #                                               #
-  #                  INFO BUTTON                  #
-  #                                               #
-  #################################################
-  - type: icon
-    icon: mdi:information-outline
-    title: Information
-    style:
-      top: 87.41%
-      left: 10.7%
-      color: rgb(255, 255, 255)
-      opacity: 0.1
-      padding: 0.8vw
-      --mdc-icon-size: 4vw
-    # tap_action: !include popup/sidebar_information.yaml
 ##########################################################################
 #                                                                        #
 #                              * ИНФОРМАЦИЯ *                            #
