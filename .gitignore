@@ -1,7 +1,7 @@
 # Ignore folders.
 .cloud
 .storage
-.vscode
+.vscode/
 deps
 tts
 www/
