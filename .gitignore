@@ -2,6 +2,7 @@
 .cloud
 .storage
 .vscode/
+/.vscode
 deps
 tts
 www/
@@ -11,4 +12,4 @@ www/
 home-assistant.log
 home-assistant_v2.db
 secrets.yaml
-.vscode/settings.json
+/.vscode/settings.json
