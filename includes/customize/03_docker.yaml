@@ -1,0 +1,18 @@
+script.ha_update:
+  friendly_name: Обновление Home Assistant
+  icon: mdi:update
+script.portainer_update:
+  friendly_name: Обновление Portainer
+  icon: mdi:update
+# script.traefik_update:
+#   friendly_name: Обновление Traefik
+#   icon: mdi:update
+# script.deconz_update:
+#   friendly_name: Обновление Deconz
+#   icon: mdi:update
+# script.adguard_update:
+#   friendly_name: Обновление Adguard
+#   icon: mdi:update
+# script.mosquitto_update:
+#   friendly_name: Обновление Mosquitto
+#   icon: mdi:update

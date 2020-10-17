@@ -1,0 +1,71 @@
+#Сенсоры
+sensor.0x00158d0004acb510_humidity:
+  friendly_name: Датчик влажности
+  device_class: humidity
+sensor.0x00158d0004acb510_temperature:
+  friendly_name: Датчик температуры
+  device_class: temperature
+sensor.0x00158d0004acb510_pressure:
+  friendly_name: Датчик давления
+  device_class: pressure
+
+## Уровень заряда
+sensor.0x00158d0004acb510_battery:
+  friendly_name: Зал температура
+
+## Уровень сигнала
+sensor.0x00158d0004acb510_linkquality:
+  friendly_name: Зал температура
+
+####################################################
+#                                                  #
+#                    CUSTOMIZE                     #
+#                                                  #
+####################################################
+
+#                     SENSOR                       #
+
+sensor.date:
+  friendly_name: Дата
+  icon: mdi:calendar-check-outline
+
+sensor.time:
+  friendly_name: Текущее время
+  icon: mdi:clock-outline
+
+sensor.cpu_temp:
+  friendly_name: Температура CPU
+  device_class: temperature
+
+# sensor.command_sensor:
+#   friendly_name: Температура
+
+sensor.processor_use:
+  friendly_name: Загрузка CPU
+
+sensor.memory_use_percent:
+  friendly_name: Используемая память
+
+sensor.disk_use_percent_home:
+  friendly_name: SSD
+  icon: mdi:memory
+
+sensor.disk_free_home:
+  friendly_name: Свободно /home
+  icon: mdi:harddisk
+
+sensor.home_assistant_v2_db:
+  friendly_name: База данных SQLite
+  icon: mdi:database
+
+sensor.online_custom:
+  friendly_name: Home Assistant в онлайне - 
+  icon: mdi:timer-outline
+
+script.pi_reboot:
+  friendly_name: Перезагрузка
+  icon: mdi:restart
+
+script.pi_shutdown:
+  friendly_name: Выключение
+  icon: mdi:power-off

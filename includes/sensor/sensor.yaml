@@ -1,0 +1,181 @@
+
+  ####################################################
+  #                                                  #
+  #                     SENSORS                      #
+  #                                                  #
+  ####################################################
+
+- platform: version
+  # name: current_ha
+  source: local
+
+- platform: version
+  # name: current_ha
+  source: docker  
+  scan_interval: 1800  
+# - platform: template
+#   sensors:
+#     version:
+#       friendly_name: 'Последняя версия - '
+#     value_template: '{{ states.binary_sensor.updater.attributes["newest_version"] }}'    
+# - platform: version
+#   name: hass_version_installed
+# - platform: version
+#   name: hass_version_latest
+#   source: docker
+# - platform: version
+#   name: hass_version_latest_beta
+#   beta: true
+#   source: docker
+
+- platform: filesize
+  file_paths:
+    - /config/home-assistant_v2.db
+    - /config/home-assistant.log
+
+- platform: systemmonitor
+  resources:
+  - type: processor_use
+  - type: memory_use_percent
+  - type: disk_use_percent
+    arg: /home
+  - type: disk_free
+    arg: /home
+  - type: last_boot
+
+# Home Assistant Online
+- platform: uptime
+  unit_of_measurement: minutes
+
+- platform: time_date
+  display_options:
+  - 'time'
+  - 'date'
+  - 'time_date'
+
+  ####################################################
+  #                                                  #
+  #                     TEMPLATE                     #
+  #                                                  #
+  ####################################################
+
+- platform: template
+  sensors:
+    ha_version:
+      icon_template: mdi:home-assistant
+      friendly_name_template: >
+        Installerad {{ states('sensor.hass_version_installed') }}
+      value_template: >
+        {{ 'Senaste' if states('sensor.hass_version_installed') == 
+        states('sensor.hass_version_latest') else states('sensor.hass_version_latest') }}
+
+- platform: template
+  sensors:
+    last_boot_custom:
+      friendly_name: "Последняя перезагрузка"
+      entity_id:
+        - sensor.time
+      value_template: >
+         {% set uptime = as_timestamp (now()) -as_timestamp(states.sensor.last_boot.state) | int %}
+         {% set minutes = (( uptime % 3600) / 60) | int %}
+         {% set hours = ((uptime % 86400) / 3600) | int %}
+         {% set days = (uptime / 86400) | int %}
+           {% if uptime < 1 %}
+             Меньше минуты
+           {% else %}
+             {% if days > 0 %}
+               {{ days }} д.
+             {% endif %}
+             {% if hours > 0 %}
+               {% if days > 0 %}
+                 {{ ' ' }}
+               {% endif %}
+               {{ hours }} ч.
+             {% endif %}
+             {% if minutes > 0 %}
+               {% if days > 0 or hours > 0 %}
+                 {{ ' ' }}
+               {% endif %}
+                 {{ minutes }} мин.
+             {% endif %}
+           {% endif %}
+      icon_template: mdi:clock
+
+# - platform: template
+#   sensors:
+#      online_custom:
+#       friendly_name: "Home Assistant в онлайне - "
+#       entity_id:
+#         - sensor.time         
+#       value_template: >
+#          {% set uptime = states.sensor.online.state | int %}
+#          {% set minutes = (( uptime % 60) / 1) | int %}
+#          {% set hours = ((uptime % 1440) / 60) | int %}
+#          {% set days = (uptime / 1440) | int %}
+#            {% if uptime < 1 %}
+#              Меньше минуты
+#            {% else %}
+#              {% if days > 0 %}
+#                {{ days }} д.
+#              {% endif %}
+#              {% if hours > 0 %}
+#                {% if days > 0 %}
+#                  {{ ' ' }}
+#                {% endif %}
+#                {{ hours }} ч.
+#              {% endif %}
+#              {% if minutes > 0 %}
+#                {% if days > 0 or hours > 0 %}
+#                  {{ ' ' }}
+#                {% endif %}
+#                  {{ minutes }} мин.
+#              {% endif %}
+#            {% endif %}
+#       icon_template: mdi:clock 
+
+- platform: template
+  sensors:
+    online_custom:
+      icon_template: mdi:clock
+      entity_id: sensor.time
+      unit_of_measurement: ' '
+      value_template: >
+        {% set uptime = states('sensor.uptime') | int %}
+        {% set minutes = (( uptime % 60) / 1) | int %}
+        {% set hours = ((uptime % 1440) / 60) | int %}
+        {% set days = (uptime / 1440) | int %}
+          {% if uptime < 1 %}
+            Меньше минуты
+          {% else %}
+            {% if days > 0 %}
+              {{ days }} д.
+            {% endif %}
+            {% if hours > 0 %}
+              {% if days > 0 %}
+                {{ ' ' }}
+              {% endif %}
+              {{ hours }} ч.
+            {% endif %}
+            {% if minutes > 0 %}
+              {% if days > 0 or hours > 0 %}
+                {{ ' ' }}
+              {% endif %}
+                {{ minutes }} мин.
+            {% endif %}
+          {% endif %}
+
+  ####################################################
+  #                                                  #
+  #                   COMMAND LINE                   #
+  #                                                  #
+  ####################################################
+
+- platform: command_line
+  name: cpu_temp
+  command: "cat /sys/class/thermal/thermal_zone0/temp"
+  unit_of_measurement: "°C"
+  value_template: '{{ (value | multiply(0.001)) | round(1) }}'
+
+- platform: command_line
+  name: CPU get_throttled
+  command: "cat /sys/devices/platform/soc/soc:firmware/get_throttled"

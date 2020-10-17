@@ -1,0 +1,8 @@
+/.cloud
+/.storage
+/custom_components
+/deps
+/home-assistant.log
+/home-assistant_v2.db
+/secrets.yaml
+/tts

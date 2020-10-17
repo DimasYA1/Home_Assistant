@@ -1,0 +1,21 @@
+rpi:
+
+    # Команды
+    shell_command:
+      # Перезагрузка Raspberry Pi
+      pi_reboot: ssh -p your_port root@192.168.1.x "sudo shutdown -r now"
+      # Выключение Raspberry Pi
+      pi_shutdown: ssh -p your_port root@192.168.1.x "sudo shutdown now"
+
+     # Скрипты
+    script:
+      # Перезагрузка Raspberry Pi в Lovelace
+      pi_reboot:
+        sequence:
+          - delay: 00:00:0.5
+          - service: shell_command.pi_reboot
+      # Выключение Raspberry Pi в Lovelace
+      pi_shutdown:
+        sequence:
+          - delay: 00:00:0.5
+          - service: shell_command.pi_shutdown

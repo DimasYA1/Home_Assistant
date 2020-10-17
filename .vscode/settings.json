@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "C:\\Python\\Python38\\python.exe",
+    "yaml.schemas": {
+        "./address.schema.json": [
+            "/address/*"
+        ]
+    }
+}
