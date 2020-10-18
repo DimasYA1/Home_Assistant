@@ -33,15 +33,15 @@
     - /config/home-assistant_v2.db
     - /config/home-assistant.log
 
-- platform: systemmonitor
-  resources:
-  - type: processor_use
-  - type: memory_use_percent
-  - type: disk_use_percent
-    arg: /home
-  - type: disk_free
-    arg: /home
-  - type: last_boot
+#- platform: systemmonitor
+#  resources:
+#  - type: processor_use
+#  - type: memory_use_percent
+#  - type: disk_use_percent
+#    arg: /home
+#  - type: disk_free
+#    arg: /home
+#  - type: last_boot
 
 # Home Assistant Online
 - platform: uptime
