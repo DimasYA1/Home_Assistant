@@ -5,7 +5,7 @@
 /.vscode
 deps
 tts
-www/
+www
 
 # Ignore files
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
