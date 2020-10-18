@@ -1,11 +1,9 @@
 # Ignore folders.
 .cloud
 .storage
-.vscode/
-/.vscode
+.vscode
 deps
 tts
-www
 
 # Ignore files
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
