@@ -27,12 +27,12 @@ entities:
     y_axis: secondary
 name: {{ name }}
 align_state: center
-align_icon: {{ align_icon|default('right') }}
+# align_icon: {{ align_icon, default('right') }}
 font_size: 60
-font_size_header: {{ font_size_header|default('11') }}
+# font_size_header: {{ font_size_header|default('11') }}
 hours_to_show: {{ hours_to_show|default('24') }}
 line_color: {{ line_color|default('var(--accent-color)') }}
-line_width: {{ line_width|default('4') }}
+# line_width: {{ line_width|default('4') }}
 animate: true
 points_per_hour: {{ points_per_hour|default('0.5') }}
 lower_bound_secondary: 0

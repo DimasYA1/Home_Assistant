@@ -9,3 +9,60 @@
   - type: last_boot
 
 - platform: cpuspeed
+
+- platform: filesize
+  file_paths:
+    - /config/home-assistant_v2.db
+    - /config/home-assistant.log
+
+# Home Assistant Online
+- platform: uptime
+#  unit_of_measurement: minutes
+
+## Version Check ###############################################################
+
+- platform: version
+  name: version_current
+  source: local
+
+- platform: version
+  name: version_latest
+  source: docker  
+  scan_interval: 1800 
+
+- platform: template
+  sensors:
+    version_check:
+      value_template: "{{ states('sensor.version_latest') == states('sensor.version_current') }}"
+      friendly_name: "Ha UpToDate check"
+
+#######################################################################
+
+- platform: time_date
+  display_options:
+  - 'time'
+  - 'date'
+  - 'time_date'
+
+## Stats Home ##################################################################
+
+#- platform: template
+#  sensors:
+#    ha_uptime:
+#      friendly_name: Hass.io Uptime
+#      value_template: >
+#        {% if states('sensor.uptime') == '0.0' %} 
+#        Gerade neu gestartet...
+#        {% else %}
+#        {% macro phrase(value, name) %}
+#        {%- set value = value | int %}
+#        {%- set end = 's' if value > 1 else '' %}
+#        {{- '{} {}{}'.format(value, name, end) if value | int > 0 else '' }}
+#        {%- endmacro %}
+#        
+#        {% set weeks = (states('sensor.uptime') | int / 7) | int %}
+#        {% set days = (states('sensor.uptime') | int) - (weeks * 7) %}
+#        {% set hours = (states('sensor.uptime') | float - states('sensor.uptime') | int) * 24 %}
+#        {% set minutes = (hours - hours | int) * 60 %}
+#        {{ [ phrase(weeks, 'week'), phrase(days, 'day'), phrase(hours, 'hr'), phrase(minutes, 'min') ] | select('!=','') | list | join(', ') }}
+#        {% endif %}

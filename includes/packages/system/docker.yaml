@@ -18,18 +18,18 @@ docker:
 
     # Сенсоры версий docker-контейнеров
     sensor:
-      # Home Assistant Docker Version
-      - platform: version
-        beta: false
-        source: docker
-        name: ha_docker_version
-
-
-      # Home Assistant Local Version
-      - platform: version
-        name: ha_local_version
-        source: local
-        beta: false
+#      # Home Assistant Docker Version
+#      - platform: version
+#        beta: false
+#        source: docker
+#        name: ha_docker_version
+#
+#
+#      # Home Assistant Local Version
+#      - platform: version
+#        name: ha_local_version
+#        source: local
+#        beta: false
 
 
       # Portainer Docker Version
