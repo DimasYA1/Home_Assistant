@@ -48,3 +48,5 @@ resources:
     type: module
   - url: /local/stack-in-card.js
     type: module
+  - url: /local/mini-humidifier-bundle.js?v=2.2.5
+    type: module

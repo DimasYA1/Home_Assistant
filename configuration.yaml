@@ -67,3 +67,11 @@ notify:
   - name: telegram_id_1
     platform: telegram
     chat_id: !secret telegram_id_1
+
+# Подключение увлажнителя
+fan:
+- platform: xiaomi_miio
+  host: !secret humidifier_ip
+  token: !secret xiaomi_token
+  name: Humidifier2
+  model: zhimi.humidifier.cb1
