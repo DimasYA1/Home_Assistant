@@ -33,6 +33,9 @@ resources:
     type: module
   - url: /hacsfiles/lovelace-hui-element/hui-element.js
     type: module
+  - url: /hacsfiles/mini-humidifier/mini-humidifier-bundle.js
+    type: module
+
   # Custom
   # - url: /local/lovelace/counter-card.js
   #   type: js
@@ -48,5 +51,5 @@ resources:
     type: module
   - url: /local/stack-in-card.js
     type: module
-  - url: /local/mini-humidifier-bundle.js?v=2.2.5
-    type: module
+  # - url: /local/mini-humidifier-bundle.js?v=2.2.5
+  #   type: module
