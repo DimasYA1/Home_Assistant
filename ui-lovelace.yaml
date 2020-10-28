@@ -1,689 +1,670 @@
-title: 
-views:
+title: ""
+views: !include_dir_list lovelace/views/
 
-##########################################################################
-#                                                                        #
-#                              * ИНФОРМАЦИЯ *                            #
-#                                                                        #
-##########################################################################
+############################################
+################ ИНФОРМАЦИЯ ################
+############################################
+#  - title: Информация  # вкладка ИНФОРМАЦИЯ
+#    icon: mdi:information-outline
+#
+#    cards:
+#      # - type: custom:layout-card
+#      #   column_num: 3
+#      #   column_width: [385, 385, 385]
+#      #   layout: horizontal
+#      #   cards:
+#          - type: vertical-stack
+#            cards:
+#              # Home Assistant
+#              - type: entities
+#                title: Home Assistant
+#                class: add_header
+#                show_header_toggle: false
+#                # style: |
+#                #   ha-card {
+#                #     background: center / cover url(/local/icons/ha_reeder.png) no-repeat;
+#                #     background-color: var(--ha-card-background);
+#                #     background-size: 14em;
+#                #   }
+#                entities:
+#                  - entity: sensor.time
+#                  - entity: sensor.date
+#                  - entity: sensor.home_assistant_v2_db
+#                  - entity: sensor.online_custom
+#                  # - entity: sensor.lets_encrypt
+#                  # - entity: script.ha_backup
+#                  - entity: script.ha_restart
+#
+#          - type: vertical-stack
+#            cards:
+#              # Raspberry Pi
+#              - type: entities
+#                title: Raspberry Pi
+#
+#                entities:
+#                  - entity: sensor.cpu_temp
+#                  - type: custom:bar-card
+#                    width: 45%
+#                    height: 2em
+#                    decimal: 0
+#                    unit_of_measurement: '%'
+#                    positions: &bar_card_positions
+#                      icon: outside
+#                      indicator: 'off'
+#                      name: inside
+#                    severity: &bar_card_severity
+#                      - color: '#5e5e5e'
+#                        from: 0
+#                        to: 89
+#                      - color: '#6d2525'
+#                        from: 90
+#                        to: 100
+#                    entity_row: true
+#                    entities:
+#                      - entity: sensor.processor_use
+#                        tap_action:
+#                          action: call-service
+#                          service: homeassistant.update_entity
+#                          service_data:
+#                            entity_id: sensor.processor_use
+#                      - entity: sensor.memory_use_percent
+#                        tap_action:
+#                          action: call-service
+#                          service: homeassistant.update_entity
+#                          service_data:
+#                            entity_id: sensor.memory_use_percent
+#                      - entity: sensor.disk_use_percent_home
+#                        tap_action:
+#                          action: call-service
+#                          service: homeassistant.update_entity
+#                          service_data:
+#                            entity_id: sensor.disk_use_percent_home
+#                  # - entity: sensor.processor_use
+#                  # - entity: sensor.memory_use_percent
+#                  # - entity: sensor.disk_use_percent_home
+#                  - entity: sensor.disk_free_home
+#                  - entity: sensor.last_boot_custom
+#                  - entity: script.pi_reboot
+#                  - entity: script.pi_shutdown
+#                  - type: custom:hui-element
+#                    card_type: horizontal-stack
+#                    style: &horizontal-style
+#                    cards:
+#
+#                    - type: custom:button-card
+#                      name: '<ha-icon icon="mdi:reload"></ha-icon> Startsidan'
+#                      tap_action:
+#                        services: |
+#                          [[[ hass.callService('browser_mod', 'toast', {message: 'Laddar om startsidan...'});
+#                          hass.callService('shell_command', 'fullykiosk_load_start_url'); ]]]
+#                      # template: name_action
+#
+#                    - type: custom:button-card
+#                      name: '<ha-icon icon="mdi:reload"> </ha-icon> Hela appen'
+#                      tap_action:
+#                        services: |
+#                          [[[ hass.callService('browser_mod', 'toast', {message: 'Startar om Fully Kiosk Browser...'});
+#                          hass.callService('shell_command', 'fullykiosk_restart_app'); ]]]
+#                      # template: name_action
+#
+#          - type: vertical-stack
+#            cards:
+#              # Docker
+#              - type: entities
+#                title: Docker
+#                # style: |
+#                #   ha-card {
+#                #     background: center / cover url(/local/icons/docker_reeder.png) no-repeat;
+#                #     background-color: var(--ha-card-background);
+#                #     background-size: 16em;
+#                #   }
+#                entities:
+#                  # Home Assistant
+#                  - entity: script.ha_update
+#                    type: custom:multiple-entity-row
+#                    style: |
+#                      div:nth-child(3) {
+#                        color:
+#                          {% if states('sensor.ha_docker_version') > states('sensor.ha_local_version') %}
+#                            var(--google-green-500)
+#                          {% elif states('sensor.ha_docker_version') < states('sensor.ha_local_version') %}
+#                            var(--google-red-500)
+#                          {% else %}
+#                            var(--primary-text-color)
+#                          {% endif %}
+#                          ;
+#                      }
+#                    name: Home Assistant
+#                    toggle: true
+#                    entities:
+#                      - entity: sensor.ha_local_version
+#                        name: Установлено
+#                      - entity: sensor.ha_docker_version
+#                        name: Доступно
+#                  # Portainer
+#                  - entity: script.portainer_update
+#                    type: custom:multiple-entity-row
+#                    style: |
+#                      div:nth-child(3) {
+#                        color:
+#                          {% if states('sensor.portainer_docker_version') > states('sensor.portainer_local_version') %}
+#                            var(--google-green-500)
+#                          {% elif states('sensor.portainer_docker_version') < states('sensor.portainer_local_version') %}
+#                            var(--google-red-500)
+#                          {% else %}
+#                            var(--primary-text-color)
+#                          {% endif %}
+#                          ;
+#                      }
+#                    name: Portainer
+#                    toggle: true
+#                    entities:
+#                      - entity: sensor.portainer_local_version
+#                        name: Установлено
+#                      - entity: sensor.portainer_docker_version
+#                        name: Доступно
 
-  - title: Информация
-    icon: mdi:information-outline
-
-    cards:
-      # - type: custom:layout-card
-      #   column_num: 3
-      #   column_width: [385, 385, 385]
-      #   layout: horizontal
-      #   cards:
-          - type: vertical-stack
-            cards:
-              # Home Assistant
-              - type: entities
-                title: Home Assistant
-                class: add_header
-                show_header_toggle: false
-                # style: |
-                #   ha-card {
-                #     background: center / cover url(/local/icons/ha_reeder.png) no-repeat;
-                #     background-color: var(--ha-card-background);
-                #     background-size: 14em;
-                #   }
-                entities:
-                  - entity: sensor.time
-                  - entity: sensor.date
-                  - entity: sensor.home_assistant_v2_db
-                  - entity: sensor.online_custom
-                  # - entity: sensor.lets_encrypt
-                  # - entity: script.ha_backup
-                  - entity: script.ha_restart
-
-          - type: vertical-stack
-            cards:
-              # Raspberry Pi
-              - type: entities
-                title: Raspberry Pi
-
-                entities:
-                  - entity: sensor.cpu_temp
-                  - type: custom:bar-card
-                    width: 45%
-                    height: 2em
-                    decimal: 0
-                    unit_of_measurement: '%'
-                    positions: &bar_card_positions
-                      icon: outside
-                      indicator: 'off'
-                      name: inside
-                    severity: &bar_card_severity
-                      - color: '#5e5e5e'
-                        from: 0
-                        to: 89
-                      - color: '#6d2525'
-                        from: 90
-                        to: 100
-                    entity_row: true
-                    entities:
-                      - entity: sensor.processor_use
-                        tap_action:
-                          action: call-service
-                          service: homeassistant.update_entity
-                          service_data:
-                            entity_id: sensor.processor_use
-                      - entity: sensor.memory_use_percent
-                        tap_action:
-                          action: call-service
-                          service: homeassistant.update_entity
-                          service_data:
-                            entity_id: sensor.memory_use_percent
-                      - entity: sensor.disk_use_percent_home
-                        tap_action:
-                          action: call-service
-                          service: homeassistant.update_entity
-                          service_data:
-                            entity_id: sensor.disk_use_percent_home
-                  # - entity: sensor.processor_use
-                  # - entity: sensor.memory_use_percent
-                  # - entity: sensor.disk_use_percent_home
-                  - entity: sensor.disk_free_home
-                  - entity: sensor.last_boot_custom
-                  - entity: script.pi_reboot
-                  - entity: script.pi_shutdown
-                  - type: custom:hui-element
-                    card_type: horizontal-stack
-                    style: &horizontal-style
-                    cards:
-
-                    - type: custom:button-card
-                      name: '<ha-icon icon="mdi:reload"></ha-icon> Startsidan'
-                      tap_action:
-                        services: |
-                          [[[ hass.callService('browser_mod', 'toast', {message: 'Laddar om startsidan...'});
-                          hass.callService('shell_command', 'fullykiosk_load_start_url'); ]]]
-                      # template: name_action
-
-                    - type: custom:button-card
-                      name: '<ha-icon icon="mdi:reload"> </ha-icon> Hela appen'
-                      tap_action:
-                        services: |
-                          [[[ hass.callService('browser_mod', 'toast', {message: 'Startar om Fully Kiosk Browser...'});
-                          hass.callService('shell_command', 'fullykiosk_restart_app'); ]]]
-                      # template: name_action
-
-          - type: vertical-stack
-            cards:
-              # Docker
-              - type: entities
-                title: Docker
-                # style: |
-                #   ha-card {
-                #     background: center / cover url(/local/icons/docker_reeder.png) no-repeat;
-                #     background-color: var(--ha-card-background);
-                #     background-size: 16em;
-                #   }
-                entities:
-                  # Home Assistant
-                  - entity: script.ha_update
-                    type: custom:multiple-entity-row
-                    style: |
-                      div:nth-child(3) {
-                        color:
-                          {% if states('sensor.ha_docker_version') > states('sensor.ha_local_version') %}
-                            var(--google-green-500)
-                          {% elif states('sensor.ha_docker_version') < states('sensor.ha_local_version') %}
-                            var(--google-red-500)
-                          {% else %}
-                            var(--primary-text-color)
-                          {% endif %}
-                          ;
-                      }
-                    name: Home Assistant
-                    toggle: true
-                    entities:
-                      - entity: sensor.ha_local_version
-                        name: Установлено
-                      - entity: sensor.ha_docker_version
-                        name: Доступно
-                  # Portainer
-                  - entity: script.portainer_update
-                    type: custom:multiple-entity-row
-                    style: |
-                      div:nth-child(3) {
-                        color:
-                          {% if states('sensor.portainer_docker_version') > states('sensor.portainer_local_version') %}
-                            var(--google-green-500)
-                          {% elif states('sensor.portainer_docker_version') < states('sensor.portainer_local_version') %}
-                            var(--google-red-500)
-                          {% else %}
-                            var(--primary-text-color)
-                          {% endif %}
-                          ;
-                      }
-                    name: Portainer
-                    toggle: true
-                    entities:
-                      - entity: sensor.portainer_local_version
-                        name: Установлено
-                      - entity: sensor.portainer_docker_version
-                        name: Доступно
-
-  - title: Сервер
-    icon: mdi:home-assistant
-    
-    cards:
-
-      - type: entities
-        show_header_toggle: false
-        entities:
-         - entity: sensor.last_boot_custom
-         - entity: sensor.online_custom
-         - entity: sensor.time
-          #  name: Текущее время
-          #  icon: mdi:clock-outline
-         - entity: sensor.date
-          #  name: Дата
-          #  icon: mdi:calendar-check-outline
-         - entity: binary_sensor.rpi_power_status
-         - entity: sensor.cpu_get_throttled
-           name: Троттлинг
-         - entity: sensor.ha_version_current
-           name: Установлен Home Assistant -
-           icon: mdi:alpha-v-circle
-         - entity: sensor.ha_version_latest
-           name: Последний Home Assistant -
-           icon: mdi:alpha-v-circle-outline
-
-      - type: history-graph
-        entities:
-         - entity: sensor.cpu_temp
-           name: Температура CPU
-
-      # - type: custom:mini-graph-card
-      #   entities:
-      #    - entity: sensor.cpu_temp
-      #      name: Температура CPU
-           
-      - type: history-graph
-        entities:
-         - entity: sensor.processor_use
-           name: Загрузка CPU
-           
-      - type: history-graph
-        entities:
-         - entity: sensor.memory_use_percent
-           name: Загрузка ОЗУ
-           
-      - type: history-graph
-        entities:
-         - entity: sensor.disk_use_percent
-           name: Диск заполнен
-           
-      - type: history-graph
-        entities:
-         - entity: sensor.disk_free
-           name: Свободное место  
-
-      - type: history-graph
-        entities:
-         - entity: sensor.home_assistant_v2_db
-           name: Свободное место  
-
-      # - url: /hacsfiles/lovelace-rpi-monitor-card/rpi-monitor-card.js
-      #   type: module
-
-  - title: Погода
-    icon: mdi:weather-partly-snowy-rainy
-    
-    cards: 
-        - type: weather-forecast
-          entity: weather.home_assistant
-          
-        - type: weather-forecast
-          entity: weather.openweathermap
-
-        # - type: iframe
-        #   url: https://www.windy.com
-        #   aspect_ratio: 75%
-
-  - title: Тренды
-    # id: data
-    icon: mdi:chart-gantt
-
-    cards:
-
-      - type: sensor
-        name: 'Температура CPU'
-        entity: sensor.cpu_temp
-        graph: line
-        # detail: 2
-
-      - type: vertical-stack
-        cards:
-        - type: markdown
-          content: >
-             **Климат в зале**  
-
-        - type: sensor
-          name: 'Температура в зале'
-          entity: sensor.0x00158d0004acb510_temperature
-          graph: line  
-
-        - type: sensor
-          name: 'Влажность в зале'
-          entity: sensor.0x00158d0004acb510_humidity
-          graph: line  
-
-        - type: sensor
-          name: 'Давление в зале'
-          entity: sensor.0x00158d0004acb510_pressure_mmhg
-          graph: line
-
-        - type: sensor
-          name: 'Давление в зале'
-          entity: sensor.0x00158d0004acb510_pressure
-          graph: line
-
-      - type: vertical-stack
-        cards:
-        - type: markdown
-          content: >
-             **Состояние сети Интернет**  
-
-        - type: sensor
-          name: 'Ping'
-          entity: sensor.speedtest_ping
-          graph: line 
-
-        - type: sensor
-          name: 'Download'
-          entity: sensor.speedtest_download
-          graph: line 
-
-        - type: sensor
-          name: 'Upload'
-          entity: sensor.speedtest_upload
-          graph: line
-     
-#  - title: СС 2531
-#    icon: mdi:usb-flash-drive
+################# СЕРВЕР ################
+#  - title: Сервер  # вкладка СЕРВЕР
+#    icon: mdi:home-assistant
 #    
 #    cards:
+#
+#      - type: entities
+#        show_header_toggle: false
+#        entities:
+#         - entity: sensor.last_boot_custom
+#         - entity: sensor.online_custom
+#         - entity: sensor.time
+#          #  name: Текущее время
+#          #  icon: mdi:clock-outline
+#         - entity: sensor.date
+#          #  name: Дата
+#          #  icon: mdi:calendar-check-outline
+#         - entity: binary_sensor.rpi_power_status
+#         - entity: sensor.cpu_get_throttled
+#           name: Троттлинг
+#         - entity: sensor.ha_version_current
+#           name: Установлен Home Assistant -
+#           icon: mdi:alpha-v-circle
+#         - entity: sensor.ha_version_latest
+#           name: Последний Home Assistant -
+#           icon: mdi:alpha-v-circle-outline
+#
+#      - type: history-graph
+#        entities:
+#         - entity: sensor.cpu_temp
+#           name: Температура CPU
+#
+#      # - type: custom:mini-graph-card
+#      #   entities:
+#      #    - entity: sensor.cpu_temp
+#      #      name: Температура CPU
+#           
+#      - type: history-graph
+#        entities:
+#         - entity: sensor.processor_use
+#           name: Загрузка CPU
+#           
+#      - type: history-graph
+#        entities:
+#         - entity: sensor.memory_use_percent
+#           name: Загрузка ОЗУ
+#           
+#      - type: history-graph
+#        entities:
+#         - entity: sensor.disk_use_percent
+#           name: Диск заполнен
+#           
+#      - type: history-graph
+#        entities:
+#         - entity: sensor.disk_free
+#           name: Свободное место  
+#
+#      - type: history-graph
+#        entities:
+#         - entity: sensor.home_assistant_v2_db
+#           name: Свободное место  
+#
+#      # - url: /hacsfiles/lovelace-rpi-monitor-card/rpi-monitor-card.js
+#      #   type: module
+
+#  - title: Погода  # вкладка ПОГОДА
+#    icon: mdi:weather-partly-snowy-rainy
 #    
+#    cards: 
+#        - type: weather-forecast
+#          entity: weather.home_assistant
+#          
+#        - type: weather-forecast
+#          entity: weather.openweathermap
+#
+#        # - type: iframe
+#        #   url: https://www.windy.com
+#        #   aspect_ratio: 75%
+
+#  - title: Тренды
+#    # id: data
+#    icon: mdi:chart-gantt
+#
+#    cards:
+#
+#      - type: sensor
+#        name: 'Температура CPU'
+#        entity: sensor.cpu_temp
+#        graph: line
+#        # detail: 2
+#
 #      - type: vertical-stack
 #        cards:
 #        - type: markdown
 #          content: >
-#            **Добавление устройств**     
+#             **Климат в зале**  
 #
+#        - type: sensor
+#          name: 'Температура в зале'
+#          entity: sensor.0x00158d0004acb510_temperature
+#          graph: line  
+#
+#        - type: sensor
+#          name: 'Влажность в зале'
+#          entity: sensor.0x00158d0004acb510_humidity
+#          graph: line  
+#
+#        - type: sensor
+#          name: 'Давление в зале'
+#          entity: sensor.0x00158d0004acb510_pressure_mmhg
+#          graph: line
+#
+#        - type: sensor
+#          name: 'Давление в зале'
+#          entity: sensor.0x00158d0004acb510_pressure
+#          graph: line
+#
+#      - type: vertical-stack
+#        cards:
+#        - type: markdown
+#          content: >
+#             **Состояние сети Интернет**  
+#
+#        - type: sensor
+#          name: 'Ping'
+#          entity: sensor.speedtest_ping
+#          graph: line 
+#
+#        - type: sensor
+#          name: 'Download'
+#          entity: sensor.speedtest_download
+#          graph: line 
+#
+#        - type: sensor
+#          name: 'Upload'
+#          entity: sensor.speedtest_upload
+#          graph: line
+     
+
+
+#  - title: telegram
+#    icon: mdi:telegram
+#
+#    cards:
 #        - type: entities
-#          title: Добавление Zigbee устройств
 #          show_header_toggle: false
 #          entities:
-#            - entity: input_boolean.zigbee_permit_join
-#            - entity: timer.zigbee_permit_join
-#            - entity: sensor.bridge_state
-
-  - title: telegram
-    icon: mdi:telegram
-
-    cards:
-        - type: entities
-          show_header_toggle: false
-          entities:
-             - entity: script.send_message_1
-               name: Сервис уведомлений
-             - entity: script.climate_report
-  
+#             - entity: script.send_message_1
+#               name: Сервис уведомлений
+#             - entity: script.climate_report
+#  
 ##########################################################################
 #                                                                        #
 #                              * ИНФОРМАЦИЯ *                            #
 #                                                                        #
 ##########################################################################
 
-  - title: Информация
-    icon: mdi:information-outline
+#  - title: Информация
+#    icon: mdi:information-outline
+#
+#    cards:
+#
+#      - type: custom:layout-card
+#        column_num: 3
+#        column_width: [385, 385, 385]
+#        layout: vertical
+#        cards:
+#          - type: entities
+#            title: Home Assistant
+#            class: add_header
+#            show_header_toggle: false
+#            entities:
+#            - entity: sensor.ha_docker_version
+#              type: custom:multiple-entity-row
+#              style: |
+#                div:nth-child(3) {
+#                  color:
+#                    {% if states('sensor.ha_docker_version') > states('sensor.ha_local_version') %}
+#                      var(--google-green-500)
+#                    {% elif states('sensor.ha_docker_version') < states('sensor.ha_local_version') %}
+#                      var(--google-red-500)
+#                    {% else %}
+#                      var(--primary-text-color)
+#                    {% endif %}
+#                    ;
+#                }
+#              name: Home Assistant
+#              state_header: Доступно
+#              # toggle: true
+#              entities:
+#                # - entity: sensor.ha_local_version
+#                #   name: Установлено
+#                - entity: sensor.ha_local_version
+#                  name: Установлено
+#            - entity: sensor.time
+#            - entity: sensor.date
+#            # - entity: sensor.ha_local_version
+#            - entity: sensor.home_assistant_v2_db
+#            - entity: sensor.home_assistant_log
+#            - entity: sensor.online_custom
+#            - type: custom:bar-card
+#              width: 55%
+#              height: 2em
+#              decimal: 0
+#              unit_of_measurement: '%'
+#              positions: *bar_card_positions
+#                # indicator: 'off'
+#                # icon: outside
+#                # name: outside
+#              severity: *bar_card_severity
+#                # - color: '#303435'
+#                #   from: 0
+#                #   to: 89
+#                # - color: '#6d2525'
+#                #   from: 90
+#                #   to: 100
+#              entity_row: true
+#              entities:
+#                
+#                - entity: sensor.processor_use
+#                  tap_action:
+#                    action: call-service
+#                    service: homeassistant.update_entity
+#                    service_data:
+#                      entity_id: sensor.docker_cpu
+#                - entity: sensor.dockermon_mem
+#                  tap_action:
+#                    action: call-service
+#                    service: homeassistant.update_entity
+#                    service_data:
+#                      entity_id: sensor.dockermon_mem
+#
+#            - type: custom:hui-element
+#              card_type: horizontal-stack
+#              cards:
+#
+#                - type: entities
+#                  class: information_network
+#                  entities:
+#                    - entity: sensor.speedtest_download
+#                      style: ':host {--paper-item-icon-color: green;}'
+#
+#                - type: entities
+#                  class: information_network
+#                  entities:
+#                    - entity: sensor.speedtest_upload
+#                      style: ':host {--paper-item-icon-color: #385581;}'
+#
+#            - type: custom:mini-graph-card
+#              entities:
+#                - color: '#385581'
+#                  entity: sensor.speedtest_upload
+#                - color: green
+#                  entity: sensor.speedtest_download
+#              align_state: left
+#              group: false
+#              points_per_hour: 2
+#              line_width: 3
+#              hour24: true
+#              hours_to_show: 24
+#              show:
+#                {fill: fade, icon: false, name: false, state: false, 
+#                name_adaptive_color: true, labels: hover, legend: false}
+#              tap_action:
+#                action: none  
+#
+#      - type: horizontal-stack
+#        cards:
+#          - type: custom:mini-graph-card
+#            entities:
+#              - sensor.0x00158d0004acb510_temperature
+#            align_icon: state
+#            show:
+#              name: false
+#            line_color: blue
+#            line_width: 8
+#            font_size: 70
+#          - type: custom:mini-graph-card
+#            entities:
+#              - sensor.0x00158d0004acb510_humidity
+#            align_icon: state
+#            show:
+#              name: false
+#            line_color: '#e74c3c'
+#            line_width: 8
+#            font_size: 70
+#          - type: custom:mini-graph-card
+#            entities:
+#              - sensor.0x00158d0004acb510_pressure
+#            align_icon: state
+#            show:
+#              name: false
+#            line_color: var(--accent-color)
+#            line_width: 8
+#            font_size: 70
 
-    cards:
+#  - title: System
+#    icon: mdi:desktop-classic
+#    cards:
+#
+#      - type: vertical-stack
+#        style: |
+#          ha-card {
+#            border: solid 1px var(--border-color);
+#            font-family: var(--primary-font-family);
+#            margin-top: 5px;
+#            margin-bottom: 5px;
+#          }
+#        cards:
+#
+#          - type: conditional
+#            conditions:
+#              - entity: sensor.version_check
+#                state: "False"
+#            card:
+#              type: vertical-stack
+#              cards:
+#
+#                - type: markdown
+#                  style: |
+#                    ha-card {
+#                      font-size: 20px;
+#                      font-family: Quicksand;
+#                      height: 30px;
+#                      background: none;
+#                      margin-top: 0em;
+#                      margin-left: 8px;
+#                      margin-bottom: -0.4em;
+#                      box-shadow: none;
+#                    }
+#                    ha-markdown {
+#                      padding: 0px 0px 0px 8px !important;
+#                      border-left: 3px solid var(--accent-color);
+#                    }
+#                  content: HASSIO
+#
+#    
+#                - type: entities
+#                  entities:
+#                    - sensor.current_version
+#                    - sensor.latest_version
+#
+#          - type: custom:stack-in-card
+#            cards: 
+#            - type: horizontal-stack
+#              cards:
+#
+#                - type: 'custom:mini-graph-card' # Зиагружка процессора
+#                  style: |
+#                    ha-card {
+#                      font-family: var(--primary-font-family);
+#                      border-bottom: 2px solid var(--background-color);
+#                    }
+#                    .graph {
+#                      padding-top: 15px;
+#                      padding-bottom: 0px;
+#                    }
+#                    .info {
+#                      padding-bottom: 0px;
+#                    }
+#                    .flex {
+#                      padding-bottom: 10px;
+#                    }
+#                  entities: 
+#                    - sensor.processor_use
+#                    - entity: sensor.solar_elevation
+#                      color: 'rgba(0,0,0,0.3)'
+#                      line_width: 1
+#                      show_line: false
+#                      show_legend: false
+#                      show_state: false
+#                      show_points: false
+#                      y_axis: secondary
+#                  name: CPU
+#                  align_state: center
+#                  align_icon: right  # {{ align_icon|default('right') }}
+#                  font_size: 60
+#                  font_size_header: 11  # {{ font_size_header|default('11') }}
+#                  hours_to_show: 24  # {{ hours_to_show|default('24') }}
+#                  line_color: 'rgba(247,53,67,1)'  # {{ line_color|default('var(--accent-color)') }}
+#                  line_width: 4  # {{ line_width|default('4') }}
+#                  animate: true
+#                  points_per_hour: 0.5  # {{ points_per_hour|default('0.5') }}
+#                  lower_bound_secondary: 0
+#                  show:
+#                    fill: fade
+#                    graph: line  # {{ graph|default('line') }}
+#                    extrema: false  # {{ extrema|default('false') }}
+#                    icon: true # {{ show_icon|default('true') }}
+#                    name: true # {{ show_name|default('true') }}
+#
+#                - type: 'custom:mini-graph-card' # Использование памяти
+#                  style: |
+#                    ha-card {
+#                      font-family: var(--primary-font-family);
+#                      border-bottom: 2px solid var(--background-color);
+#                    }
+#                    .graph {
+#                      padding-top: 15px;
+#                      padding-bottom: 0px;
+#                    }
+#                    .info {
+#                      padding-bottom: 0px;
+#                    }
+#                    .flex {
+#                      padding-bottom: 10px;
+#                    }
+#                  entities: 
+#                    - sensor.memory_use_percent
+#                    - entity: sensor.solar_elevation
+#                      color: 'rgba(0,0,0,0.3)'
+#                      line_width: 1
+#                      show_line: false
+#                      show_legend: false
+#                      show_state: false
+#                      show_points: false
+#                      y_axis: secondary
+#                  name: Memory
+#                  align_state: center
+#                  align_icon: right  # {{ align_icon|default('right') }}
+#                  font_size: 60
+#                  font_size_header: 11  # {{ font_size_header|default('11') }}
+#                  hours_to_show: 24  # {{ hours_to_show|default('24') }}
+#                  line_color: 'rgba(222,176,107,1)'  # {{ line_color|default('var(--accent-color)') }}
+#                  line_width: 4  # {{ line_width|default('4') }}
+#                  animate: true
+#                  points_per_hour: 0.5  # {{ points_per_hour|default('0.5') }}
+#                  lower_bound_secondary: 0
+#                  show:
+#                    fill: fade
+#                    graph: line  # {{ graph|default('line') }}
+#                    extrema: false  # {{ extrema|default('false') }}
+#                    icon: true # {{ show_icon|default('true') }}
+#                    name: true # {{ show_name|default('true') }}
+#
+#                - type: 'custom:mini-graph-card' # Использование диска
+#                  style: |
+#                    ha-card {
+#                      font-family: var(--primary-font-family);
+#                      border-bottom: 2px solid var(--background-color);
+#                    }
+#                    .graph {
+#                      padding-top: 15px;
+#                      padding-bottom: 0px;
+#                    }
+#                    .info {
+#                      padding-bottom: 0px;
+#                    }
+#                    .flex {
+#                      padding-bottom: 10px;
+#                    }
+#                  entities: 
+#                    - sensor.disk_use_percent_home
+#                    - entity: sensor.solar_elevation
+#                      color: 'rgba(0,0,0,0.3)'
+#                      line_width: 1
+#                      show_line: false
+#                      show_legend: false
+#                      show_state: false
+#                      show_points: false
+#                      y_axis: secondary
+#                  name: Disk
+#                  align_state: center
+#                  align_icon: right  # {{ align_icon|default('right') }}
+#                  font_size: 60
+#                  font_size_header: 11  # {{ font_size_header|default('11') }}
+#                  hours_to_show: 24  # {{ hours_to_show|default('24') }}
+#                  line_color: 'rgba(0,202,139,1)'  # {{ line_color|default('var(--accent-color)') }}
+#                  line_width: 4  # {{ line_width|default('4') }}
+#                  animate: true
+#                  points_per_hour: 0.5  # {{ points_per_hour|default('0.5') }}
+#                  lower_bound_secondary: 0
+#                  show:
+#                    fill: fade
+#                    graph: line  # {{ graph|default('line') }}
+#                    extrema: false  # {{ extrema|default('false') }}
+#                    icon: true # {{ show_icon|default('true') }}
+#                    name: true # {{ show_name|default('true') }}
+#
+#          - type: entities
+#            style: |
+#              ha-card {
+#                font-family: var(--primary-font-family);
+#              }
+#              .card-content {
+#                padding-top: 0px;
+#                padding-bottom: 0px;
+#              }
+#            entities:
+#              - sensor.cpu_speed
+#              - sensor.cpu_temp
+#              - sensor.db_size
+#              - sensor.hass_io_uptime_pretty
+#              - sensor.nuc_uptime
 
-      - type: custom:layout-card
-        column_num: 3
-        column_width: [385, 385, 385]
-        layout: vertical
-        cards:
-          - type: entities
-            title: Home Assistant
-            class: add_header
-            show_header_toggle: false
-            entities:
-            - entity: sensor.ha_docker_version
-              type: custom:multiple-entity-row
-              style: |
-                div:nth-child(3) {
-                  color:
-                    {% if states('sensor.ha_docker_version') > states('sensor.ha_local_version') %}
-                      var(--google-green-500)
-                    {% elif states('sensor.ha_docker_version') < states('sensor.ha_local_version') %}
-                      var(--google-red-500)
-                    {% else %}
-                      var(--primary-text-color)
-                    {% endif %}
-                    ;
-                }
-              name: Home Assistant
-              state_header: Доступно
-              # toggle: true
-              entities:
-                # - entity: sensor.ha_local_version
-                #   name: Установлено
-                - entity: sensor.ha_local_version
-                  name: Установлено
-            - entity: sensor.time
-            - entity: sensor.date
-            # - entity: sensor.ha_local_version
-            - entity: sensor.home_assistant_v2_db
-            - entity: sensor.home_assistant_log
-            - entity: sensor.online_custom
-            - type: custom:bar-card
-              width: 55%
-              height: 2em
-              decimal: 0
-              unit_of_measurement: '%'
-              positions: *bar_card_positions
-                # indicator: 'off'
-                # icon: outside
-                # name: outside
-              severity: *bar_card_severity
-                # - color: '#303435'
-                #   from: 0
-                #   to: 89
-                # - color: '#6d2525'
-                #   from: 90
-                #   to: 100
-              entity_row: true
-              entities:
-                
-                - entity: sensor.processor_use
-                  tap_action:
-                    action: call-service
-                    service: homeassistant.update_entity
-                    service_data:
-                      entity_id: sensor.docker_cpu
-                - entity: sensor.dockermon_mem
-                  tap_action:
-                    action: call-service
-                    service: homeassistant.update_entity
-                    service_data:
-                      entity_id: sensor.dockermon_mem
-
-            - type: custom:hui-element
-              card_type: horizontal-stack
-              cards:
-
-                - type: entities
-                  class: information_network
-                  entities:
-                    - entity: sensor.speedtest_download
-                      style: ':host {--paper-item-icon-color: green;}'
-
-                - type: entities
-                  class: information_network
-                  entities:
-                    - entity: sensor.speedtest_upload
-                      style: ':host {--paper-item-icon-color: #385581;}'
-
-            - type: custom:mini-graph-card
-              entities:
-                - color: '#385581'
-                  entity: sensor.speedtest_upload
-                - color: green
-                  entity: sensor.speedtest_download
-              align_state: left
-              group: false
-              points_per_hour: 2
-              line_width: 3
-              hour24: true
-              hours_to_show: 24
-              show:
-                {fill: fade, icon: false, name: false, state: false, 
-                name_adaptive_color: true, labels: hover, legend: false}
-              tap_action:
-                action: none  
-
-      - type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            entities:
-              - sensor.0x00158d0004acb510_temperature
-            align_icon: state
-            show:
-              name: false
-            line_color: blue
-            line_width: 8
-            font_size: 70
-          - type: custom:mini-graph-card
-            entities:
-              - sensor.0x00158d0004acb510_humidity
-            align_icon: state
-            show:
-              name: false
-            line_color: '#e74c3c'
-            line_width: 8
-            font_size: 70
-          - type: custom:mini-graph-card
-            entities:
-              - sensor.0x00158d0004acb510_pressure
-            align_icon: state
-            show:
-              name: false
-            line_color: var(--accent-color)
-            line_width: 8
-            font_size: 70
-
-  - title: System
-    icon: mdi:desktop-classic
-    cards:
-
-      - type: vertical-stack
-        style: |
-          ha-card {
-            border: solid 1px var(--border-color);
-            font-family: var(--primary-font-family);
-            margin-top: 5px;
-            margin-bottom: 5px;
-          }
-        cards:
-
-          - type: conditional
-            conditions:
-              - entity: sensor.version_check
-                state: "False"
-            card:
-              type: vertical-stack
-              cards:
-
-                - type: markdown
-                  style: |
-                    ha-card {
-                      font-size: 20px;
-                      font-family: Quicksand;
-                      height: 30px;
-                      background: none;
-                      margin-top: 0em;
-                      margin-left: 8px;
-                      margin-bottom: -0.4em;
-                      box-shadow: none;
-                    }
-                    ha-markdown {
-                      padding: 0px 0px 0px 8px !important;
-                      border-left: 3px solid var(--accent-color);
-                    }
-                  content: HASSIO
-
-    
-                - type: entities
-                  entities:
-                    - sensor.current_version
-                    - sensor.latest_version
-
-          - type: custom:stack-in-card
-            cards: 
-            - type: horizontal-stack
-              cards:
-
-                - type: 'custom:mini-graph-card' # Зиагружка процессора
-                  style: |
-                    ha-card {
-                      font-family: var(--primary-font-family);
-                      border-bottom: 2px solid var(--background-color);
-                    }
-                    .graph {
-                      padding-top: 15px;
-                      padding-bottom: 0px;
-                    }
-                    .info {
-                      padding-bottom: 0px;
-                    }
-                    .flex {
-                      padding-bottom: 10px;
-                    }
-                  entities: 
-                    - sensor.processor_use
-                    - entity: sensor.solar_elevation
-                      color: 'rgba(0,0,0,0.3)'
-                      line_width: 1
-                      show_line: false
-                      show_legend: false
-                      show_state: false
-                      show_points: false
-                      y_axis: secondary
-                  name: CPU
-                  align_state: center
-                  align_icon: right  # {{ align_icon|default('right') }}
-                  font_size: 60
-                  font_size_header: 11  # {{ font_size_header|default('11') }}
-                  hours_to_show: 24  # {{ hours_to_show|default('24') }}
-                  line_color: 'rgba(247,53,67,1)'  # {{ line_color|default('var(--accent-color)') }}
-                  line_width: 4  # {{ line_width|default('4') }}
-                  animate: true
-                  points_per_hour: 0.5  # {{ points_per_hour|default('0.5') }}
-                  lower_bound_secondary: 0
-                  show:
-                    fill: fade
-                    graph: line  # {{ graph|default('line') }}
-                    extrema: false  # {{ extrema|default('false') }}
-                    icon: true # {{ show_icon|default('true') }}
-                    name: true # {{ show_name|default('true') }}
-
-                - type: 'custom:mini-graph-card' # Использование памяти
-                  style: |
-                    ha-card {
-                      font-family: var(--primary-font-family);
-                      border-bottom: 2px solid var(--background-color);
-                    }
-                    .graph {
-                      padding-top: 15px;
-                      padding-bottom: 0px;
-                    }
-                    .info {
-                      padding-bottom: 0px;
-                    }
-                    .flex {
-                      padding-bottom: 10px;
-                    }
-                  entities: 
-                    - sensor.memory_use_percent
-                    - entity: sensor.solar_elevation
-                      color: 'rgba(0,0,0,0.3)'
-                      line_width: 1
-                      show_line: false
-                      show_legend: false
-                      show_state: false
-                      show_points: false
-                      y_axis: secondary
-                  name: Memory
-                  align_state: center
-                  align_icon: right  # {{ align_icon|default('right') }}
-                  font_size: 60
-                  font_size_header: 11  # {{ font_size_header|default('11') }}
-                  hours_to_show: 24  # {{ hours_to_show|default('24') }}
-                  line_color: 'rgba(222,176,107,1)'  # {{ line_color|default('var(--accent-color)') }}
-                  line_width: 4  # {{ line_width|default('4') }}
-                  animate: true
-                  points_per_hour: 0.5  # {{ points_per_hour|default('0.5') }}
-                  lower_bound_secondary: 0
-                  show:
-                    fill: fade
-                    graph: line  # {{ graph|default('line') }}
-                    extrema: false  # {{ extrema|default('false') }}
-                    icon: true # {{ show_icon|default('true') }}
-                    name: true # {{ show_name|default('true') }}
-
-                - type: 'custom:mini-graph-card' # Использование диска
-                  style: |
-                    ha-card {
-                      font-family: var(--primary-font-family);
-                      border-bottom: 2px solid var(--background-color);
-                    }
-                    .graph {
-                      padding-top: 15px;
-                      padding-bottom: 0px;
-                    }
-                    .info {
-                      padding-bottom: 0px;
-                    }
-                    .flex {
-                      padding-bottom: 10px;
-                    }
-                  entities: 
-                    - sensor.disk_use_percent_home
-                    - entity: sensor.solar_elevation
-                      color: 'rgba(0,0,0,0.3)'
-                      line_width: 1
-                      show_line: false
-                      show_legend: false
-                      show_state: false
-                      show_points: false
-                      y_axis: secondary
-                  name: Disk
-                  align_state: center
-                  align_icon: right  # {{ align_icon|default('right') }}
-                  font_size: 60
-                  font_size_header: 11  # {{ font_size_header|default('11') }}
-                  hours_to_show: 24  # {{ hours_to_show|default('24') }}
-                  line_color: 'rgba(0,202,139,1)'  # {{ line_color|default('var(--accent-color)') }}
-                  line_width: 4  # {{ line_width|default('4') }}
-                  animate: true
-                  points_per_hour: 0.5  # {{ points_per_hour|default('0.5') }}
-                  lower_bound_secondary: 0
-                  show:
-                    fill: fade
-                    graph: line  # {{ graph|default('line') }}
-                    extrema: false  # {{ extrema|default('false') }}
-                    icon: true # {{ show_icon|default('true') }}
-                    name: true # {{ show_name|default('true') }}
-
-          - type: entities
-            style: |
-              ha-card {
-                font-family: var(--primary-font-family);
-              }
-              .card-content {
-                padding-top: 0px;
-                padding-bottom: 0px;
-              }
-            entities:
-              - sensor.cpu_speed
-              - sensor.cpu_temp
-              - sensor.db_size
-              - sensor.hass_io_uptime_pretty
-              - sensor.nuc_uptime
-
-  - title: Климат
-    icon: mdi:water-percent
-    cards:
-
-      - type: custom:mini-humidifier
-        entity: fan.humidifier2
-        # zhimi.humidifier.cb1 default value may be omitted, added for example.
-        model: 'zhimi.humidifier.cb1' 
+#  - title: Климат
+#    icon: mdi:water-percent
+#    cards:
+#
+#      - type: custom:mini-humidifier
+#        entity: fan.humidifier2
+#        # zhimi.humidifier.cb1 default value may be omitted, added for example.
+#        model: 'zhimi.humidifier.cb1' 
 

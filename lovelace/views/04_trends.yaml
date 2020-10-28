@@ -1,0 +1,47 @@
+title: Тренды
+# id: data
+icon: mdi:chart-gantt
+cards:
+  - type: sensor
+    name: 'Температура CPU'
+    entity: sensor.cpu_temp
+    graph: line
+    # detail: 2
+  - type: vertical-stack
+    cards:
+    - type: markdown
+      content: >
+         **Климат в зале**  
+    - type: sensor
+      name: 'Температура в зале'
+      entity: sensor.0x00158d0004acb510_temperature
+      graph: line  
+    - type: sensor
+      name: 'Влажность в зале'
+      entity: sensor.0x00158d0004acb510_humidity
+      graph: line  
+    - type: sensor
+      name: 'Давление в зале'
+      entity: sensor.0x00158d0004acb510_pressure_mmhg
+      graph: line
+    - type: sensor
+      name: 'Давление в зале'
+      entity: sensor.0x00158d0004acb510_pressure
+      graph: line
+  - type: vertical-stack
+    cards:
+    - type: markdown
+      content: >
+         **Состояние сети Интернет**  
+    - type: sensor
+      name: 'Ping'
+      entity: sensor.speedtest_ping
+      graph: line 
+    - type: sensor
+      name: 'Download'
+      entity: sensor.speedtest_download
+      graph: line 
+    - type: sensor
+      name: 'Upload'
+      entity: sensor.speedtest_upload
+      graph: line

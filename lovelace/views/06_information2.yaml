@@ -1,0 +1,138 @@
+title: Информация
+icon: mdi:information-outline
+
+cards:
+
+  - type: custom:layout-card
+    column_num: 3
+    column_width: [385, 385, 385]
+    layout: vertical
+    cards:
+      - type: entities
+        title: Home Assistant
+        class: add_header
+        show_header_toggle: false
+        entities:
+        - entity: sensor.ha_docker_version
+          type: custom:multiple-entity-row
+          style: |
+            div:nth-child(3) {
+              color:
+                {% if states('sensor.ha_docker_version') > states('sensor.ha_local_version') %}
+                  var(--google-green-500)
+                {% elif states('sensor.ha_docker_version') < states('sensor.ha_local_version') %}
+                  var(--google-red-500)
+                {% else %}
+                  var(--primary-text-color)
+                {% endif %}
+                ;
+            }
+          name: Home Assistant
+          state_header: Доступно
+          # toggle: true
+          entities:
+            # - entity: sensor.ha_local_version
+            #   name: Установлено
+            - entity: sensor.ha_local_version
+              name: Установлено
+        - entity: sensor.time
+        - entity: sensor.date
+        # - entity: sensor.ha_local_version
+        - entity: sensor.home_assistant_v2_db
+        - entity: sensor.home_assistant_log
+        - entity: sensor.online_custom
+        - type: custom:bar-card
+          width: 55%
+          height: 2em
+          decimal: 0
+          unit_of_measurement: '%'
+          positions: &bar_card_positions
+            indicator: 'off'
+            icon: outside
+            name: outside
+          severity: &bar_card_severity
+            - color: '#303435'
+              from: 0
+              to: 89
+            - color: '#6d2525'
+              from: 90
+              to: 100
+          entity_row: true
+          entities:
+            
+            - entity: sensor.processor_use
+              tap_action:
+                action: call-service
+                service: homeassistant.update_entity
+                service_data:
+                  entity_id: sensor.docker_cpu
+            - entity: sensor.dockermon_mem
+              tap_action:
+                action: call-service
+                service: homeassistant.update_entity
+                service_data:
+                  entity_id: sensor.dockermon_mem
+
+        - type: custom:hui-element
+          card_type: horizontal-stack
+          cards:
+
+            - type: entities
+              class: information_network
+              entities:
+                - entity: sensor.speedtest_download
+                  style: ':host {--paper-item-icon-color: green;}'
+
+            - type: entities
+              class: information_network
+              entities:
+                - entity: sensor.speedtest_upload
+                  style: ':host {--paper-item-icon-color: #385581;}'
+
+        - type: custom:mini-graph-card
+          entities:
+            - color: '#385581'
+              entity: sensor.speedtest_upload
+            - color: green
+              entity: sensor.speedtest_download
+          align_state: left
+          group: false
+          points_per_hour: 2
+          line_width: 3
+          hour24: true
+          hours_to_show: 24
+          show:
+            {fill: fade, icon: false, name: false, state: false, 
+            name_adaptive_color: true, labels: hover, legend: false}
+          tap_action:
+            action: none  
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.0x00158d0004acb510_temperature
+        align_icon: state
+        show:
+          name: false
+        line_color: blue
+        line_width: 8
+        font_size: 70
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.0x00158d0004acb510_humidity
+        align_icon: state
+        show:
+          name: false
+        line_color: '#e74c3c'
+        line_width: 8
+        font_size: 70
+      - type: custom:mini-graph-card
+        entities:
+          - sensor.0x00158d0004acb510_pressure
+        align_icon: state
+        show:
+          name: false
+        line_color: var(--accent-color)
+        line_width: 8
+        font_size: 70

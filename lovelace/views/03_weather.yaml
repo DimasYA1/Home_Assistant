@@ -1,0 +1,12 @@
+title: Погода  # вкладка ПОГОДА
+icon: mdi:weather-partly-snowy-rainy
+
+cards: 
+    - type: weather-forecast
+      entity: weather.home_assistant
+      
+    - type: weather-forecast
+      entity: weather.openweathermap
+    # - type: iframe
+    #   url: https://www.windy.com
+    #   aspect_ratio: 75%

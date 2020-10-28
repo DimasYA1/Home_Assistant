@@ -1,0 +1,153 @@
+title: Информация  # вкладка ИНФОРМАЦИЯ
+icon: mdi:information-outline
+cards:
+  # - type: custom:layout-card
+  #   column_num: 3
+  #   column_width: [385, 385, 385]
+  #   layout: horizontal
+  #   cards:
+      - type: vertical-stack
+        cards:
+          # Home Assistant
+          - type: entities
+            title: Home Assistant
+            class: add_header
+            show_header_toggle: false
+            # style: |
+            #   ha-card {
+            #     background: center / cover url(/local/icons/ha_reeder.png) no-repeat;
+            #     background-color: var(--ha-card-background);
+            #     background-size: 14em;
+            #   }
+            entities:
+              - entity: sensor.time
+              - entity: sensor.date
+              - entity: sensor.home_assistant_v2_db
+              - entity: sensor.online_custom
+              # - entity: sensor.lets_encrypt
+              # - entity: script.ha_backup
+              - entity: script.ha_restart
+      - type: vertical-stack
+        cards:
+          # Raspberry Pi
+          - type: entities
+            title: Raspberry Pi
+            entities:
+              - entity: sensor.cpu_temp
+              - type: custom:bar-card
+                width: 45%
+                height: 2em
+                decimal: 0
+                unit_of_measurement: '%'
+                positions: &bar_card_positions
+                  icon: outside
+                  indicator: 'off'
+                  name: inside
+                severity: &bar_card_severity
+                  - color: '#5e5e5e'
+                    from: 0
+                    to: 89
+                  - color: '#6d2525'
+                    from: 90
+                    to: 100
+                entity_row: true
+                entities:
+                  - entity: sensor.processor_use
+                    tap_action:
+                      action: call-service
+                      service: homeassistant.update_entity
+                      service_data:
+                        entity_id: sensor.processor_use
+                  - entity: sensor.memory_use_percent
+                    tap_action:
+                      action: call-service
+                      service: homeassistant.update_entity
+                      service_data:
+                        entity_id: sensor.memory_use_percent
+                  - entity: sensor.disk_use_percent_home
+                    tap_action:
+                      action: call-service
+                      service: homeassistant.update_entity
+                      service_data:
+                        entity_id: sensor.disk_use_percent_home
+              # - entity: sensor.processor_use
+              # - entity: sensor.memory_use_percent
+              # - entity: sensor.disk_use_percent_home
+              - entity: sensor.disk_free_home
+              - entity: sensor.last_boot_custom
+              - entity: script.pi_reboot
+              - entity: script.pi_shutdown
+              - type: custom:hui-element
+                card_type: horizontal-stack
+                style: &horizontal-style
+                cards:
+                - type: custom:button-card
+                  name: '<ha-icon icon="mdi:reload"></ha-icon> Startsidan'
+                  tap_action:
+                    services: |
+                      [[[ hass.callService('browser_mod', 'toast', {message: 'Laddar om startsidan...'});
+                      hass.callService('shell_command', 'fullykiosk_load_start_url'); ]]]
+                  # template: name_action
+                - type: custom:button-card
+                  name: '<ha-icon icon="mdi:reload"> </ha-icon> Hela appen'
+                  tap_action:
+                    services: |
+                      [[[ hass.callService('browser_mod', 'toast', {message: 'Startar om Fully Kiosk Browser...'});
+                      hass.callService('shell_command', 'fullykiosk_restart_app'); ]]]
+                  # template: name_action
+      - type: vertical-stack
+        cards:
+          # Docker
+          - type: entities
+            title: Docker
+            # style: |
+            #   ha-card {
+            #     background: center / cover url(/local/icons/docker_reeder.png) no-repeat;
+            #     background-color: var(--ha-card-background);
+            #     background-size: 16em;
+            #   }
+            entities:
+              # Home Assistant
+              - entity: script.ha_update
+                type: custom:multiple-entity-row
+                style: |
+                  div:nth-child(3) {
+                    color:
+                      {% if states('sensor.ha_docker_version') > states('sensor.ha_local_version') %}
+                        var(--google-green-500)
+                      {% elif states('sensor.ha_docker_version') < states('sensor.ha_local_version') %}
+                        var(--google-red-500)
+                      {% else %}
+                        var(--primary-text-color)
+                      {% endif %}
+                      ;
+                  }
+                name: Home Assistant
+                toggle: true
+                entities:
+                  - entity: sensor.ha_local_version
+                    name: Установлено
+                  - entity: sensor.ha_docker_version
+                    name: Доступно
+              # Portainer
+              - entity: script.portainer_update
+                type: custom:multiple-entity-row
+                style: |
+                  div:nth-child(3) {
+                    color:
+                      {% if states('sensor.portainer_docker_version') > states('sensor.portainer_local_version') %}
+                        var(--google-green-500)
+                      {% elif states('sensor.portainer_docker_version') < states('sensor.portainer_local_version') %}
+                        var(--google-red-500)
+                      {% else %}
+                        var(--primary-text-color)
+                      {% endif %}
+                      ;
+                  }
+                name: Portainer
+                toggle: true
+                entities:
+                  - entity: sensor.portainer_local_version
+                    name: Установлено
+                  - entity: sensor.portainer_docker_version
+                    name: Доступно
