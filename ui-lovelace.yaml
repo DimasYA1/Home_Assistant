@@ -186,10 +186,10 @@ views:
          - entity: binary_sensor.rpi_power_status
          - entity: sensor.cpu_get_throttled
            name: Троттлинг
-         - entity: sensor.ha_local_version
+         - entity: sensor.ha_version_current
            name: Установлен Home Assistant -
            icon: mdi:alpha-v-circle
-         - entity: sensor.ha_docker_version
+         - entity: sensor.ha_version_latest
            name: Последний Home Assistant -
            icon: mdi:alpha-v-circle-outline
 
@@ -304,24 +304,24 @@ views:
           entity: sensor.speedtest_upload
           graph: line
      
-  - title: СС 2531
-    icon: mdi:usb-flash-drive
-    
-    cards:
-    
-      - type: vertical-stack
-        cards:
-        - type: markdown
-          content: >
-             **Добавление устройств**     
-
-        - type: entities
-          title: Добавление Zigbee устройств
-          show_header_toggle: false
-          entities:
-             - entity: input_boolean.zigbee_permit_join
-             - entity: timer.zigbee_permit_join
-             - entity: sensor.bridge_state
+#  - title: СС 2531
+#    icon: mdi:usb-flash-drive
+#    
+#    cards:
+#    
+#      - type: vertical-stack
+#        cards:
+#        - type: markdown
+#          content: >
+#            **Добавление устройств**     
+#
+#        - type: entities
+#          title: Добавление Zigbee устройств
+#          show_header_toggle: false
+#          entities:
+#            - entity: input_boolean.zigbee_permit_join
+#            - entity: timer.zigbee_permit_join
+#            - entity: sensor.bridge_state
 
   - title: telegram
     icon: mdi:telegram

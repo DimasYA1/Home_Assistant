@@ -5,12 +5,12 @@
   #                                                  #
   ####################################################
 
-- platform: version
-  source: local
+# - platform: version
+#   source: local
 
-- platform: version
-  source: docker  
-  scan_interval: 1800  
+# - platform: version
+#   source: docker  
+#   scan_interval: 1800  
 
 # - platform: template
 #   sensors:
@@ -179,3 +179,56 @@
 - platform: command_line
   name: CPU get_throttled
   command: "cat /sys/devices/platform/soc/soc:firmware/get_throttled"
+  
+
+- platform: mqtt
+  name: "Напряжение"
+  state_topic: "tele/pzem/SENSOR"
+  value_template: "{{ value_json['ENERGY'].Voltage}}"
+  unit_of_measurement: "В"
+  
+  # - platform: mqtt
+  #   name: "Ток"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].Current}}"
+  #   unit_of_measurement: "А"
+  # - platform: mqtt
+  #   name: "Мощность"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].Power}}"
+  #   unit_of_measurement: "Вт"
+  # - platform: mqtt
+  #   name: "Полная мощность"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].ApparentPower}}"
+  #   unit_of_measurement: "В·А"
+  # - platform: mqtt
+  #   name: "Реактивная мощность"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].ReactivePower}}"
+  #   unit_of_measurement: "Вар"
+  # - platform: mqtt
+  #   name: "Коэффициент мощности"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].Factor}}"
+  #   unit_of_measurement: "λ"
+  # - platform: mqtt
+  #   name: "Частота"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].Frequency}}"
+  #   unit_of_measurement: "Гц"
+  # - platform: mqtt
+  #   name: "Потребление сегодня"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].Today}}"
+  #   unit_of_measurement: "кВт⋅ч"
+  # - platform: mqtt
+  #   name: "Потребление вчера"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].Yesterday}}"
+  #   unit_of_measurement: "кВт⋅ч"
+  # - platform: mqtt
+  #   name: "Потребление всего"
+  #   state_topic: "tele/pzem/SENSOR"
+  #   value_template: "{{ value_json['ENERGY'].Total}}"
+    # unit_of_measurement: "кВт⋅ч"

@@ -22,11 +22,11 @@
 ## Version Check ###############################################################
 
 - platform: version
-  name: version_current
+  name: ha_version_current
   source: local
 
 - platform: version
-  name: version_latest
+  name: ha_version_latest
   source: docker  
   scan_interval: 1800 
 
