@@ -184,6 +184,6 @@ cards:
         entities:
           - sensor.cpu_speed
           - sensor.cpu_temp
-          - sensor.db_size
+          - sensor.home_assistant_v2_db
           - sensor.hass_io_uptime_pretty
           - sensor.nuc_uptime
