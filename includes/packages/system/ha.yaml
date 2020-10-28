@@ -3,7 +3,7 @@ ha:
     # Команды
     shell_command:
       # Перезагрузка Home Assistant
-      ha_restart: ssh dimasya1@192.168.1.100 docker restart homeassistant
+      ha_restart: ssh -i /config/.ssh/id_rsa dimasya1@192.168.1.100 docker restart homeassistant
 
     # Скрипты
     script:
