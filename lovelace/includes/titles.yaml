@@ -15,4 +15,4 @@ style: |
     padding: 0px 0px 0px 8px !important;
     border-left: 3px solid var(--accent-color);
   }
-content: {{ title }}
+content: { title }

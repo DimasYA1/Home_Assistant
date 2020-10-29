@@ -34,7 +34,7 @@ cards:
             entities: 
               - entity: sensor.temperature_mean
                 name: Innen
-              - entity: sensor.dwd_weather_temperature
+              - entity: sensor.met_no_weather_temperature
                 name: Außen
                 color: 'rgba(73,85,108,0.5)'
               - entity: sensor.solar_elevation
@@ -86,7 +86,7 @@ cards:
             entities: 
               - entity: sensor.humidity_mean
                 name: Innen
-              - entity: sensor.dwd_weather_humidity
+              - entity: sensor.met_no_weather_humidity
                 name: Außen
                 color: 'rgba(73,85,108,0.5)'
               - entity: sensor.solar_elevation
