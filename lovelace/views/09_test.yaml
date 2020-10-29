@@ -1,0 +1,114 @@
+icon: mdi:home-assistant
+title: Dashboard
+id: Dash
+
+cards:
+
+  ## ROW 1 ###################################################################################################################
+  - type: vertical-stack
+    cards:
+
+      - !include /config/lovelace/includes/titles.yaml
+      - title: SENSOREN
+      ## TEMPERATUR / LICHT / LUFTFEUCHTIGKEIT ##
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:mini-graph-card'
+            style: |
+              ha-card {
+                border: solid 1px var(--border-color);
+                font-family: var(--primary-font-family);
+                margin-top: 5px;
+                margin-bottom: 5px;
+              }
+              .graph {
+                padding-top: 15px;
+                padding-bottom: 0px;
+              }
+              .info {
+                padding-bottom: 0px;
+              }
+              .flex {
+                padding-bottom: 10px;
+              }
+            entities: 
+              - entity: sensor.temperature_mean
+                name: Innen
+              - entity: sensor.dwd_weather_temperature
+                name: Außen
+                color: 'rgba(73,85,108,0.5)'
+              - entity: sensor.solar_elevation
+                color: 'rgba(0,0,0,0.3)'
+                line_width: 1
+                show_line: false
+                show_legend: false
+                show_state: false
+                show_points: false
+                y_axis: secondary
+            name: Temperatur
+            align_state: center
+            align_icon: right
+            font_size: 60
+            font_size_header: 11
+            hours_to_show: 48
+            line_color: var(--custom_graph_color_1)
+            line_width: 4
+            animate: true
+            points_per_hour: 0.5
+            lower_bound_secondary: 0
+            show:
+              fill: fade
+              graph: line
+              extrema: false
+          - !include /config/lovelace/includes/graphs_embeded.yaml
+          - entity: sensor.light_level_mean
+            name: Helligkeit
+            line_color: var(--custom_graph_color_2)
+            hours_to_show: 48
+          - type: 'custom:mini-graph-card'
+            style: |
+              ha-card {
+                border: solid 1px var(--border-color);
+                font-family: var(--primary-font-family);
+                margin-top: 5px;
+                margin-bottom: 5px;
+              }
+              .graph {
+                padding-top: 15px;
+                padding-bottom: 0px;
+              }
+              .info {
+                padding-bottom: 0px;
+              }
+              .flex {
+                padding-bottom: 10px;
+              }
+            entities: 
+              - entity: sensor.humidity_mean
+                name: Innen
+              - entity: sensor.dwd_weather_humidity
+                name: Außen
+                color: 'rgba(73,85,108,0.5)'
+              - entity: sensor.solar_elevation
+                color: 'rgba(0,0,0,0.3)'
+                line_width: 1
+                show_line: false
+                show_legend: false
+                show_state: false
+                show_points: false
+                y_axis: secondary
+            name: Luftfeuchtigkeit
+            align_state: center
+            align_icon: right
+            font_size: 60
+            font_size_header: 11
+            hours_to_show: 48
+            line_color: var(--custom_graph_color_3)
+            line_width: 4
+            animate: true
+            points_per_hour: 0.5
+            lower_bound_secondary: 0
+            show:
+              fill: fade
+              graph: line
+              extrema: false
