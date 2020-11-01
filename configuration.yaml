@@ -37,15 +37,19 @@ mqtt:
   username: !secret mqtt_username
   password: !secret mqtt_password
   
-lovelace: !include lovelace/lovelace.yaml
-
 # Вынос во внешние файлы
+lovelace: !include lovelace/lovelace.yaml
 timer: !include includes/timer.yaml
 input_boolean: !include includes/input_boolean.yaml
 group: !include includes/groups.yaml
 script: !include includes/scripts.yaml
 scene: !include includes/scenes.yaml
 recorder: !include includes/recorder.yaml
+
+# Подключение увлажнителя
+fan: !include includes/fan.yaml
+
+utility_meter: !include includes/utility_meter.yaml
 
 #Вынос во внешние папки
 sensor: !include_dir_merge_list includes/sensor
@@ -67,11 +71,3 @@ notify:
   - name: telegram_id_1
     platform: telegram
     chat_id: !secret telegram_id_1
-
-# Подключение увлажнителя
-fan:
-- platform: xiaomi_miio
-  host: !secret humidifier_ip
-  token: !secret xiaomi_token
-  name: Humidifier2
-  model: zhimi.humidifier.cb1
