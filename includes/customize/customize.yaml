@@ -60,6 +60,10 @@ sensor.home_assistant_v2_db:
 
 sensor.ha_uptime:
   friendly_name: Home Assistant в онлайне - 
+  icon: mdi:timer
+
+sensor.rpi_last_boot:
+  friendly_name: Последняя перезагрузка - 
   icon: mdi:timer-outline
 
 script.pi_reboot:

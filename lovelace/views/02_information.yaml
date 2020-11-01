@@ -74,7 +74,7 @@ cards:
               # - entity: sensor.memory_use_percent
               # - entity: sensor.disk_use_percent_home
               - entity: sensor.disk_free
-              - entity: sensor.last_boot_custom
+              - entity: sensor.rpi_last_boot
               - entity: script.pi_reboot
               - entity: script.pi_shutdown
               - type: custom:hui-element
