@@ -64,16 +64,16 @@ cards:
                       service: homeassistant.update_entity
                       service_data:
                         entity_id: sensor.memory_use_percent
-                  - entity: sensor.disk_use_percent_home
+                  - entity: sensor.disk_use_percent
                     tap_action:
                       action: call-service
                       service: homeassistant.update_entity
                       service_data:
-                        entity_id: sensor.disk_use_percent_home
+                        entity_id: sensor.disk_use_percent
               # - entity: sensor.processor_use
               # - entity: sensor.memory_use_percent
               # - entity: sensor.disk_use_percent_home
-              - entity: sensor.disk_free_home
+              - entity: sensor.disk_free
               - entity: sensor.last_boot_custom
               - entity: script.pi_reboot
               - entity: script.pi_shutdown

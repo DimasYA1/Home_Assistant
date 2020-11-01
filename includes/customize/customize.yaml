@@ -46,11 +46,11 @@ sensor.processor_use:
 sensor.memory_use_percent:
   friendly_name: Используемая память
 
-sensor.disk_use_percent_home:
+sensor.disk_use_percent:
   friendly_name: SSD
   icon: mdi:memory
 
-sensor.disk_free_home:
+sensor.disk_free:
   friendly_name: Свободно /home
   icon: mdi:harddisk
 
