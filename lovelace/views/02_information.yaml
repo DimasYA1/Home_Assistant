@@ -23,7 +23,7 @@ cards:
               - entity: sensor.time
               - entity: sensor.date
               - entity: sensor.home_assistant_v2_db
-              - entity: sensor.online_custom
+              - entity: sensor.ha_uptime
               # - entity: sensor.lets_encrypt
               # - entity: script.ha_backup
               - entity: script.ha_restart

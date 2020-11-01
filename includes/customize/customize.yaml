@@ -58,7 +58,7 @@ sensor.home_assistant_v2_db:
   friendly_name: База данных SQLite
   icon: mdi:database
 
-sensor.online_custom:
+sensor.ha_uptime:
   friendly_name: Home Assistant в онлайне - 
   icon: mdi:timer-outline
 

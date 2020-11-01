@@ -40,7 +40,7 @@ cards:
         # - entity: sensor.ha_local_version
         - entity: sensor.home_assistant_v2_db
         - entity: sensor.home_assistant_log
-        - entity: sensor.online_custom
+        - entity: sensor.ha_uptime
         - type: custom:bar-card
           width: 55%
           height: 2em
