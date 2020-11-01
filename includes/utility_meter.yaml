@@ -1,0 +1,18 @@
+drink_water_yearly: # Годовое потребление питьевой воды
+  source: sensor.drink_water_drink_filter
+  cycle: yearly
+  tariffs:
+    - single  
+
+drink_water_monthly: # Месячное потребление питьевой воды
+  source: sensor.drink_water_drink_filter
+  cycle: monthly
+  tariffs:
+    - single  
+
+drink_water_daily: # Дневное потребление питьевой воды
+  source: sensor.drink_water_drink_filter
+  cycle: daily
+  tariffs:
+    - single  
+  

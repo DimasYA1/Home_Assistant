@@ -66,3 +66,11 @@
 #        {% set minutes = (hours - hours | int) * 60 %}
 #        {{ [ phrase(weeks, 'week'), phrase(days, 'day'), phrase(hours, 'hr'), phrase(minutes, 'min') ] | select('!=','') | list | join(', ') }}
 #        {% endif %}
+
+- platform: template
+  sensors:
+    drink_water_yesterday: # Расход питьевой воды (вчера)
+      friendly_name: Расход питьевой воды (вчера)
+      icon_template: mdi:gauge
+      unit_of_measurement: 'л'
+      value_template: "{{ state_attr('sensor.drink_water_daily_single', 'last_period') | float }}"

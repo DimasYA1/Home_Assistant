@@ -69,3 +69,18 @@ script.pi_reboot:
 script.pi_shutdown:
   friendly_name: Выключение
   icon: mdi:power-off
+
+sensor.drink_water_yearly_single:
+  friendly_name: Расход питьевой воды (год)
+  unit_of_measurement: л         
+  icon: mdi:chart-histogram
+
+sensor.drink_water_monthly_single:
+  friendly_name: Расход питьевой воды (этот месяц)
+  unit_of_measurement: л         
+  icon: mdi:counter
+
+sensor.drink_water_daily_single:
+  friendly_name: Расход питьевой воды (сегодня)
+  unit_of_measurement: л         
+  icon: mdi:gauge            

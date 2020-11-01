@@ -1,0 +1,16 @@
+
+title: Счетчики воды
+id: counters
+icon: mdi:water-pump
+cards:
+- type: entities # Фильтры воды
+  title: Фильтры воды
+  show_header_toggle: false
+  entities:
+    - sensor.drink_water_daily_single
+    - type: divider
+    - sensor.drink_water_yesterday
+    - type: divider
+    - sensor.drink_water_monthly_single
+    - type: divider      
+    - sensor.drink_water_yearly_single

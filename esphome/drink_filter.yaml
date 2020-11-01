@@ -1,0 +1,72 @@
+#===============================================================================
+# Счетчик питьевой воды
+# NodeMCU ESP8266
+#===============================================================================
+substitutions:
+  device_name: drink_filter
+#===============================================================================  
+esphome:
+  name: ${device_name}
+  platform: ESP8266
+  board: nodemcuv2
+# Настройки Wi-Fi
+wifi:
+  networks:
+    - ssid: !secret wifi_ssid 
+      password: !secret wifi_pass
+#  manual_ip:
+#    static_ip: !secret drink_filter_ip
+#    gateway: !secret gateway_ip
+#    subnet: !secret subnet_mask
+#  reboot_timeout: 0s  
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Drink Filter Fallback Hotspot"
+    password: !secret wifi_ap_pass
+    
+captive_portal:
+
+# Отключаем лог
+logger:
+  baud_rate: 0
+api: # Enable Home Assistant API
+  password: !secret api_pwd
+  reboot_timeout: 0s      
+ota: 
+  password: !secret drink_filter_ota_pwd 
+web_server:
+  port: 80
+#===============================================================================
+time: # Время берем из Home Assistant
+  - platform: homeassistant
+    id: homeassistant_time
+#===============================================================================
+binary_sensor:
+  - platform: status
+    name: "state_${device_name}"
+#===============================================================================
+sensor:
+  - platform: wifi_signal # Уровень Wi-Fi сигнала положительным числом
+    name: "status_${device_name}"
+    update_interval: 60s 
+    filters:
+      - lambda: return x * (-1);
+#------------------------------------------------------------------------------    
+  - platform: uptime # Время работы после последней перезагрузки
+    name: "uptime_${device_name}"
+#------------------------------------------------------------------------------
+  - platform: pulse_counter # Сенсор "питьевой" воды
+    name: "drink_water_${device_name}"
+    id: id_drink_water
+    pin: D2
+    update_interval: 15s # Время обновления важно оставить таким 
+    unit_of_measurement: л
+    filters: # Коэффициент 0.25 из-за обновления 4 раза в мин, (было:2145-0,63л/мин, стало:580-2,5л/мин) - количество тиков счётчика на литр воды
+      - lambda: |-
+          static float total_drink_value = 0.0;
+          total_drink_value  = x * 0.25 / 580;
+          return total_drink_value;         
+#===============================================================================
+switch:
+  - platform: restart # Переключатель перезагрузки устройства
+    name: "restart_${device_name}"      
