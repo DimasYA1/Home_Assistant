@@ -12,3 +12,4 @@ home-assistant.log
 home-assistant_v2.db
 secrets.yaml
 /.vscode/settings.json
+known_devices.yaml
