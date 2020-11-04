@@ -71,3 +71,24 @@ notify:
   - name: telegram_id_1
     platform: telegram
     chat_id: !secret telegram_id_1
+
+asuswrt:
+  host: 192.168.1.1
+  username: !secret asuswrt_login
+  password: !secret asuswrt_pass 
+#  protocol: telnet
+  interface: eth2.2
+  dnsmasq: /tmp
+  sensors:
+  - devices
+  - upload
+  - download
+  - upload_speed
+  - download_speed
+  
+
+#device_tracker:
+#  - platform: asuswrt
+#    new_device_defaults:
+#      track_new_devices: False
+#      hide_if_away: True
