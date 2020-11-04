@@ -33,7 +33,7 @@ sensor.time:
   friendly_name: Текущее время
   icon: mdi:clock-outline
 
-sensor.cpu_temp:
+sensor.processor_temp:
   friendly_name: Температура CPU
   device_class: temperature
 
@@ -47,8 +47,8 @@ sensor.memory_use_percent:
   friendly_name: Используемая память
 
 sensor.disk_use_percent:
-  friendly_name: SSD
-  icon: mdi:memory
+  friendly_name: System SSD
+  icon: custom:imac-ssd
 
 sensor.disk_free:
   friendly_name: Свободно /home
@@ -62,7 +62,7 @@ sensor.ha_uptime:
   friendly_name: Home Assistant в онлайне - 
   icon: mdi:timer
 
-sensor.rpi_last_boot:
+sensor.rpi_uptime:
   friendly_name: Последняя перезагрузка - 
   icon: mdi:timer-outline
 

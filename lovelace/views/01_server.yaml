@@ -6,7 +6,7 @@ cards:
   - type: entities
     show_header_toggle: false
     entities:
-     - entity: sensor.rpi_last_boot
+     - entity: sensor.rpi_uptime
      - entity: sensor.ha_uptime
      - entity: sensor.time
       #  name: Текущее время
@@ -26,12 +26,12 @@ cards:
 
   - type: history-graph
     entities:
-     - entity: sensor.cpu_temp
+     - entity: sensor.processor_temp
        name: Температура CPU
 
   # - type: custom:mini-graph-card
   #   entities:
-  #    - entity: sensor.cpu_temp
+  #    - entity: sensor.processor_temp
   #      name: Температура CPU
        
   - type: history-graph

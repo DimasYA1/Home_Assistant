@@ -4,7 +4,7 @@ icon: mdi:chart-gantt
 cards:
   - type: sensor
     name: 'Температура CPU'
-    entity: sensor.cpu_temp
+    entity: sensor.processor_temp
     graph: line
     # detail: 2
   - type: vertical-stack

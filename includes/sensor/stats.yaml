@@ -69,7 +69,7 @@
 
 - platform: template
   sensors:
-    rpi_last_boot: # Время с последней перезагрузки Raspberry
+    rpi_uptime: # Время с последней перезагрузки Raspberry
       value_template: >
          {% set uptime = as_timestamp (now()) -as_timestamp(states.sensor.last_boot.state) | int %}
          {% set minutes = (( uptime % 3600) / 60) | int %}

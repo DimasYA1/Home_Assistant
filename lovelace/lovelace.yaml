@@ -53,3 +53,5 @@ resources:
     type: module
   # - url: /local/mini-humidifier-bundle.js?v=2.2.5
   #   type: module
+  - url: /local/custom_icons.js?v=25052001
+    type: module

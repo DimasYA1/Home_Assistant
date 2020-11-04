@@ -112,7 +112,7 @@ cards:
                   show_state: false
                   show_points: false
                   y_axis: secondary
-              name: Memory
+              name: Память
               align_state: center
               align_icon: right  # {{ align_icon|default('right') }}
               font_size: 60
@@ -155,7 +155,7 @@ cards:
                   show_state: false
                   show_points: false
                   y_axis: secondary
-              name: Disk
+              name: Диск
               align_state: center
               align_icon: right  # {{ align_icon|default('right') }}
               font_size: 60
@@ -183,7 +183,127 @@ cards:
           }
         entities:
           - sensor.cpu_speed
-          - sensor.cpu_temp
+          - sensor.processor_temp
           - sensor.home_assistant_v2_db
-          - sensor.hass_io_uptime_pretty
-          - sensor.nuc_uptime
+          - sensor.ha_uptime
+          - sensor.rpi_uptime
+
+  - type: vertical-stack
+    style: !include ../includes/style.yaml
+    cards:
+      - !include ../includes/titles.yaml
+      - title: NETZMONITOR
+
+      - type: custom:stack-in-card
+        cards: 
+          - type: horizontal-stack
+            cards:        
+              - type: custom:bar-card
+                style: |
+                  .card-content {
+                    padding: 3px;
+                    padding-top: 0px;
+                    padding-bottom: 0px;
+                  }
+                entity: sensor.speedtest_download
+                friendly_name: "Down"
+                icon_template: mdi:download
+                color: 'var(--accent-color)'
+                height: 30px
+                positions:
+                  icon: inside
+                  indicator: 'off'
+                  title: inside
+                  value: inside
+                target: 100
+                max: 110
+              - type: custom:bar-card
+                style: |
+                  .card-content {
+                    padding: 3px;
+                    padding-top: 0px;
+                    padding-bottom: 0px;
+                  }
+                  #states > * {
+                    margin-top: 1;
+                  }
+                entity: sensor.speedtest_upload
+                friendly_name: "Up"
+                icon_template: mdi:upload
+                color: 'var(--accent-color)'
+                height: 30px
+                positions:
+                  icon: inside
+                  indicator: 'off'
+                  title: inside
+                  value: inside
+                target: 40
+                max: 45
+          - type: horizontal-stack
+            cards:
+              - !include ../includes/graphs_embeded.yaml
+              - entity: sensor.asuswrt_download_speed
+                name: Download
+                align_icon: left
+                points_per_hour: 4
+                hours_to_show: 12
+                extrema: true
+              - !include ../includes/graphs_embeded.yaml
+              - entity: sensor.asuswrt_upload_speed
+                name: Upload
+                points_per_hour: 4
+                hours_to_show: 12
+                extrema: true
+          - type: entities
+            style: !include ../includes/style_entities_embeded.yaml
+            entities:
+              - sensor.asuswrt_download
+              - sensor.asuswrt_upload
+              #- binary_sensor.remote_ui
+              #- sensor.net_uptime_pretty
+      
+      - !include ../includes/titles.yaml
+      - title: ESP HOME
+
+      - type: custom:stack-in-card
+        cards:   
+          - type: horizontal-stack
+            cards:
+              - type: "custom:button-card"
+                template: esp
+                entity: binary_sensor.state_drink_filter
+                name: Doorbell
+                icon: mdi:chip
+                layout: icon_name
+                show_name: true
+                show_icon: true
+                show_state: false
+              - type: "custom:button-card"
+                template: esp
+                entity: sensor.status_drink_filter
+              - type: "custom:button-card"
+                template: esp
+                entity: sensor.uptime_drink_filter
+                styles:
+                  card:
+                    - width: 200px
+#          - type: horizontal-stack
+#            cards:
+#              - type: "custom:button-card"
+#                template: esp
+#                entity: binary_sensor.esp8266_bed_status
+#                name: Bed
+#                icon: mdi:chip
+#                layout: icon_name
+#                show_name: true
+#                show_icon: true
+#                show_state: false
+#              - type: "custom:button-card"
+#                template: esp
+#                entity: sensor.esp8266_bed_wifi_signal
+#              - type: "custom:button-card"
+#                template: esp
+#                entity: sensor.esp8266_bed_uptime_pretty
+#                styles:
+#                  card:
+#                    - width: 200px

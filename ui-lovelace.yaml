@@ -42,7 +42,7 @@ views: !include_dir_list lovelace/views/
 #                title: Raspberry Pi
 #
 #                entities:
-#                  - entity: sensor.cpu_temp
+#                  - entity: sensor.processor_temp
 #                  - type: custom:bar-card
 #                    width: 45%
 #                    height: 2em
@@ -193,12 +193,12 @@ views: !include_dir_list lovelace/views/
 #
 #      - type: history-graph
 #        entities:
-#         - entity: sensor.cpu_temp
+#         - entity: sensor.processor_temp
 #           name: Температура CPU
 #
 #      # - type: custom:mini-graph-card
 #      #   entities:
-#      #    - entity: sensor.cpu_temp
+#      #    - entity: sensor.processor_temp
 #      #      name: Температура CPU
 #           
 #      - type: history-graph
@@ -251,7 +251,7 @@ views: !include_dir_list lovelace/views/
 #
 #      - type: sensor
 #        name: 'Температура CPU'
-#        entity: sensor.cpu_temp
+#        entity: sensor.processor_temp
 #        graph: line
 #        # detail: 2
 #
@@ -654,7 +654,7 @@ views: !include_dir_list lovelace/views/
 #              }
 #            entities:
 #              - sensor.cpu_speed
-#              - sensor.cpu_temp
+#              - sensor.processor_temp
 #              - sensor.db_size
 #              - sensor.hass_io_uptime_pretty
 #              - sensor.nuc_uptime

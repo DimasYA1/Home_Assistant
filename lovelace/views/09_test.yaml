@@ -32,10 +32,10 @@ cards:
                 padding-bottom: 10px;
               }
             entities: 
-              - entity: sensor.temperature_mean
-                name: Innen
+              - entity: sensor.0x00158d0004acb510_temperature
+                name: Внутри
               - entity: sensor.met_no_weather_temperature
-                name: Außen
+                name: Снаружи
                 color: 'rgba(73,85,108,0.5)'
               - entity: sensor.solar_elevation
                 color: 'rgba(0,0,0,0.3)'
@@ -45,7 +45,7 @@ cards:
                 show_state: false
                 show_points: false
                 y_axis: secondary
-            name: Temperatur
+            name: Температура
             align_state: center
             align_icon: right
             font_size: 60
@@ -61,10 +61,10 @@ cards:
               graph: line
               extrema: false
           - !include /config/lovelace/includes/graphs_embeded.yaml
-          - entity: sensor.light_level_mean
-            name: Helligkeit
-            line_color: var(--custom_graph_color_2)
-            hours_to_show: 48
+#          - entity: sensor.light_level_mean
+#            name: Helligkeit
+#            line_color: var(--custom_graph_color_2)
+#            hours_to_show: 48
           - type: 'custom:mini-graph-card'
             style: |
               ha-card {
@@ -84,10 +84,10 @@ cards:
                 padding-bottom: 10px;
               }
             entities: 
-              - entity: sensor.humidity_mean
-                name: Innen
+              - entity: sensor.0x00158d0004acb510_humidity
+                name: Внутри
               - entity: sensor.met_no_weather_humidity
-                name: Außen
+                name: Снаружи
                 color: 'rgba(73,85,108,0.5)'
               - entity: sensor.solar_elevation
                 color: 'rgba(0,0,0,0.3)'
@@ -97,7 +97,7 @@ cards:
                 show_state: false
                 show_points: false
                 y_axis: secondary
-            name: Luftfeuchtigkeit
+            name: Влажность
             align_state: center
             align_icon: right
             font_size: 60
