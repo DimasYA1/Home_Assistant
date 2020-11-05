@@ -17,7 +17,7 @@
 
 # Home Assistant Online
 - platform: uptime
-#  unit_of_measurement: minutes
+  unit_of_measurement: minutes
 
 ## Version Check ###############################################################
 
@@ -99,7 +99,7 @@
   sensors:
      ha_uptime: # аптайм Home Assistant
       value_template: >
-        {% set uptime = states('sensor.online') | int %}
+        {% set uptime = states('sensor.uptime') | int %}
         {% set minutes = (( uptime % 60) / 1) | int %}
         {% set hours = ((uptime % 1440) / 60) | int %}
         {% set days = (uptime / 1440) | int %}
