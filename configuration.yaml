@@ -66,8 +66,15 @@ lovelace: # !include lovelace/lovelace.yaml
       type: module
     - url: /local/stack-in-card.js
       type: module
-    - url: /local/custom_icons.js?v=25052001
+    - url: /local/custom_icons.js
       type: module
+
+    - url: 'https://fonts.googleapis.com/css?family=Raleway'
+      type: css
+    - url: 'https://fonts.googleapis.com/css?family=Oswald'
+      type: css
+    - url: 'https://fonts.googleapis.com/css?family=Quicksand'
+      type: css
 
 
 # Вынос во внешние файлы
@@ -117,7 +124,10 @@ asuswrt:
   - download
   - upload_speed
   - download_speed
-  
+
+weather:
+  - platform: gismeteo
+    mode: daily 
 
 #device_tracker:
 #  - platform: asuswrt
