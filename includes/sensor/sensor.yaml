@@ -4,24 +4,13 @@
   #                                                  #
   ####################################################
 
-- platform: command_line
-  name: processor_temp
-  command: "cat /sys/class/thermal/thermal_zone0/temp"
-  unit_of_measurement: "°C"
-  value_template: '{{ (value | multiply(0.001)) | round(1) }}'
-
-- platform: command_line
-  name: CPU get_throttled
-  command: "cat /sys/devices/platform/soc/soc:firmware/get_throttled"
-  
-
 - platform: mqtt
   name: "Напряжение"
   state_topic: "tele/pzem/SENSOR"
   value_template: "{{ value_json['ENERGY'].Voltage}}"
   unit_of_measurement: "В"
   
-  # - platform: mqtt
+  # - platform: mqtt 
   #   name: "Ток"
   #   state_topic: "tele/pzem/SENSOR"
   #   value_template: "{{ value_json['ENERGY'].Current}}"

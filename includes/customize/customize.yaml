@@ -37,6 +37,9 @@ sensor.processor_temp:
   friendly_name: Температура CPU
   device_class: temperature
 
+sensor.processor_freq:
+  friendly_name: Частота CPU
+  icon: mdi:pulse
 # sensor.command_sensor:
 #   friendly_name: Температура
 
@@ -55,15 +58,15 @@ sensor.disk_free:
   icon: mdi:harddisk
 
 sensor.home_assistant_v2_db:
-  friendly_name: База данных SQLite
+  friendly_name: База данных
   icon: mdi:database
 
 sensor.ha_uptime:
-  friendly_name: Home Assistant в онлайне - 
+  friendly_name: HA Uptime 
   icon: mdi:timer
 
 sensor.rpi_uptime:
-  friendly_name: Последняя перезагрузка - 
+  friendly_name: RPI Uptime 
   icon: mdi:timer-outline
 
 script.pi_reboot:

@@ -8,7 +8,7 @@
     arg: /
   - type: last_boot
 
-- platform: cpuspeed
+#- platform: cpuspeed
 
 - platform: filesize
   file_paths:
@@ -130,3 +130,19 @@
       icon_template: mdi:gauge
       unit_of_measurement: 'л'
       value_template: "{{ state_attr('sensor.drink_water_daily_single', 'last_period') | float }}"
+
+- platform: command_line
+  name: processor_temp
+  command: "cat /sys/class/thermal/thermal_zone0/temp"
+  unit_of_measurement: "°C"
+  value_template: '{{ (value | multiply(0.001)) | round(1) }}'
+
+- platform: command_line
+  name: CPU get_throttled
+  command: "cat /sys/devices/platform/soc/soc:firmware/get_throttled"
+
+- platform: command_line
+  name: processor_freq
+  command: "cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq"
+  unit_of_measurement: "МГц"
+  value_template: '{{ (value | multiply(0.001)) | round(1) }}'
