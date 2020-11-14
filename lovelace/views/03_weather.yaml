@@ -10,3 +10,5 @@ cards:
     # - type: iframe
     #   url: https://www.windy.com
     #   aspect_ratio: 75%
+    - type: weather-forecast
+      entity: weather.gismeteo
