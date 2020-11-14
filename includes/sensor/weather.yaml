@@ -10,3 +10,18 @@
       friendly_name: "Luftfeuchtigkeit"
       icon_template: mdi:water-percent
       unit_of_measurement: '%'
+
+- platform: gismeteo
+  forecast: true
+  monitored_conditions:
+    - weather
+    - temperature
+    - wind_speed
+    - wind_bearing
+    - humidity
+    - clouds
+    - pressure
+    - rain
+    - snow
+    - storm
+    - geomagnetic
