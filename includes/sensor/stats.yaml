@@ -131,6 +131,38 @@
       unit_of_measurement: 'л'
       value_template: "{{ state_attr('sensor.drink_water_daily_single', 'last_period') | float }}"
 
+- platform: template
+  sensors:
+    miwifi3_mb_received: 
+      friendly_name: Xiaomi Mi R3 Wireless Router MB received
+      icon_template: mdi:download-network
+      unit_of_measurement: 'MB' 
+      value_template: "{{ (states('sensor.xiaomi_mi_mini_wireless_router_b_received') | float / 1048576) | round(2) }}" 
+
+- platform: template
+  sensors:
+    miwifi3_mb_sent: 
+      friendly_name: "Xiaomi Mi R3 Wireless Router MB sent" 
+      icon_template: mdi:upload-network
+      unit_of_measurement: 'MB' 
+      value_template: "{{ (states('sensor.xiaomi_mi_mini_wireless_router_b_sent') | float / 1048576) | round(2) }}" 
+
+- platform: template
+  sensors:
+    miwifi3_mb_received_speed: 
+      friendly_name: "Xiaomi Mi R3 Wireless Router Mbit/s received"
+      icon_template: mdi:download-network 
+      unit_of_measurement: 'Mbit/s' 
+      value_template: "{{ (states('sensor.xiaomi_mi_mini_wireless_router_kib_s_received') | float / 122) | round(2) }}"
+
+- platform: template
+  sensors:
+    miwifi3_mb_sent_speed: 
+      friendly_name: "Xiaomi Mi R3 Wireless Router Mbit/s sent" 
+      icon_template: mdi:upload-network
+      unit_of_measurement: 'Mbit/s' 
+      value_template: "{{ (states('sensor.xiaomi_mi_mini_wireless_router_kib_s_sent') | float / 122) | round(2) }}"
+
 - platform: command_line
   name: processor_temp
   command: "cat /sys/class/thermal/thermal_zone0/temp"

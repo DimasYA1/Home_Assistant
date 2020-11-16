@@ -198,6 +198,7 @@ cards:
                   }
                 entities: 
                   - entity: sensor.asuswrt_download_speed
+                  #- entity: sensor.miwifi3_mb_received_speed
                   - entity: sensor.solar_elevation
                     color: 'rgba(0,0,0,0.3)'
                     line_width: 1
@@ -243,6 +244,101 @@ cards:
                   }
                 entities: 
                   - entity: sensor.asuswrt_upload_speed
+                  #- entity: sensor.miwifi3_mb_sent_speed
+                  - entity: sensor.solar_elevation
+                    color: 'rgba(0,0,0,0.3)'
+                    line_width: 1
+                    show_line: false
+                    show_legend: false
+                    show_state: false
+                    show_points: false
+                    y_axis: secondary
+                name: Upload
+                align_state: center
+                # align_icon: {{ align_icon, default('right') }}
+                font_size: 60
+                # font_size_header: {{ font_size_header|default('11') }}
+                hours_to_show: 12 # { hours_to_show|default('24') }
+                line_color: '#1A89F5' # { line_color|default('var(--accent-color)') }
+                # line_width: {{ line_width|default('4') }}
+                animate: true
+                points_per_hour: 4 # { points_per_hour|default('0.5') }
+                lower_bound_secondary: 0
+                show:
+                  fill: false
+                  graph: { graph|default('line') }
+                  extrema: { extrema|default('false') }
+                  icon: { show_icon|default('true') }
+                  name: { show_name|default('true') }
+                extrema: true
+
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:mini-graph-card'
+                style: |
+                  ha-card {
+                    font-family: var(--primary-font-family);
+                    border-bottom: 2px solid var(--background-color);
+                  }
+                  .graph {
+                    padding-top: 15px;
+                    padding-bottom: 0px;
+                  }
+                  .info {
+                    padding-bottom: 0px;
+                  }
+                  .flex {
+                    padding-bottom: 10px;
+                  }
+                entities: 
+                  #- entity: sensor.asuswrt_download_speed
+                  - entity: sensor.miwifi3_mb_received_speed
+                  - entity: sensor.solar_elevation
+                    color: 'rgba(0,0,0,0.3)'
+                    line_width: 1
+                    show_line: false
+                    show_legend: false
+                    show_state: false
+                    show_points: false
+                    y_axis: secondary
+                name: Download
+                align_state: center
+                # align_icon: {{ align_icon, default('right') }}
+                font_size: 60
+                # font_size_header: {{ font_size_header|default('11') }}
+                hours_to_show: 12 # { hours_to_show|default('24') }
+                line_color: '#1A89F5' #{ line_color|default('var(--accent-color)') }
+                # line_width: {{ line_width|default('4') }}
+                animate: true
+                points_per_hour: 4 # { points_per_hour|default('0.5') }
+                lower_bound_secondary: 0
+                show:
+                  fill: false
+                  graph: { graph|default('line') }
+                  extrema: { extrema|default('false') }
+                  icon: { show_icon|default('true') }
+                  name: { show_name|default('true') } # !include ../includes/graphs_embeded.yaml
+                align_icon: left
+                extrema: true
+              - type: 'custom:mini-graph-card'
+                style: |
+                  ha-card {
+                    font-family: var(--primary-font-family);
+                    border-bottom: 2px solid var(--background-color);
+                  }
+                  .graph {
+                    padding-top: 15px;
+                    padding-bottom: 0px;
+                  }
+                  .info {
+                    padding-bottom: 0px;
+                  }
+                  .flex {
+                    padding-bottom: 10px;
+                  }
+                entities: 
+                  #- entity: sensor.asuswrt_upload_speed
+                  - entity: sensor.miwifi3_mb_sent_speed
                   - entity: sensor.solar_elevation
                     color: 'rgba(0,0,0,0.3)'
                     line_width: 1
@@ -281,4 +377,6 @@ cards:
               }
             entities:
               - sensor.asuswrt_download
-              - sensor.asuswrt_upload      
+              - sensor.miwifi3_mb_received
+              - sensor.asuswrt_upload
+              - sensor.miwifi3_mb_sent      
