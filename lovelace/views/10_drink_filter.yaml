@@ -14,3 +14,19 @@ cards:
     - sensor.drink_water_monthly_single
     - type: divider      
     - sensor.drink_water_yearly_single
+
+- type: 'custom:bar-card'
+  entities:
+    - entity: sensor.drink_water_filter_usage
+      name: Filter 1
+      icon: 'mdi:filter'
+      decimal: 1
+
+- type: entities
+  show_header_toggle: false
+  entities:
+    - entity: input_text.drink_water_filter_name
+    - entity: input_datetime.drink_water_filter_install_date
+    - entity: input_number.drink_water_filter_capacity
+    - entity: input_number.drink_water_filter_install_counter_value
+    - type: divider
