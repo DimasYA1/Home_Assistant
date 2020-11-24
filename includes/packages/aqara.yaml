@@ -15,17 +15,17 @@ aqara:
       climate_report:
         alias: Отчет о погоде
         sequence:
-         - service: notify.telegram_id_1
-           data:
-             message: | 
-                 {{"\U0001F3E0"}} Климат отчет за {{ states('sensor.time_date') }}
-                 {{"\U0001F321"}} Температура - {{ states('sensor.0x00158d0004acb510_temperature') }} C
-                 {{"\U0001F32B"}} Влажность - {{ states('sensor.0x00158d0004acb510_humidity') }} %
-                 {{"\U0001F4AA"}} Давление - {{ states('sensor.0x00158d0004acb510_pressure_mmhg') }} мм рт. ст
-                 {{"\U00002600"}} Погода - {{ states('sensor.openweathermap_weather') }}
-                 {{"\U00002B50"}} Прогноз на сегодня - {{ states('sensor.openweathermap_forecast_temperature') }} C
-                 {{"\U0001F327"}} Прогноз дождя - {{ states('sensor.openweathermap_rain') }}
-                 {{"\U0001F328"}} Прогноз снега - {{ states('sensor.openweathermap_snow') }}
+          - service: notify.telegram_id_1
+            data:
+              message: | 
+                  {{"\U0001F3E0"}} Климат отчет за {{ states('sensor.time_date') }}
+                  {{"\U0001F321"}} Температура - {{ states('sensor.0x00158d0004acb510_temperature') }} C
+                  {{"\U0001F32B"}} Влажность - {{ states('sensor.0x00158d0004acb510_humidity') }} %
+                  {{"\U0001F4AA"}} Давление - {{ states('sensor.0x00158d0004acb510_pressure_mmhg') }} мм рт. ст
+                  {{"\U00002600"}} Погода - {{ states('sensor.openweathermap_weather') }}
+                  {{"\U00002B50"}} Прогноз на сегодня - {{ states('sensor.openweathermap_forecast_temperature') }} C
+                  {{"\U0001F327"}} Прогноз дождя - {{ states('sensor.openweathermap_rain') }}
+                  {{"\U0001F328"}} Прогноз снега - {{ states('sensor.openweathermap_snow') }}
 
     automation:   
     
@@ -41,6 +41,6 @@ aqara:
           # - platform: time
           #   at: '07:30:00'              
           action:
-           - service: script.turn_on
-             entity_id: 
+            - service: script.turn_on
+              entity_id: 
                 - script.climate_report  

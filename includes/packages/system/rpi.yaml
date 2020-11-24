@@ -7,7 +7,7 @@ rpi:
       # Выключение Raspberry Pi
       pi_shutdown: ssh -p your_port root@192.168.1.x "sudo shutdown now"
 
-     # Скрипты
+    # Скрипты
     script:
       # Перезагрузка Raspberry Pi в Lovelace
       pi_reboot:

@@ -53,10 +53,10 @@ docker:
 
 
       # Portainer Local Version
-      -  platform: command_line
-         name: portainer_local_version
-         command: ssh -o StrictHostKeyChecking=no -i /config/.ssh/id_rsa dimasya1@192.168.1.100 "docker logs portainer 2>&1 | grep -m1 -o 'Starting Portainer[[:space:][0-9]\+.[0-9]\+.[0-9]\+' | grep -o '[0-9]\+.[0-9]\+.[0-9]\+'"
-         scan_interval: 3600
+      - platform: command_line
+        name: portainer_local_version
+        command: ssh -o StrictHostKeyChecking=no -i /config/.ssh/id_rsa dimasya1@192.168.1.100 "docker logs portainer 2>&1 | grep -m1 -o 'Starting Portainer[[:space:][0-9]\+.[0-9]\+.[0-9]\+' | grep -o '[0-9]\+.[0-9]\+.[0-9]\+'"
+        scan_interval: 3600
 
 
       # # Traefik Docker Version

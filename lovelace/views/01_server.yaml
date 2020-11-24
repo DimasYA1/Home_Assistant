@@ -6,58 +6,58 @@ cards:
   - type: entities
     show_header_toggle: false
     entities:
-     - entity: sensor.rpi_uptime
-     - entity: sensor.ha_uptime
-     - entity: sensor.time
+      - entity: sensor.rpi_uptime
+      - entity: sensor.ha_uptime
+      - entity: sensor.time
       #  name: Текущее время
       #  icon: mdi:clock-outline
-     - entity: sensor.date
+      - entity: sensor.date
       #  name: Дата
       #  icon: mdi:calendar-check-outline
-     - entity: binary_sensor.rpi_power_status
-     - entity: sensor.cpu_get_throttled
-       name: Троттлинг
-     - entity: sensor.ha_version_current
-       name: Установлен Home Assistant -
-       icon: mdi:alpha-v-circle
-     - entity: sensor.ha_version_latest
-       name: Последний Home Assistant -
-       icon: mdi:alpha-v-circle-outline
+      - entity: binary_sensor.rpi_power_status
+      - entity: sensor.cpu_get_throttled
+        name: Троттлинг
+      - entity: sensor.ha_version_current
+        name: Установлен Home Assistant -
+        icon: mdi:alpha-v-circle
+      - entity: sensor.ha_version_latest
+        name: Последний Home Assistant -
+        icon: mdi:alpha-v-circle-outline
 
   - type: history-graph
     entities:
-     - entity: sensor.processor_temp
-       name: Температура CPU
+      - entity: sensor.processor_temp
+        name: Температура CPU
 
   # - type: custom:mini-graph-card
   #   entities:
   #    - entity: sensor.processor_temp
   #      name: Температура CPU
-       
-  - type: history-graph
-    entities:
-     - entity: sensor.processor_use
-       name: Загрузка CPU
-       
-  - type: history-graph
-    entities:
-     - entity: sensor.memory_use_percent
-       name: Загрузка ОЗУ
-       
-  - type: history-graph
-    entities:
-     - entity: sensor.disk_use_percent
-       name: Диск заполнен
-       
-  - type: history-graph
-    entities:
-     - entity: sensor.disk_free
-       name: Свободное место  
 
   - type: history-graph
     entities:
-     - entity: sensor.home_assistant_v2_db
-       name: Свободное место  
+      - entity: sensor.processor_use
+        name: Загрузка CPU
+        
+  - type: history-graph
+    entities:
+      - entity: sensor.memory_use_percent
+        name: Загрузка ОЗУ
+        
+  - type: history-graph
+    entities:
+      - entity: sensor.disk_use_percent
+        name: Диск заполнен
+        
+  - type: history-graph
+    entities:
+      - entity: sensor.disk_free
+        name: Свободное место  
+
+  - type: history-graph
+    entities:
+      - entity: sensor.home_assistant_v2_db
+        name: Свободное место  
 
   # - url: /hacsfiles/lovelace-rpi-monitor-card/rpi-monitor-card.js
   #   type: module
