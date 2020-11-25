@@ -162,9 +162,7 @@ cards:
                     padding-right: 5px;
                     padding-left: 0px;
                   }
-#                  #states > * {
-#                    margin-top: 1;
-#                  }
+
                 entity: sensor.speedtest_upload
                 friendly_name: "Up"
                 #icon_template: mdi:upload
@@ -180,7 +178,7 @@ cards:
 
           - type: horizontal-stack
             cards:
-              - type: 'custom:mini-graph-card'
+              - type: custom:mini-graph-card
                 style: |
                   ha-card {
                     font-family: var(--primary-font-family);
@@ -226,7 +224,7 @@ cards:
                   name: { show_name|default('true') } # !include ../includes/graphs_embeded.yaml
                 align_icon: left
                 extrema: true
-              - type: 'custom:mini-graph-card'
+              - type: custom:mini-graph-card
                 style: |
                   ha-card {
                     font-family: var(--primary-font-family);
@@ -274,7 +272,7 @@ cards:
 
           - type: horizontal-stack
             cards:
-              - type: 'custom:mini-graph-card'
+              - type: custom:mini-graph-card
                 style: |
                   ha-card {
                     font-family: var(--primary-font-family);
@@ -320,7 +318,7 @@ cards:
                   name: { show_name|default('true') } # !include ../includes/graphs_embeded.yaml
                 align_icon: left
                 extrema: true
-              - type: 'custom:mini-graph-card'
+              - type: custom:mini-graph-card
                 style: |
                   ha-card {
                     font-family: var(--primary-font-family);
@@ -379,4 +377,5 @@ cards:
               - sensor.asuswrt_download
               - sensor.miwifi3_mb_received
               - sensor.asuswrt_upload
-              - sensor.miwifi3_mb_sent      
+              - sensor.miwifi3_mb_sent    
+
