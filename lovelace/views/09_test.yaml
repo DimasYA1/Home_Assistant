@@ -179,32 +179,32 @@ cards:
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
-                style: |
-                  ha-card {
-                    font-family: var(--primary-font-family);
-                    border-bottom: 2px solid var(--background-color);
-                  }
-                  .graph {
-                    padding-top: 15px;
-                    padding-bottom: 0px;
-                  }
-                  .info {
-                    padding-bottom: 0px;
-                  }
-                  .flex {
-                    padding-bottom: 10px;
-                  }
+                #style: |
+                #  ha-card {
+                #    font-family: var(--primary-font-family);
+                #    border-bottom: 2px solid var(--background-color);
+                #  }
+                #  .graph {
+                #    padding-top: 15px;
+                #    padding-bottom: 0px;
+                #  }
+                #  .info {
+                #    padding-bottom: 0px;
+                #  }
+                #  .flex {
+                #    padding-bottom: 10px;
+                #  }
                 entities: 
                   - entity: sensor.asuswrt_download_speed
                   #- entity: sensor.miwifi3_mb_received_speed
-                  - entity: sensor.solar_elevation
-                    color: 'rgba(0,0,0,0.3)'
-                    line_width: 1
-                    show_line: false
-                    show_legend: false
-                    show_state: false
-                    show_points: false
-                    y_axis: secondary
+                  #- entity: sensor.solar_elevation
+                  #  color: 'rgba(0,0,0,0.3)'
+                  #  line_width: 1
+                  #  show_line: false
+                  #  show_legend: false
+                  #  show_state: false
+                  #  show_points: false
+                  #  y_axis: secondary
                 name: Download
                 align_state: center
                 # align_icon: {{ align_icon, default('right') }}
@@ -215,42 +215,42 @@ cards:
                 # line_width: {{ line_width|default('4') }}
                 animate: true
                 points_per_hour: 4 # { points_per_hour|default('0.5') }
-                lower_bound_secondary: 0
+                #lower_bound_secondary: 0
                 show:
                   fill: false
-                  graph: { graph|default('line') }
-                  extrema: { extrema|default('false') }
-                  icon: { show_icon|default('true') }
-                  name: { show_name|default('true') } # !include ../includes/graphs_embeded.yaml
+                  graph: line
+                  extrema: true
+                  icon: true
+                  name: true
                 align_icon: left
-                extrema: true
+                
               - type: custom:mini-graph-card
-                style: |
-                  ha-card {
-                    font-family: var(--primary-font-family);
-                    border-bottom: 2px solid var(--background-color);
-                  }
-                  .graph {
-                    padding-top: 15px;
-                    padding-bottom: 0px;
-                  }
-                  .info {
-                    padding-bottom: 0px;
-                  }
-                  .flex {
-                    padding-bottom: 10px;
-                  }
+                #style: |
+                #  ha-card {
+                #    font-family: var(--primary-font-family);
+                #    border-bottom: 2px solid var(--background-color);
+                #  }
+                #  .graph {
+                #    padding-top: 15px;
+                #    padding-bottom: 0px;
+                #  }
+                #  .info {
+                #    padding-bottom: 0px;
+                #  }
+                #  .flex {
+                #    padding-bottom: 10px;
+                #  }
                 entities: 
                   - entity: sensor.asuswrt_upload_speed
                   #- entity: sensor.miwifi3_mb_sent_speed
-                  - entity: sensor.solar_elevation
-                    color: 'rgba(0,0,0,0.3)'
-                    line_width: 1
-                    show_line: false
-                    show_legend: false
-                    show_state: false
-                    show_points: false
-                    y_axis: secondary
+                  #- entity: sensor.solar_elevation
+                  #  color: 'rgba(0,0,0,0.3)'
+                  #  line_width: 1
+                  #  show_line: false
+                  #  show_legend: false
+                  #  show_state: false
+                  #  show_points: false
+                  #  y_axis: secondary
                 name: Upload
                 align_state: center
                 # align_icon: {{ align_icon, default('right') }}

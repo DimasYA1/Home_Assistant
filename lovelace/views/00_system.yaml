@@ -42,12 +42,14 @@ cards:
                 - sensor.ha_version_latest
 
       - type: entities
+        #title: Общее
         show_header_toggle: false
         entities:
           - entity: sensor.time
           - entity: sensor.date
 
       - type: custom:stack-in-card
+        title: Система
         cards: 
         - type: horizontal-stack
           cards:
@@ -200,247 +202,234 @@ cards:
                 - sensor.ha_uptime
                 - sensor.rpi_uptime
 
-      - type: horizontal-stack
-        cards:
-          - type: 'custom:mini-graph-card'
-            #style: |
-            #  ha-card {
-            #    border: solid 1px var(--border-color);
-            #    font-family: var(--primary-font-family);
-            #    margin-top: 5px;
-            #    margin-bottom: 5px;
-            #  }
-            #  .graph {
-            #    padding-top: 15px;
-            #    padding-bottom: 0px;
-            #  }
-            #  .info {
-            #    padding-bottom: 0px;
-            #  }
-            #  .flex {
-            #    padding-bottom: 10px;
-            #  }
-            entities: 
-              - entity: sensor.0x00158d0004acb510_temperature
-                name: Внутри
-              - entity: sensor.gismeteo_temperature
-                name: Снаружи
-                color: 'rgba(222,176,107,1)' #'rgba(73,85,108,0.5)'
-                y_axis: secondary
-              #- entity: sensor.solar_elevation
-              #  color: 'rgba(0,0,0,0.3)'
-              #  line_width: 1
-              #  show_line: false
-              #  show_legend: false
-              #  show_state: false
-              #  show_points: false
-              #  y_axis: secondary
-            name: Температура
-            align_state: center
-            align_icon: right
-            font_size: 60
-            font_size_header: 11
-            hours_to_show: 24
-            line_color: rgba(247,53,67,1)
-            line_width: 4
-            animate: true
-            points_per_hour: 1
-            #lower_bound_secondary: 0
-            show:
-              fill: false
-              graph: line
-              extrema: false
-          #- !include /config/lovelace/includes/graphs_embeded.yaml
-          #- entity: sensor.light_level_mean
-          #  name: Helligkeit
-          #  line_color: var(--custom_graph_color_2)
-          #  hours_to_show: 48
-          - type: 'custom:mini-graph-card'
-            #style: |
-            #  ha-card {
-            #    border: solid 1px var(--border-color);
-            #    font-family: var(--primary-font-family);
-            #    margin-top: 5px;
-            #    margin-bottom: 5px;
-            #  }
-            #  .graph {
-            #    padding-top: 15px;
-            #    padding-bottom: 0px;
-            #  }
-            #  .info {
-            #    padding-bottom: 0px;
-            #  }
-            #  .flex {
-            #    padding-bottom: 10px;
-            #  }
-            entities: 
-              - entity: sensor.0x00158d0004acb510_humidity
-                name: Внутри
-              - entity: sensor.gismeteo_humidity
-                name: Снаружи
-                color: 'rgba(222,176,107,1)' #'rgba(73,85,108,0.5)'
-              - entity: sensor.solar_elevation
-                color: 'rgba(0,0,0,0.3)'
-                line_width: 1
-                show_line: false
-                show_legend: false
-                show_state: false
-                show_points: false
-                y_axis: secondary
-            name: Влажность
-            align_state: center
-            align_icon: right
-            font_size: 60
-            font_size_header: 11
-            hours_to_show: 24
-            line_color: 'rgba(0,202,139,1)'
-            line_width: 4
-            animate: true
-            points_per_hour: 0.5
-            lower_bound_secondary: 0
-            show:
-              fill: false
-              graph: line
-              extrema: 
+  - type: custom:stack-in-card  # Карточка Сенсоры 
+    title: Sensors
+    cards: 
 
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          #style: |
+          #  ha-card {
+          #    border: solid 1px var(--border-color);
+          #    font-family: var(--primary-font-family);
+          #    margin-top: 5px;
+          #    margin-bottom: 5px;
+          #  }
+          #  .graph {
+          #    padding-top: 15px;
+          #    padding-bottom: 0px;
+          #  }
+          #  .info {
+          #    padding-bottom: 0px;
+          #  }
+          #  .flex {
+          #    padding-bottom: 10px;
+          #  }
+          entities: 
+            - entity: sensor.0x00158d0004acb510_temperature
+              name: Внутри
+            - entity: sensor.gismeteo_temperature
+              name: Снаружи
+              color: 'rgba(222,176,107,1)' #'rgba(73,85,108,0.5)'
+              y_axis: secondary
+            #- entity: sensor.solar_elevation
+            #  color: 'rgba(0,0,0,0.3)'
+            #  line_width: 1
+            #  show_line: false
+            #  show_legend: false
+            #  show_state: false
+            #  show_points: false
+            #  y_axis: secondary
+          name: Температура
+          align_state: center
+          align_icon: right
+          font_size: 60
+          font_size_header: 11
+          hours_to_show: 24
+          line_color: rgba(247,53,67,1)
+          line_width: 4
+          animate: true
+          points_per_hour: 1
+          #lower_bound_secondary: 0
+          show:
+            fill: false
+            graph: line
+            extrema: false
+        #- !include /config/lovelace/includes/graphs_embeded.yaml
+        #- entity: sensor.light_level_mean
+        #  name: Helligkeit
+        #  line_color: var(--custom_graph_color_2)
+        #  hours_to_show: 48
+        - type: 'custom:mini-graph-card'
+          #style: |
+          #  ha-card {
+          #    border: solid 1px var(--border-color);
+          #    font-family: var(--primary-font-family);
+          #    margin-top: 5px;
+          #    margin-bottom: 5px;
+          #  }
+          #  .graph {
+          #    padding-top: 15px;
+          #    padding-bottom: 0px;
+          #  }
+          #  .info {
+          #    padding-bottom: 0px;
+          #  }
+          #  .flex {
+          #    padding-bottom: 10px;
+          #  }
+          entities: 
+            - entity: sensor.0x00158d0004acb510_humidity
+              name: Внутри
+            - entity: sensor.gismeteo_humidity
+              name: Снаружи
+              color: 'rgba(222,176,107,1)' #'rgba(73,85,108,0.5)'
+            - entity: sensor.solar_elevation
+              color: 'rgba(0,0,0,0.3)'
+              line_width: 1
+              show_line: false
+              show_legend: false
+              show_state: false
+              show_points: false
+              y_axis: secondary
+          name: Влажность
+          align_state: center
+          align_icon: right
+          font_size: 60
+          font_size_header: 11
+          hours_to_show: 24
+          line_color: 'rgba(0,202,139,1)'
+          line_width: 4
+          animate: true
+          points_per_hour: 0.5
+          lower_bound_secondary: 0
+          show:
+            fill: false
+            graph: line
+            extrema: 
 
-#      - type: vertical-stack
-#        style: | # !include ../includes/style.yaml
-#          ha-card {
-#            border: solid 1px var(--border-color);
-#            font-family: var(--primary-font-family);
-#            margin-top: 5px;
-#            margin-bottom: 5px;
-#          } 
-#        cards:
-#          - type: markdown
-#            style: |
-#              ha-card {
-#                font-size: 20px;
-#                font-family: var(--primary-font-family);
-#                height: 30px;
-#                background: none;
-#                margin-top: 0em;
-#                margin-left: 8px;
-#                margin-bottom: -0.4em;
-#                box-shadow: none;
-#              }
-#              ha-markdown {
-#                padding: 0px 0px 0px 8px !important;
-#                border-left: 3px solid var(--accent-color);
-#              }
-#            content: NETZMONITOR # !include ../includes/titles.yaml
-#            
-#          - type: custom:stack-in-card
-#            cards: 
-#    #          - type: horizontal-stack
-#    #            cards:        
-#    #              - type: custom:bar-card
-#    #                style: |
-#    #                  .card-content {
-#    #                    padding: 3px;
-#    #                    padding-top: 0px;
-#    #                    padding-bottom: 0px;
-#    #                  }
-#    #                entity: sensor.speedtest_download
-#    #                friendly_name: "Down"
-#    #                icon_template: mdi:download
-#    #                color: 'var(--accent-color)'
-#    #                height: 30px
-#    #                positions:
-#    #                  icon: inside
-#    #                  indicator: 'off'
-#    #                  title: inside
-#    #                  value: inside
-#    #                target: 100
-#    #                max: 110
-#    #              - type: custom:bar-card
-#    #                style: |
-#    #                  .card-content {
-#    #                    padding: 3px;
-#    #                    padding-top: 0px;
-#    #                    padding-bottom: 0px;
-#    #                  }
-#    #                  #states > * {
-#    #                    margin-top: 1;
-#    #                  }
-#    #                entity: sensor.speedtest_upload
-#    #                friendly_name: "Up"
-#    #                icon_template: mdi:upload
-#    #                color: 'var(--accent-color)'
-#    #                height: 30px
-#    #                positions:
-#    #                  icon: inside
-#    #                  indicator: 'off'
-#    #                  title: inside
-#    #                  value: inside
-#    #                target: 40
-#    #                max: 45
-#              - type: horizontal-stack
-#                cards:
-#                  - !include ../includes/graphs_embeded.yaml
-#                  - entity: sensor.asuswrt_download_speed
-#                    name: Download
-#                    align_icon: left
-#                    points_per_hour: 4
-#                    hours_to_show: 12
-#                    extrema: true
-#                  - !include ../includes/graphs_embeded.yaml
-#                  - entity: sensor.asuswrt_upload_speed
-#                    name: Upload
-#                    points_per_hour: 4
-#                    hours_to_show: 12
-#                    extrema: true
-#              - type: entities
-#                style: !include ../includes/style_entities_embeded.yaml
-#                entities:
-#                  - sensor.asuswrt_download
-#                  - sensor.asuswrt_upload
-#                  #- binary_sensor.remote_ui
-#                  #- sensor.net_uptime_pretty
-#                
-#          - !include ../includes/titles.yaml
-#          - title: ESP HOME
-#                
-#          - type: custom:stack-in-card
-#            cards:   
-#              - type: horizontal-stack
-#                cards:
-#                  - type: "custom:button-card"
-#                    template: esp
-#                    entity: binary_sensor.state_drink_filter
-#                    name: Doorbell
-#                    icon: mdi:chip
-#                    layout: icon_name
-#                    show_name: true
-#                    show_icon: true
-#                    show_state: false
-#                  - type: "custom:button-card"
-#                    template: esp
-#                    entity: sensor.status_drink_filter
-#                  - type: "custom:button-card"
-#                    template: esp
-#                    entity: sensor.uptime_drink_filter
-#                    styles:
-#                      card:
-#                        - width: 200px
-##          - type: horizontal-stack
-##            cards:
-##              - type: "custom:button-card"
-##                template: esp
-##                entity: binary_sensor.esp8266_bed_status
-##                name: Bed
-##                icon: mdi:chip
-##                layout: icon_name
-##                show_name: true
-##                show_icon: true
-##                show_state: false
-##              - type: "custom:button-card"
-##                template: esp
-##                entity: sensor.esp8266_bed_wifi_signal
-##              - type: "custom:button-card"
-##                template: esp
-##                entity: sensor.esp8266_bed_uptime_pretty
-##                styles:
-##                  card:
-##                    - width: 200px
+  - type: custom:stack-in-card  # Карточка Network Status
+    title: Network Status
+    cards: 
+
+    - type: horizontal-stack  # Карточка Скорость сети
+      cards:        
+        #- type: custom:bar-card
+        #  style: |-
+        #    bar-card-value {
+        #    margin-right: auto;
+        #    font-size: 13px;
+        #    font-weight: bold;
+        #    text-shadow: 1px 1px #0005;
+        #    }
+        #  
+        #  #style: |
+        #  #  .card-content {
+        #  #    padding-top: 10px;
+        #  #    padding-bottom: 0px;
+        #  #    padding-right: 10px;
+        #  #    padding-left: 0px;
+        #  #  }
+        #  entity: sensor.speedtest_download
+        #  #color: 'var(--accent-color)'
+        #  height: 30px
+        #  positions:
+        #    icon: off
+        #    indicator: off
+        #    title: inside
+        #    value: inside
+        #  target: 100
+        #  max: 100
+
+        - type: entity
+          style: |-
+            .card-content {
+            margin-right: auto;
+            font-size: 13px;
+            
+            
+            }
+          entity: sensor.speedtest_download
+          name: Down
+        
+        - type: entity
+          style: |-
+            .card-content {
+            margin-right: auto;
+            font-size: 13px;
+            
+            
+            }
+          entity: sensor.speedtest_ping
+          name: Ping
+
+        - type: entity
+          style: |-
+            .card-content {
+            margin-right: auto;
+            font-size: 13px;
+            
+            
+            }
+          entity: sensor.speedtest_upload
+          name: Up
+
+    - type: horizontal-stack  # Карточка Скорость скачивания
+      cards:
+        - type: custom:mini-graph-card
+          entities: 
+            - entity: sensor.asuswrt_download_speed
+          name: Download
+          align_state: center
+          # align_icon: {{ align_icon, default('right') }}
+          font_size: 60
+          # font_size_header: {{ font_size_header|default('11') }}
+          hours_to_show: 12 # { hours_to_show|default('24') }
+          line_color: '#1A89F5' #{ line_color|default('var(--accent-color)') }
+          # line_width: {{ line_width|default('4') }}
+          animate: true
+          points_per_hour: 4 # { points_per_hour|default('0.5') }
+          #lower_bound_secondary: 0
+          show:
+            fill: false
+            graph: line
+            extrema: true
+            icon: true
+            name: true
+          align_icon: left
+          
+        - type: custom:mini-graph-card
+          entities: 
+            - entity: sensor.asuswrt_upload_speed
+          name: Upload
+          align_state: center
+          # align_icon: {{ align_icon, default('right') }}
+          font_size: 60
+          # font_size_header: {{ font_size_header|default('11') }}
+          hours_to_show: 12 # { hours_to_show|default('24') }
+          line_color: '#1A89F5' # { line_color|default('var(--accent-color)') }
+          # line_width: {{ line_width|default('4') }}
+          animate: true
+          points_per_hour: 4 # { points_per_hour|default('0.5') }
+          lower_bound_secondary: 0
+          show:
+            fill: false
+            graph: { graph|default('line') }
+            extrema: { extrema|default('false') }
+            icon: { show_icon|default('true') }
+            name: { show_name|default('true') }
+          extrema: true
+
+    - type: entities
+      #style: |
+      #  ha-card {
+      #    font-family: var(--primary-font-family);
+      #  }
+      #  .card-content {
+      #    padding-top: 0px;
+      #    padding-bottom: 0px;
+      #  }
+      entities:
+        - sensor.asuswrt_download
+        - sensor.asuswrt_upload
