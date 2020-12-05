@@ -1,0 +1,178 @@
+hum_living:
+
+  binary_sensor:
+    
+    - platform: mqtt
+      name: lr_hum_mode
+      state_topic: "states/lr_hum"
+      payload_on: "ON"
+      payload_off: "OFF"
+
+    - platform: template
+      sensors:
+        living_hum:
+          friendly_name: "Режим увлажнения, Гостиная -"
+          value_template: >-
+            {{ is_state('binary_sensor.0x00158d000445206b_contact', 'off')  
+              and is_state('binary_sensor.0xec1bbdfffedf6a6a_contact', 'off')
+              and is_state('binary_sensor.silent_mode', 'off')
+              and is_state('binary_sensor.lr_hum_mode', 'on') 
+              and is_state('sensor.living_day_work', 'Включен') }}
+          icon_template: >-
+            {% if is_state("binary_sensor.living_hum", "on") %}
+            mdi:water-percent
+            {% else %}
+            mdi:air-humidifier
+            {% endif %}
+
+
+  sensor:
+    
+    # Cредняя влажность
+      - platform: min_max
+        name: mean_humidity
+        type: mean
+        entity_ids:
+          - sensor.0x00158d0004acb510_humidity
+          - sensor.smartmi_humidity
+
+  switch:
+  
+    - platform: template
+      switches:
+      
+        lr_hum_mode:
+          friendly_name: "Гостиная, режим увлажнения воздуха"
+          value_template: "{{  is_state('binary_sensor.lr_hum_mode', 'on') }}"
+          turn_on:
+            service: mqtt.publish
+            data_template:
+              topic: "states/lr_hum"
+              payload_template: 'ON'
+              retain: true 
+          turn_off:
+            service: mqtt.publish
+            data_template:
+              topic: "states/lr_hum"
+              payload_template: 'OFF'
+              retain: true 
+          icon_template: >-
+              mdi:air-humidifier
+
+        smart_humidifier_mode_auto:
+          friendly_name: "Увлажнитель авто"
+          value_template: >-
+            {{ is_state('fan.humidifier2', 'on')
+              and is_state_attr('fan.humidifier2', 'mode', 'auto') }}
+          turn_on:
+            - service: homeassistant.turn_on
+              entity_id: fan.humidifier2
+            - service: fan.set_speed
+              entity_id: fan.humidifier2
+              data:
+                  speed: Auto
+          turn_off:
+            - service: homeassistant.turn_off
+              entity_id: 
+                - fan.humidifier2
+                  
+        smart_humidifier_mode_silent:
+          friendly_name: "Увлажнитель тихий"
+          value_template: >-
+            {{ is_state('fan.humidifier2', 'on')
+              and is_state_attr('fan.humidifier2', 'mode', 'silent') }}
+          turn_on:
+            - service: homeassistant.turn_on
+              entity_id: fan.humidifier2
+            - service: fan.set_speed
+              entity_id: fan.humidifier2
+              data:
+                  speed: Silent
+          turn_off:
+            - service: homeassistant.turn_off
+              entity_id: 
+                - fan.humidifier2
+                  
+        smart_humidifier_mode_medium:
+          friendly_name: "Увлажнитель средний"
+          value_template: >-
+            {{ is_state('fan.humidifier2', 'on')
+              and is_state_attr('fan.humidifier2', 'mode', 'medium') }}
+          turn_on:
+            - service: homeassistant.turn_on
+              entity_id: fan.humidifier2
+            - service: fan.set_speed
+              entity_id: fan.humidifier2
+              data:
+                  speed: Medium
+          turn_off:
+            - service: homeassistant.turn_off
+              entity_id: 
+                - fan.humidifier2
+                  
+        smart_humidifier_mode_high:
+          friendly_name: "Увлажнитель максимальный"
+          value_template: >-
+            {{ is_state('fan.humidifier2', 'on')
+              and is_state_attr('fan.humidifier2', 'mode', 'high') }}
+          turn_on:
+            - service: homeassistant.turn_on
+              entity_id: fan.humidifier2
+            - service: fan.set_speed
+              entity_id: fan.humidifier2
+              data:
+                  speed: High
+          turn_off:
+            - service: homeassistant.turn_off
+              entity_id: 
+                - fan.humidifier2
+
+  input_number:
+    humidity_level:
+      name: Уровень влажности Зал
+      initial: 50
+      min: 30
+      max: 60
+      step: 1
+
+  automation:
+
+    ## Включение увлажнителя
+    - id: Увлажнение в зале
+      alias: hum_auto
+      initial_state: true
+      trigger:
+        - platform: time_pattern
+          minutes: '/5'
+        - platform: state
+          entity_id:
+            - input_number.humidity_level
+            - sensor.mean_humidity
+            #- binary_sensor.living_hum
+      condition:
+        - condition: state
+          entity_id: switch.control_mode
+          state: 'on'
+      action:
+        service_template: >-
+            {% if states.binary_sensor.living_hum.state == 'off' %}
+            switch.turn_off
+            {% else %}
+            switch.turn_on
+            {% endif %}
+        data_template:
+            entity_id: >-
+                {% set current = states('input_number.humidity_level') | float %}
+                {% set low = (states('input_number.humidity_level') | float) - 5 %}
+                {% set medium = (states('input_number.humidity_level') | float) - 10 %}
+                {% set high = (states('input_number.humidity_level') | float) - 15 %}
+                {% set humidity = states('sensor.mean_humidity') | float %}
+                {% if humidity < high %} 
+                switch.smart_humidifier_mode_high
+                {% elif humidity < medium %} 
+                switch.smart_humidifier_mode_medium
+                {% elif humidity < low %} 
+                switch.smart_humidifier_mode_low
+                {% else %} 
+                switch.smart_humidifier_mode_auto
+                {% endif %}
