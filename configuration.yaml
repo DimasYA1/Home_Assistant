@@ -128,3 +128,16 @@ asuswrt:
 weather:
   - platform: gismeteo
     mode: daily 
+
+google_assistant:
+  project_id: !secret google_project_id
+  service_account: !include SERVICE_ACCOUNT.json
+  exposed_domains:
+    - switch
+    - light
+    - climate
+    - media_player
+    - sensor 
+    - humidifier 
+    - fan 
+    - script 
