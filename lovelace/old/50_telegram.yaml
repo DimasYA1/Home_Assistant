@@ -1,0 +1,10 @@
+title: telegram
+icon: mdi:telegram
+
+cards:
+    - type: entities
+      show_header_toggle: false
+      entities:
+        - entity: script.send_message_1
+          name: Сервис уведомлений
+        - entity: script.climate_report

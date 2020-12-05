@@ -3,26 +3,26 @@ icon: mdi:home-assistant
 
 cards:
 
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - entity: sensor.rpi_uptime
-      - entity: sensor.ha_uptime
-      - entity: sensor.time
-      #  name: Текущее время
-      #  icon: mdi:clock-outline
-      - entity: sensor.date
-      #  name: Дата
-      #  icon: mdi:calendar-check-outline
-      - entity: binary_sensor.rpi_power_status
-      - entity: sensor.cpu_get_throttled
-        name: Троттлинг
-      - entity: sensor.ha_version_current
-        name: Установлен Home Assistant -
-        icon: mdi:alpha-v-circle
-      - entity: sensor.ha_version_latest
-        name: Последний Home Assistant -
-        icon: mdi:alpha-v-circle-outline
+#  - type: entities
+#    show_header_toggle: false
+#    entities:
+#      - entity: sensor.rpi_uptime
+#      - entity: sensor.ha_uptime
+#      - entity: sensor.time
+#      #  name: Текущее время
+#      #  icon: mdi:clock-outline
+#      - entity: sensor.date
+#      #  name: Дата
+#      #  icon: mdi:calendar-check-outline
+#      - entity: binary_sensor.rpi_power_status
+#      - entity: sensor.cpu_get_throttled
+#        name: Троттлинг
+#      - entity: sensor.ha_version_current
+#        name: Установлен Home Assistant -
+#        icon: mdi:alpha-v-circle
+#      - entity: sensor.ha_version_latest
+#        name: Последний Home Assistant -
+#        icon: mdi:alpha-v-circle-outline
 
   - type: history-graph
     entities:
@@ -58,6 +58,3 @@ cards:
     entities:
       - entity: sensor.home_assistant_v2_db
         name: Свободное место  
-
-  # - url: /hacsfiles/lovelace-rpi-monitor-card/rpi-monitor-card.js
-  #   type: module
