@@ -27,6 +27,7 @@ cards:
               # - entity: sensor.lets_encrypt
               # - entity: script.ha_backup
               - entity: script.ha_restart
+
       - type: vertical-stack
         cards:
           # Raspberry Pi
@@ -95,6 +96,7 @@ cards:
                       [[[ hass.callService('browser_mod', 'toast', {message: 'Startar om Fully Kiosk Browser...'});
                       hass.callService('shell_command', 'fullykiosk_restart_app'); ]]]
                   # template: name_action
+
       - type: vertical-stack
         cards:
           # Docker
