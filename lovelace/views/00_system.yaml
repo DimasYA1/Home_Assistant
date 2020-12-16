@@ -198,7 +198,7 @@ cards:
                 - sensor.processor_temp
                 - sensor.home_assistant_v2_db
                 - sensor.ha_uptime
-                - sensor.rpi_uptime
+                - sensor.host_uptime
 
   - type: vertical-stack
     cards:

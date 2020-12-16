@@ -61,13 +61,13 @@ sensor.home_assistant_v2_db:
   friendly_name: База данных
   icon: mdi:database
 
-sensor.ha_uptime:
-  friendly_name: HA Uptime 
-  icon: mdi:timer
+#sensor.ha_uptime:
+#  friendly_name: HA Uptime 
+#  icon: mdi:timer
 
-sensor.rpi_uptime:
-  friendly_name: RPI Uptime 
-  icon: mdi:timer-outline
+#sensor.rpi_uptime:
+#  friendly_name: RPI Uptime 
+#  icon: mdi:timer-outline
 
 script.pi_reboot:
   friendly_name: Перезагрузка
