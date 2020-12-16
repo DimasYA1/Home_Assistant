@@ -5,3 +5,18 @@ cards:
     entity: fan.humidifier2
     # zhimi.humidifier.cb1 default value may be omitted, added for example.
     model: 'zhimi.humidifier.cb1' 
+
+  - type: custom:vertical-stack-in-card
+    title: My Card
+    cards:
+      - type: glance
+        entities:
+          - sensor.0x00158d0004acb510_temperature
+          - sensor.0x00158d0004acb510_humidity
+          - sensor.0x00158d0004acb510_pressure
+      #- type: entities
+      #  entities:
+      #  - switch.livingroom_tv
+      #  - entity: script.livingroom_receiver
+      #    name: Receiver
+      #  - switch.livingroom_ac

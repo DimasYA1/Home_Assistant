@@ -60,6 +60,8 @@ lovelace: # !include lovelace/lovelace.yaml
       type: module
     - url: /hacsfiles/mini-humidifier/mini-humidifier-bundle.js
       type: module
+    - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
+      type: module
 
     # Custom
     - url: /local/layout-card.js
@@ -68,6 +70,8 @@ lovelace: # !include lovelace/lovelace.yaml
       type: module
     - url: /local/custom_icons.js
       type: module
+    #- url: /local/vertical-stack-in-card.js?v=0.3.3
+    #  type: js
 
     - url: 'https://fonts.googleapis.com/css?family=Raleway'
       type: css
