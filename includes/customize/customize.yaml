@@ -33,6 +33,14 @@ sensor.time:
   friendly_name: Текущее время
   icon: mdi:clock-outline
 
+sensor.ha_version_current:
+  friendly_name: Текущая версия HA Core
+  icon: mdi:alpha-v-circle-outline
+
+sensor.ha_version_latest:
+  friendly_name: Поcледняя версия HA Core
+  icon: mdi:alpha-v-circle
+
 sensor.processor_temp:
   friendly_name: Температура CPU
   device_class: temperature

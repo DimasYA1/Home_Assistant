@@ -36,13 +36,86 @@
       value_template: "{{ states('sensor.ha_version_latest') == states('sensor.ha_version_current') }}"
       friendly_name: "Ha UpToDate check"
 
-#######################################################################
+# ############################################################################
+# HA Latest version sensor
+# ############################################################################
+
+- platform: rest_mod
+  resource: https://version.home-assistant.io/stable.json
+  name: HA Latest Version
+  value_template: "{{ value_json.homeassistant.default }}"
+  scan_interval: 1800
+
+- platform: rest_mod
+  resource: https://version.home-assistant.io/beta.json
+  name: HA Latest Beta
+  value_template: "{{ value_json.homeassistant.default }}"
+  scan_interval: 1800
+
+# ############################################################################
+# HA Latest Supervisor version
+# ############################################################################
+
+- platform: rest_mod
+  resource: https://version.home-assistant.io/stable.json
+  name: HA Supervisor Latest Version
+  value_template: "{{ value_json.supervisor }}"
+  scan_interval: 1800
+
+- platform: rest_mod
+  resource: https://version.home-assistant.io/beta.json
+  name: HA Supervisor Latest Beta
+  value_template: "{{ value_json.supervisor }}"
+  scan_interval: 1800
+  
+- platform: template
+  sensors:
+    ha_supervisor_current_version:
+      friendly_name: HA Supervisor Current Version
+      value_template: "{{state_attr('sensor.supervisor_updates','current_version')}}"
+
+################################################################################
+
+- platform: command_line
+  name: Supervisor updates
+  command: 'curl http://supervisor/supervisor/info -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" | jq ''{"newest_version":.data.version_latest,"current_version":.data.version,"addons":[.data.addons[] | select(.version != .version_latest)]}'''
+  value_template: "{{ value_json.addons | length }}"
+  json_attributes:
+    - newest_version
+    - current_version
+    - addons
+
+# ############################################################################
+# Time\date sensor
+# ############################################################################
 
 - platform: time_date
   display_options:
   - 'time'
   - 'date'
   - 'time_date'
+  - 'date_time'
+  - 'date_time_iso'
+  - 'time_utc'
+  - 'beat'
+
+- platform: template
+  sensors:
+    current_year:
+      value_template: "{{states('sensor.date').split('-')[0]}}"
+      unit_of_measurement: ''
+    current_month:
+      value_template: "{{states('sensor.date').split('-')[1]}}"
+      unit_of_measurement: ''
+    current_day:
+      value_template: "{{states('sensor.date').split('-')[2]}}"
+      unit_of_measurement: ''
+    current_hour:
+      value_template: "{{states('sensor.time').split(':')[0]}}"
+      unit_of_measurement: ''
+    current_minute:
+      value_template: "{{states('sensor.time').split(':')[1]}}"
+      unit_of_measurement: ''
 
 ## Stats Home ##################################################################
 
