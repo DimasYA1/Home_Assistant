@@ -3,10 +3,8 @@ import json
 import logging
 from xml.parsers.expat import ExpatError
 
+import httpx
 from jsonpath import jsonpath
-import requests
-from requests import Session
-from requests.auth import HTTPBasicAuth, HTTPDigestAuth
 import voluptuous as vol
 import xmltodict
 
@@ -18,6 +16,7 @@ from homeassistant.const import (
     CONF_HEADERS,
     CONF_METHOD,
     CONF_NAME,
+    CONF_PARAMS,
     CONF_PASSWORD,
     CONF_PAYLOAD,
     CONF_RESOURCE,
@@ -32,9 +31,10 @@ from homeassistant.const import (
 )
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
-from homeassistant.helpers.reload import setup_reload_service
+from homeassistant.helpers.reload import async_setup_reload_service
 
 from . import DOMAIN, PLATFORMS
+from .data import DEFAULT_TIMEOUT, RestDataMod
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -42,7 +42,6 @@ DEFAULT_METHOD = "GET"
 DEFAULT_NAME = "REST_MOD Sensor"
 DEFAULT_VERIFY_SSL = True
 DEFAULT_FORCE_UPDATE = False
-DEFAULT_TIMEOUT = 10
 
 
 CONF_JSON_ATTRS = "json_attributes"
@@ -55,16 +54,17 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Exclusive(CONF_RESOURCE, CONF_RESOURCE): cv.url,
         vol.Exclusive(CONF_RESOURCE_TEMPLATE, CONF_RESOURCE): cv.template,
-        vol.Exclusive(CONF_PAYLOAD, CONF_PAYLOAD): cv.string,
-        vol.Exclusive(CONF_PAYLOAD_TEMPLATE, CONF_PAYLOAD): cv.template,
         vol.Optional(CONF_AUTHENTICATION): vol.In(
             [HTTP_BASIC_AUTHENTICATION, HTTP_DIGEST_AUTHENTICATION]
         ),
         vol.Optional(CONF_HEADERS): vol.Schema({cv.string: cv.template}),
+        vol.Optional(CONF_PARAMS): vol.Schema({cv.string: cv.string}),
         vol.Optional(CONF_JSON_ATTRS, default=[]): cv.ensure_list_csv,
         vol.Optional(CONF_METHOD, default=DEFAULT_METHOD): vol.In(METHODS),
         vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
         vol.Optional(CONF_PASSWORD): cv.string,
+        vol.Exclusive(CONF_PAYLOAD, CONF_PAYLOAD): cv.string,
+        vol.Exclusive(CONF_PAYLOAD_TEMPLATE, CONF_PAYLOAD): cv.template,
         vol.Optional(CONF_UNIT_OF_MEASUREMENT): cv.string,
         vol.Optional(CONF_DEVICE_CLASS): DEVICE_CLASSES_SCHEMA,
         vol.Optional(CONF_USERNAME): cv.string,
@@ -82,9 +82,9 @@ PLATFORM_SCHEMA = vol.All(
 )
 
 
-def setup_platform(hass, config, add_entities, discovery_info=None):
+async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     """Set up the RESTful sensor."""
-    setup_reload_service(hass, DOMAIN, PLATFORMS)
+    await async_setup_reload_service(hass, DOMAIN, PLATFORMS)
 
     name = config.get(CONF_NAME)
     resource = config.get(CONF_RESOURCE)
@@ -96,6 +96,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     username = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)
     headers = config.get(CONF_HEADERS)
+    params = config.get(CONF_PARAMS)
     unit = config.get(CONF_UNIT_OF_MEASUREMENT)
     device_class = config.get(CONF_DEVICE_CLASS)
     value_template = config.get(CONF_VALUE_TEMPLATE)
@@ -110,11 +111,11 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
     if resource_template is not None:
         resource_template.hass = hass
-        resource = resource_template.render()
+        resource = resource_template.async_render(parse_result=False)
 
     if payload_template is not None:
         payload_template.hass = hass
-        payload = payload_template.render()
+        payload = payload_template.async_render(parse_result=False)
 
     if headers is not None:
         for header_template in headers.values():
@@ -122,20 +123,21 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
 
     if username and password:
         if config.get(CONF_AUTHENTICATION) == HTTP_DIGEST_AUTHENTICATION:
-            auth = HTTPDigestAuth(username, password)
+            auth = httpx.DigestAuth(username, password)
         else:
-            auth = HTTPBasicAuth(username, password)
+            auth = (username, password)
     else:
         auth = None
 
     rest = RestDataMod(
-        method, resource, auth, headers, payload, verify_ssl, timeout, proxy_url
+        hass, method, resource, auth, headers, params, payload, verify_ssl, timeout, proxy_url
     )
-    rest.update()
+
+    await rest.async_update()
 
     # Must update the sensor now (including fetching the rest resource) to
     # ensure it's updating its state.
-    add_entities(
+    async_add_entities(
         [
             RestSensorMod(
                 hass,
@@ -151,7 +153,6 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
                 json_attrs_path,
             )
         ],
-        True,
     )
 
 
@@ -217,17 +218,25 @@ class RestSensorMod(Entity):
         """Force update."""
         return self._force_update
 
-    def update(self):
+    async def async_update(self):
         """Get the latest data from REST API and update the state."""
         if self._resource_template is not None:
-            self.rest.set_url(self._resource_template.render())
+            self.rest.set_url(self._resource_template.async_render(parse_result=False))
 
         if self._payload_template is not None:
-            self.rest.set_payload(self._payload_template.render())
+            self.rest.set_payload(self._payload_template.async_render(parse_result=False))
 
-        self.rest.update()
+        await self.rest.async_update()
+        self._update_from_rest_data()
+
+    async def async_added_to_hass(self):
+        """Ensure the data from the initial update is reflected in the state."""
+        self._update_from_rest_data()
+
+    def _update_from_rest_data(self):
+        """Update state from the rest data."""
         value = self.rest.data
-        _LOGGER.debug("Data fetched from resource: %s", value)
+        _LOGGER.debug("[%s] Data fetched from resource: %s", self._name, value)
         if self.rest.headers is not None:
             # If the http request failed, headers will be None
             content_type = self.rest.headers.get("content-type")
@@ -235,15 +244,17 @@ class RestSensorMod(Entity):
             if content_type and (
                 content_type.startswith("text/xml")
                 or content_type.startswith("application/xml")
+                or content_type.startswith("application/xhtml+xml")
             ):
                 try:
                     value = json.dumps(xmltodict.parse(value))
-                    _LOGGER.debug("JSON converted from XML: %s", value)
+                    _LOGGER.debug("[%s] JSON converted from XML: %s", self._name, value)
                 except ExpatError:
                     _LOGGER.warning(
-                        "REST xml result could not be parsed and converted to JSON"
+                        "[%s] REST xml result could not be parsed and converted to JSON",
+                        self._name
                     )
-                    _LOGGER.debug("Erroneous XML: %s", value)
+                    _LOGGER.debug("[%s] Erroneous XML: %s", self._name, value)
 
         if self._json_attrs:
             self._attributes = {}
@@ -264,16 +275,21 @@ class RestSensorMod(Entity):
                         self._attributes = attrs
                     else:
                         _LOGGER.warning(
-                            "JSON result was not a dictionary"
-                            " or list with 0th element a dictionary"
+                            "[%s] JSON result was not a dictionary"
+                            " or list with 0th element a dictionary",
+                            self._name
                         )
                 except ValueError:
-                    _LOGGER.warning("REST result could not be parsed as JSON")
-                    _LOGGER.debug("Erroneous JSON: %s", value)
+                    _LOGGER.warning("[%s] REST result could not be parsed as JSON", self._name)
+                    _LOGGER.debug("[%s] Erroneous JSON: %s", self._name, value)
+
             else:
-                _LOGGER.warning("Empty reply found when expecting JSON data")
+                _LOGGER.warning("[%s] Empty reply found when expecting JSON data", self._name)
+
         if value is not None and self._value_template is not None:
-            value = self._value_template.render_with_possible_json_value(value, None)
+            value = self._value_template.async_render_with_possible_json_value(
+                value, None
+            )
 
         self._state = value
 
@@ -281,81 +297,3 @@ class RestSensorMod(Entity):
     def device_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
-
-
-class RestDataMod:
-    """Class for handling the data retrieval."""
-
-    def __init__(
-        self,
-        method,
-        resource,
-        auth,
-        headers,
-        data,
-        verify_ssl,
-        timeout=DEFAULT_TIMEOUT,
-        proxy_url=None,
-    ):
-        """Initialize the data object."""
-        self._method = method
-        self._resource = resource
-        self._auth = auth
-        self._headers = headers
-        self._request_data = data
-        self._verify_ssl = verify_ssl
-        self._timeout = timeout
-        self._http_session = Session()
-
-        if proxy_url is not None:
-            self._proxies = {"http": proxy_url, "https": proxy_url}
-        else:
-            self._proxies = None
-
-        self.data = None
-        self.headers = None
-
-    def set_payload(self, payload):
-        """Set payload."""
-        self._request_data = payload
-
-    def __del__(self):
-        """Destroy the http session on destroy."""
-        self._http_session.close()
-
-    def set_url(self, url):
-        """Set url."""
-        self._resource = url
-
-    def update(self):
-        """Get the latest data from REST service with provided method."""
-        _LOGGER.debug("Updating from %s", self._resource)
-
-        headers = {}
-        if self._headers:
-            for header_name, header_template in self._headers.items():
-                headers[header_name] = header_template.render()
-
-        try:
-            response = self._http_session.request(
-                self._method,
-                self._resource,
-                headers=headers,
-                auth=self._auth,
-                data=self._request_data,
-                timeout=self._timeout,
-                verify=self._verify_ssl,
-                proxies=self._proxies,
-            )
-            self.data = response.text
-            self.headers = response.headers
-        except requests.exceptions.RequestException as ex:
-            _LOGGER.warning(
-                "Error fetching data: %s failed with %s", self._resource, ex
-            )
-            self.data = None
-            self.headers = None
-        except Exception as err:
-            _LOGGER.warning("Unknown error: %s", err)
-            self.data = None
-            self.headers = None

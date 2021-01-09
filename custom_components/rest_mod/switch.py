@@ -11,6 +11,7 @@ from homeassistant.const import (
     CONF_HEADERS,
     CONF_METHOD,
     CONF_NAME,
+    CONF_PARAMS,
     CONF_PASSWORD,
     CONF_RESOURCE,
     CONF_RESOURCE_TEMPLATE,
@@ -50,6 +51,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Exclusive(CONF_STATE_RESOURCE, CONF_STATE_RESOURCE): cv.string,
         vol.Exclusive(CONF_STATE_RESOURCE_TEMPLATE, CONF_STATE_RESOURCE): cv.template,
         vol.Optional(CONF_HEADERS): vol.Schema({cv.string: cv.template}),
+        vol.Optional(CONF_PARAMS): {cv.string: cv.string},
         vol.Optional(CONF_BODY_OFF, default=DEFAULT_BODY_OFF): cv.template,
         vol.Optional(CONF_BODY_ON, default=DEFAULT_BODY_ON): cv.template,
         vol.Optional(CONF_IS_ON_TEMPLATE): cv.template,
@@ -79,6 +81,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     is_on_template = config.get(CONF_IS_ON_TEMPLATE)
     method = config.get(CONF_METHOD)
     headers = config.get(CONF_HEADERS)
+    params = config.get(CONF_PARAMS)
     name = config.get(CONF_NAME)
     username = config.get(CONF_USERNAME)
     password = config.get(CONF_PASSWORD)
@@ -90,11 +93,11 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
     if resource_template is not None:
         resource_template.hass = hass
-        resource = resource_template.async_render()
+        resource = resource_template.async_render(parse_result=False)
 
     if state_resource_template is not None:
         state_resource_template.hass = hass
-        state_resource = state_resource_template.async_render()
+        state_resource = state_resource_template.async_render(parse_result=False)
 
     if headers is not None:
         for header_template in headers.values():
@@ -121,6 +124,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             state_resource_template,
             method,
             headers,
+            params,
             auth,
             body_on,
             body_off,
@@ -131,14 +135,15 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
         req = await switch.get_device_state(hass)
         if req.status >= HTTP_BAD_REQUEST:
-            _LOGGER.warning("Got non-ok response from resource: %s", req.status)
+            _LOGGER.warning("[%s] Got non-ok response from resource: %s", name, req.status)
     except (TypeError, ValueError):
         _LOGGER.error(
-            "Missing resource or schema in configuration. "
-            "Add http:// or https:// to your URL"
+            "[%s] Missing resource or schema in configuration. "
+            "Add http:// or https:// to your URL",
+            self._name
         )
     except (asyncio.TimeoutError, aiohttp.ClientError):
-        _LOGGER.warning("No route to resource/endpoint: %s", resource)
+        _LOGGER.warning("[%s] No route to resource/endpoint: %s", name, resource)
 
     async_add_entities([switch])
 
@@ -155,6 +160,7 @@ class RestSwitchMod(SwitchEntity):
         state_resource_template,
         method,
         headers,
+        params,
         auth,
         body_on,
         body_off,
@@ -171,6 +177,7 @@ class RestSwitchMod(SwitchEntity):
         self._state_resource_template = state_resource_template
         self._method = method
         self._headers = headers
+        self._params = params
         self._auth = auth
         self._body_on = body_on
         self._body_off = body_off
@@ -185,7 +192,7 @@ class RestSwitchMod(SwitchEntity):
     @property
     def available(self):
         """Return the availability of this sensor."""
-        _LOGGER.debug("State: %s", self._state)
+        _LOGGER.debug("[%s] State: %s", self._name, self._state)
         return self._state is not None
 
     @property
@@ -200,7 +207,7 @@ class RestSwitchMod(SwitchEntity):
 
     async def async_turn_on(self, **kwargs):
         """Turn the device on."""
-        body_on_t = self._body_on.async_render()
+        body_on_t = self._body_on.async_render(parse_result=False)
 
         try:
             req = await self.set_device_state(body_on_t)
@@ -209,14 +216,14 @@ class RestSwitchMod(SwitchEntity):
                 self._state = True
             else:
                 _LOGGER.warning(
-                    "Can't turn on %s. Is resource/endpoint offline?", self._resource
+                    "[%s] Can't turn on %s. Is resource/endpoint offline?", self._name, self._resource
                 )
         except (asyncio.TimeoutError, aiohttp.ClientError):
-            _LOGGER.warning("Error while switching on %s", self._resource)
+            _LOGGER.warning("[%s] Error while switching on %s", self._name, self._resource)
 
     async def async_turn_off(self, **kwargs):
         """Turn the device off."""
-        body_off_t = self._body_off.async_render()
+        body_off_t = self._body_off.async_render(parse_result=False)
 
         try:
             req = await self.set_device_state(body_off_t)
@@ -224,22 +231,22 @@ class RestSwitchMod(SwitchEntity):
                 self._state = False
             else:
                 _LOGGER.warning(
-                    "Can't turn off %s. Is resource/endpoint offline?", self._resource
+                    "[%s] Can't turn off %s. Is resource/endpoint offline?", self._name, self._resource
                 )
         except (asyncio.TimeoutError, aiohttp.ClientError):
-            _LOGGER.warning("Error while switching off %s", self._resource)
+            _LOGGER.warning("[%s] Error while switching off %s", self._name, self._resource)
 
     async def set_device_state(self, body):
         """Send a state update to the device."""
         websession = async_get_clientsession(self.hass, self._verify_ssl)
 
         if self._resource_template is not None:
-            self.set_url(self._resource_template.async_render())
+            self.set_url(self._resource_template.async_render(parse_result=False))
 
         headers = {}
         if self._headers:
             for header_name, header_template in self._headers.items():
-                headers[header_name] = header_template.async_render()
+                headers[header_name] = header_template.async_render(parse_result=False)
 
         with async_timeout.timeout(self._timeout):
             req = await getattr(websession, self._method)(
@@ -247,6 +254,7 @@ class RestSwitchMod(SwitchEntity):
                 auth=self._auth,
                 data=bytes(body, "utf-8"),
                 headers=headers,
+                params=self._params,
             )
             return req
 
@@ -255,9 +263,9 @@ class RestSwitchMod(SwitchEntity):
         try:
             await self.get_device_state(self.hass)
         except asyncio.TimeoutError:
-            _LOGGER.warning("Timed out while fetching data")
+            _LOGGER.warning("[%s] Timed out while fetching data", self._name)
         except aiohttp.ClientError as err:
-            _LOGGER.warning("Error while fetching data: %s", err)
+            _LOGGER.warning("[%s] Error while fetching data: %s", self._name, err)
 
     async def get_device_state(self, hass):
         """Get the latest data from REST API and update the state."""
@@ -266,33 +274,36 @@ class RestSwitchMod(SwitchEntity):
         state_resource = self._resource
 
         if self._resource_template is not None:
-            state_resource = self._resource_template.async_render()
+            state_resource = self._resource_template.async_render(parse_result=False)
 
         if self._state_resource is not None:
             state_resource = self._state_resource
 
         if self._state_resource_template is not None:
-            state_resource = self._state_resource_template.async_render()
+            state_resource = self._state_resource_template.async_render(parse_result=False)
 
         headers = {}
         if self._headers:
             for header_name, header_template in self._headers.items():
-                headers[header_name] = header_template.async_render()
+                headers[header_name] = header_template.async_render(parse_result=False)
 
         with async_timeout.timeout(self._timeout):
             req = await websession.get(
-                state_resource, auth=self._auth, headers=headers
+                state_resource,
+                auth=self._auth,
+                headers=headers,
+                params=self._params,
             )
             text = await req.text()
 
-        _LOGGER.debug("Raw response is (%s): %s", req.status, text)
+        _LOGGER.debug("[%s] Raw response is (%s): %s", self._name, req.status, text)
 
         if self._is_on_template is not None:
             text = self._is_on_template.async_render_with_possible_json_value(
                 text, "None"
             )
 
-            _LOGGER.debug("Value after template rendering: %s", text)
+            _LOGGER.debug("[%s] Value after template rendering: %s", self._name, text)
             text = text.lower()
 
             if text == "true":

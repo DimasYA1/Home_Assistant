@@ -17,6 +17,7 @@ from homeassistant.const import (
     CONF_HEADERS,
     CONF_METHOD,
     CONF_NAME,
+    CONF_PARAMS,
     CONF_PASSWORD,
     CONF_RESOURCE,
     CONF_USERNAME,
@@ -51,6 +52,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
             ["POST", "GET", "POST_JSON"]
         ),
         vol.Optional(CONF_HEADERS): vol.Schema({cv.string: cv.string}),
+        vol.Optional(CONF_PARAMS): vol.Schema({cv.string: cv.string}),
         vol.Optional(CONF_NAME): cv.string,
         vol.Optional(CONF_TARGET_PARAMETER_NAME): cv.string,
         vol.Optional(CONF_TITLE_PARAMETER_NAME): cv.string,
@@ -75,6 +77,7 @@ def get_service(hass, config, discovery_info=None):
     resource = config.get(CONF_RESOURCE)
     method = config.get(CONF_METHOD)
     headers = config.get(CONF_HEADERS)
+    params = config.get(CONF_PARAMS)
     message_param_name = config.get(CONF_MESSAGE_PARAMETER_NAME)
     title_param_name = config.get(CONF_TITLE_PARAMETER_NAME)
     target_param_name = config.get(CONF_TARGET_PARAMETER_NAME)
@@ -97,6 +100,7 @@ def get_service(hass, config, discovery_info=None):
         resource,
         method,
         headers,
+        params,
         message_param_name,
         title_param_name,
         target_param_name,
@@ -116,6 +120,7 @@ class RestNotificationServiceMod(BaseNotificationService):
         resource,
         method,
         headers,
+        params,
         message_param_name,
         title_param_name,
         target_param_name,
@@ -129,6 +134,7 @@ class RestNotificationServiceMod(BaseNotificationService):
         self._hass = hass
         self._method = method.upper()
         self._headers = headers
+        self._params = params
         self._message_param_name = message_param_name
         self._title_param_name = title_param_name
         self._target_param_name = target_param_name
@@ -163,7 +169,7 @@ class RestNotificationServiceMod(BaseNotificationService):
                         key: _data_template_creator(item) for key, item in value.items()
                     }
                 value.hass = self._hass
-                return value.async_render(kwargs)
+                return value.async_render(kwargs, parse_result=False)
 
             data.update(_data_template_creator(self._data_template))
 
@@ -171,6 +177,7 @@ class RestNotificationServiceMod(BaseNotificationService):
             response = requests.post(
                 self._resource,
                 headers=self._headers,
+                params=self._params,
                 data=data,
                 timeout=10,
                 auth=self._auth,
@@ -180,6 +187,7 @@ class RestNotificationServiceMod(BaseNotificationService):
             response = requests.post(
                 self._resource,
                 headers=self._headers,
+                params=self._params,
                 json=data,
                 timeout=10,
                 auth=self._auth,
@@ -189,7 +197,7 @@ class RestNotificationServiceMod(BaseNotificationService):
             response = requests.get(
                 self._resource,
                 headers=self._headers,
-                params=data,
+                params=self._params.update(data),
                 timeout=10,
                 auth=self._auth,
                 verify=self._verify_ssl,
@@ -200,18 +208,18 @@ class RestNotificationServiceMod(BaseNotificationService):
             and response.status_code < 600
         ):
             _LOGGER.exception(
-                "Server error. Response %d: %s:", response.status_code, response.reason
+                "[%s] Server error. Response %d: %s:", self._name, response.status_code, response.reason
             )
         elif (
             response.status_code >= HTTP_BAD_REQUEST
             and response.status_code < HTTP_INTERNAL_SERVER_ERROR
         ):
             _LOGGER.exception(
-                "Client error. Response %d: %s:", response.status_code, response.reason
+                "[%s] Client error. Response %d: %s:", self._name, response.status_code, response.reason
             )
         elif response.status_code >= HTTP_OK and response.status_code < 300:
             _LOGGER.debug(
-                "Success. Response %d: %s:", response.status_code, response.reason
+                "[%s] Success. Response %d: %s:", self._name, response.status_code, response.reason
             )
         else:
-            _LOGGER.debug("Response %d: %s:", response.status_code, response.reason)
+            _LOGGER.debug("[%s] Response %d: %s:", self._name, response.status_code, response.reason)
