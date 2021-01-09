@@ -27,6 +27,10 @@ noctis-grey:
   primary-color: 'var(--accent-color)'
   light-primary-color: '#7b7d80'
 
+  # Google
+  google-red-500: "#E45E65"
+  google-green-500: "#0EE770"
+
   # Background
   background-color: '#212121'
   primary-background-color: 'var(--background-color)'

@@ -41,6 +41,14 @@ sensor.ha_version_latest:
   friendly_name: Поcледняя версия HA Core
   icon: mdi:alpha-v-circle
 
+sensor.ha_supervisor_current_version:
+  friendly_name: Текущая версия HA Supervisor
+  icon: mdi:alpha-v-circle-outline
+
+sensor.ha_supervisor_latest_version:
+  friendly_name: Поcледняя версия HA Supervisor
+  icon: mdi:alpha-v-circle
+
 sensor.processor_temp:
   friendly_name: Температура CPU
   device_class: temperature
@@ -98,4 +106,8 @@ sensor.drink_water_monthly_single:
 sensor.drink_water_daily_single:
   friendly_name: Расход питьевой воды (сегодня)
   unit_of_measurement: л         
-  icon: mdi:gauge            
+  icon: mdi:gauge   
+
+sensor.mean_humidity:
+  friendly_name: Средняя влажность
+  icon: mdi:water-percent
