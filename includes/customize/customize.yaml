@@ -35,19 +35,23 @@ sensor.time:
 
 sensor.ha_version_current:
   friendly_name: Текущая версия HA Core
-  icon: mdi:alpha-v-circle-outline
+  icon: mdi:alpha-c-circle-outline
 
 sensor.ha_version_latest:
   friendly_name: Поcледняя версия HA Core
-  icon: mdi:alpha-v-circle
+  icon: mdi:alpha-c-circle
 
 sensor.ha_supervisor_current_version:
   friendly_name: Текущая версия HA Supervisor
-  icon: mdi:alpha-v-circle-outline
+  icon: mdi:alpha-s-circle-outline
 
 sensor.ha_supervisor_latest_version:
   friendly_name: Поcледняя версия HA Supervisor
-  icon: mdi:alpha-v-circle
+  icon: mdi:alpha-s-circle
+
+sensor.hacs:
+  friendly_name: HACS
+  unit_of_measurement: ожидают обновления
 
 sensor.processor_temp:
   friendly_name: Температура CPU
@@ -66,7 +70,7 @@ sensor.memory_use_percent:
   friendly_name: Используемая память
 
 sensor.disk_use_percent:
-  friendly_name: System SSD
+  friendly_name: SSD
   icon: custom:imac-ssd
 
 sensor.disk_free:
@@ -76,6 +80,10 @@ sensor.disk_free:
 sensor.home_assistant_v2_db:
   friendly_name: База данных
   icon: mdi:database
+
+binary_sensor.rpi_power_status:
+  friendly_name: Состояние питания RPi
+  icon: mdi:raspberry-pi
 
 #sensor.ha_uptime:
 #  friendly_name: HA Uptime 

@@ -142,7 +142,7 @@
 
 - platform: template
   sensors:
-    host_uptime_abs: # Время с последней перезагрузки Raspberry (host) абсолютное в минутах
+    rpi_uptime_abs: # Время с последней перезагрузки Raspberry (host) абсолютное в минутах
       value_template: "{{ ( ( as_timestamp(now()) - as_timestamp(states('sensor.last_boot')) ) / (60) ) | int }}"
       #value_template: >
       #  {% set uptime = as_timestamp (now()) -as_timestamp(states.sensor.last_boot.state) | int %}
@@ -169,21 +169,21 @@
       #      {% endif %}
       #    {% endif %}
 
-    host_uptime:
-      friendly_name: Host Uptime 
+    rpi_uptime:
+      friendly_name: RPi Uptime 
       icon_template: mdi:timer-outline
       value_template: >
-        {%- set uptime = states('sensor.host_uptime_abs')|int -%}
+        {%- set uptime = states('sensor.rpi_uptime_abs')|int -%}
         {%- set minutes = (uptime % 60) | int %} 
         {%- set hours = ((uptime % 1440) /60) | int %}
         {%- set days = (uptime / 1440)|int -%}
 
         {%if days > 0 %}{{days}} д. {% endif %}{%if hours > 0 %}{{hours}} ч. {% endif %}{%if minutes > 0  or uptime >60 %}{{minutes}} мин.{%else%}< 1 мин.{%endif%}
       attribute_templates:
-        days: "{{ (states('sensor.host_uptime_abs')|int / 1440)|int }}"
-        hours: "{{ ((states('sensor.host_uptime_abs')|int % 1440) /60) | int }}"
-        minutes: "{{ (states('sensor.host_uptime_abs')|int % 60) | int }}"
-        raw: "{{ (states('sensor.host_uptime_abs')|float) }}"
+        days: "{{ (states('sensor.rpi_uptime_abs')|int / 1440)|int }}"
+        hours: "{{ ((states('sensor.rpi_uptime_abs')|int % 1440) /60) | int }}"
+        minutes: "{{ (states('sensor.rpi_uptime_abs')|int % 60) | int }}"
+        raw: "{{ (states('sensor.rpi_uptime_abs')|float) }}"
 
 - platform: template  # аптайм Home Assistant
   sensors:

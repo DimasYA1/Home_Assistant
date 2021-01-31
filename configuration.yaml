@@ -62,6 +62,8 @@ lovelace: # !include lovelace/lovelace.yaml
       type: module
     - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
       type: module
+    - url: /hacsfiles/weather-card/weather-card.js
+      type: module
 
     # Custom
     - url: /local/layout-card.js
