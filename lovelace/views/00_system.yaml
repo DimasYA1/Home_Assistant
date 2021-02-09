@@ -357,8 +357,45 @@ cards:
         content: КЛИМАТ
       
       - type: custom:mini-humidifier # Карточка увлажнителя
-        entity: fan.humidifier2
+        entity: fan.xiaomi_air_humidifier_2
         model: 'zhimi.humidifier.cb1'
+        indicators:
+          depth:
+            icon: 'mdi:tray-full'
+            unit: '%'
+            round: 0
+            order: 0
+            max_value: 125
+            volume: 4
+            type: 'percent'
+            source:
+              attribute: depth
+              mapper: >
+                (val) => {
+                  const value = (100 * (val || 0)) / this.max_value;
+                  return this.type === 'liters' ? (value * this.volume) / 100 : value;
+                }
+          temperature:
+            icon: 'mdi:thermometer-low'
+            unit: '°C'
+            round: 1
+            order: 1
+            source:
+              attribute: temperature
+          humidity:
+            icon: 'mdi:water'
+            unit: '%'
+            round: 1
+            order: 2
+            source:
+              attribute: humidity
+          motor_speed:
+            icon: 'mdi:fan'
+            unit: 'rpm'
+            round: 0
+            order: 3
+            source:
+              attribute: motor_speed
 
   - type: vertical-stack
     cards:

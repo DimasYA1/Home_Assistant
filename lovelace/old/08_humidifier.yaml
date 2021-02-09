@@ -2,6 +2,6 @@ title: Климат
 icon: mdi:water-percent
 cards:
   - type: custom:mini-humidifier
-    entity: fan.humidifier2
+    entity: fan.xiaomi_air_humidifier_2
     # zhimi.humidifier.cb1 default value may be omitted, added for example.
     model: 'zhimi.humidifier.cb1' 

@@ -5,23 +5,23 @@
 # Увлажнитель Smartmi   
     smartmi_mode:
       friendly_name: 'Режим увлажнителя'
-      value_template: "{{ state_attr('fan.humidifier2', 'mode') }}"
+      value_template: "{{ state_attr('fan.xiaomi_air_humidifier_2', 'mode') }}"
       icon_template: mdi:speedometer
 
     smartmi_water:
       friendly_name: 'Уровень воды'
       unit_of_measurement: '%'
-      value_template: "{{ [state_attr('fan.humidifier2', 'depth') / 1.2, 100] | min | int }}"
+      value_template: "{{ [state_attr('fan.xiaomi_air_humidifier_2', 'depth') / 1.2, 100] | min | int }}"
       icon_template: mdi:cup-water
 
     smartmi_temperature:
       friendly_name: 'Увлажнитель - температура'
       unit_of_measurement: '°C'
-      value_template: "{{ state_attr('fan.humidifier2', 'temperature') }}"
+      value_template: "{{ state_attr('fan.xiaomi_air_humidifier_2', 'temperature') }}"
       icon_template: mdi:temperature-celsius
 
     smartmi_humidity:
       friendly_name: 'Увлажнитель - влажность'
       unit_of_measurement: '%'
-      value_template: "{{ state_attr('fan.humidifier2', 'humidity') }}"
+      value_template: "{{ state_attr('fan.xiaomi_air_humidifier_2', 'humidity') }}"
       icon_template: mdi:water-percent

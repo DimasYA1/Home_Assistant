@@ -1,5 +1,5 @@
 - platform: xiaomi_miio
+  name: Xiaomi Air Humidifier 2
   host: !secret humidifier_ip
   token: !secret xiaomi_token
-  name: Humidifier2
   model: zhimi.humidifier.cb1

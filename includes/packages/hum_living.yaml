@@ -60,72 +60,72 @@ hum_living:
               mdi:air-humidifier
 
         smart_humidifier_mode_auto:
-          friendly_name: "Увлажнитель авто"
+          friendly_name: "Увлажнитель Авто режим"
           value_template: >-
-            {{ is_state('fan.humidifier2', 'on')
-              and is_state_attr('fan.humidifier2', 'mode', 'auto') }}
+            {{ is_state('fan.xiaomi_air_humidifier_2', 'on')
+              and is_state_attr('fan.xiaomi_air_humidifier_2', 'mode', 'auto') }}
           turn_on:
             - service: homeassistant.turn_on
-              entity_id: fan.humidifier2
+              entity_id: fan.xiaomi_air_humidifier_2
             - service: fan.set_speed
-              entity_id: fan.humidifier2
+              entity_id: fan.xiaomi_air_humidifier_2
               data:
                   speed: Auto
           turn_off:
             - service: homeassistant.turn_off
               entity_id: 
-                - fan.humidifier2
+                - fan.xiaomi_air_humidifier_2
                   
         smart_humidifier_mode_silent:
-          friendly_name: "Увлажнитель тихий"
+          friendly_name: "Увлажнитель Тихий режим"
           value_template: >-
-            {{ is_state('fan.humidifier2', 'on')
-              and is_state_attr('fan.humidifier2', 'mode', 'silent') }}
+            {{ is_state('fan.xiaomi_air_humidifier_2', 'on')
+              and is_state_attr('fan.xiaomi_air_humidifier_2', 'mode', 'silent') }}
           turn_on:
             - service: homeassistant.turn_on
-              entity_id: fan.humidifier2
+              entity_id: fan.xiaomi_air_humidifier_2
             - service: fan.set_speed
-              entity_id: fan.humidifier2
+              entity_id: fan.xiaomi_air_humidifier_2
               data:
                   speed: Silent
           turn_off:
             - service: homeassistant.turn_off
               entity_id: 
-                - fan.humidifier2
+                - fan.xiaomi_air_humidifier_2
                   
         smart_humidifier_mode_medium:
-          friendly_name: "Увлажнитель средний"
+          friendly_name: "Увлажнитель Средний режим"
           value_template: >-
-            {{ is_state('fan.humidifier2', 'on')
-              and is_state_attr('fan.humidifier2', 'mode', 'medium') }}
+            {{ is_state('fan.xiaomi_air_humidifier_2', 'on')
+              and is_state_attr('fan.xiaomi_air_humidifier_2', 'mode', 'medium') }}
           turn_on:
             - service: homeassistant.turn_on
-              entity_id: fan.humidifier2
+              entity_id: fan.xiaomi_air_humidifier_2
             - service: fan.set_speed
-              entity_id: fan.humidifier2
+              entity_id: fan.xiaomi_air_humidifier_2
               data:
                   speed: Medium
           turn_off:
             - service: homeassistant.turn_off
               entity_id: 
-                - fan.humidifier2
+                - fan.xiaomi_air_humidifier_2
                   
         smart_humidifier_mode_high:
-          friendly_name: "Увлажнитель максимальный"
+          friendly_name: "Увлажнитель Максимальный режим"
           value_template: >-
-            {{ is_state('fan.humidifier2', 'on')
-              and is_state_attr('fan.humidifier2', 'mode', 'high') }}
+            {{ is_state('fan.xiaomi_air_humidifier_2', 'on')
+              and is_state_attr('fan.xiaomi_air_humidifier_2', 'mode', 'high') }}
           turn_on:
             - service: homeassistant.turn_on
-              entity_id: fan.humidifier2
+              entity_id: fan.xiaomi_air_humidifier_2
             - service: fan.set_speed
-              entity_id: fan.humidifier2
+              entity_id: fan.xiaomi_air_humidifier_2
               data:
                   speed: High
           turn_off:
             - service: homeassistant.turn_off
               entity_id: 
-                - fan.humidifier2
+                - fan.xiaomi_air_humidifier_2
 
   input_number:
     humidity_level:
