@@ -37,7 +37,7 @@ mqtt:
   username: !secret mqtt_username
   password: !secret mqtt_password
   
-#lovelace_gen:
+lovelace_gen:
 
 lovelace: # !include lovelace/lovelace.yaml
   mode: yaml
@@ -64,6 +64,10 @@ lovelace: # !include lovelace/lovelace.yaml
       type: module
     - url: /hacsfiles/weather-card/weather-card.js
       type: module
+#    - url: https://cdn.jsdelivr.net/gh/bramkragten/weather-card/dist/weather-card.min.js
+#      type: module
+    - url: /hacsfiles/light-popup-card/light-popup-card.js
+      type: module
 
     # Custom
     - url: /local/layout-card.js
@@ -82,6 +86,9 @@ lovelace: # !include lovelace/lovelace.yaml
     - url: 'https://fonts.googleapis.com/css?family=Quicksand'
       type: css
 
+browser_mod:
+  disable:
+    - all
 
 # Вынос во внешние файлы
 timer: !include includes/timer.yaml
@@ -117,19 +124,28 @@ notify:
     platform: telegram
     chat_id: !secret telegram_id_1
 
-asuswrt:
-  host: 192.168.1.1
-  username: !secret asuswrt_login
-  password: !secret asuswrt_pass 
-#  protocol: telnet
-  interface: eth2.2
-  dnsmasq: /tmp
-  sensors:
-  - devices
-  - upload
-  - download
-  - upload_speed
-  - download_speed
+device_tracker:
+  - platform: keenetic_ndms2
+    host: !secret keenetic_host
+    username: !secret keenetic_user
+    password: !secret keenetic_pass
+    consider_home: 60
+    new_device_defaults:
+      track_new_devices: false
+
+# asuswrt:
+#   host: 192.168.1.1
+#   username: !secret asuswrt_login
+#   password: !secret asuswrt_pass 
+# #  protocol: telnet
+#   interface: eth2.2
+#   dnsmasq: /tmp
+#   sensors:
+#   - devices
+#   - upload
+#   - download
+#   - upload_speed
+#   - download_speed
 
 weather:
   - platform: gismeteo
@@ -147,3 +163,28 @@ google_assistant:
     - humidifier 
     - fan 
     - script 
+
+ble_monitor:
+#   hci_interface: 0
+#   discovery: True
+#   active_scan: False
+#   report_unknown: False
+#   batt_entities: False
+#   decimals: 1
+#   period: 60
+#   log_spikes: False
+#   use_median: False
+#   restore_state: False
+  devices:
+    - mac: 'A4:C1:38:C5:00:75'
+      name: 'Кухня'
+      encryption_key: 'a2c8838e1ca1eb339558e9e7ebe59304'
+      temperature_unit: C
+#       decimals: 2
+#       use_median: False
+#       restore_state: default
+#     - mac: 'C4:3C:4D:6B:4F:F3'
+#       name: 'Bedroom'
+#       temperature_unit: F
+#     - mac: 'B4:7C:8D:6D:4C:D3'
+#       reset_timer: 35

@@ -4,25 +4,10 @@ cards:
 
   - type: vertical-stack
     cards:
+      - !include
+        - ../includes/titles.yaml
+        - title: RPi & HA
 
-      - type: markdown  # RPi & HA
-        style: |
-          ha-card {
-            font-size: 20px;
-            font-family: var(--primary-font-family) # Quicksand;
-            height: 30px;
-            background: none;
-            margin-top: 0em;
-            margin-left: 8px;
-            margin-bottom: 0em;
-            box-shadow: none;
-          }
-          ha-markdown {
-            padding: 0px 0px 0px 8px !important;
-            # border-left: 3px solid var(--accent-color);
-          }
-        content: RPi & HA
-      
       - type: custom:stack-in-card
         cards:
 
@@ -174,24 +159,9 @@ cards:
   
   - type: vertical-stack
     cards:
-      
-      - type: markdown  # СЕНСОРЫ
-        style: |
-          ha-card {
-            font-size: 20px;
-            font-family: var(--primary-font-family) # Quicksand;
-            height: 30px;
-            background: none;
-            margin-top: 0em;
-            margin-left: 8px;
-            margin-bottom: 0em;
-            box-shadow: none;
-          }
-          ha-markdown {
-            padding: 0px 0px 0px 8px !important;
-            # border-left: 3px solid var(--accent-color);
-          }
-        content: СЕНСОРЫ
+      - !include
+        - ../includes/titles.yaml
+        - title: СЕНСОРЫ
       
       - type: custom:stack-in-card  # Карточка Сенсоры 
         cards: 
@@ -304,6 +274,44 @@ cards:
           cards:
             - type: custom:mini-graph-card
               entities: 
+                - sensor.ble_temperature_kukhnia
+              name: Температура на кухне
+              align_state: center
+              align_icon: right
+              font_size: 60
+              font_size_header: 11
+              hours_to_show: 24
+              line_color: rgba(247,53,67,1) 
+              line_width: 4
+              animate: true
+              points_per_hour: 2
+              show:
+                fill: false
+                graph: line
+                extrema: false
+            
+            - type: custom:mini-graph-card
+              entities: 
+                - sensor.ble_humidity_kukhnia
+              name: Влажность на кухне
+              align_state: center
+              align_icon: right
+              font_size: 60
+              font_size_header: 11
+              hours_to_show: 24
+              line_color: rgba(0,202,139,1)
+              line_width: 4
+              animate: true
+              points_per_hour: 2
+              show:
+                fill: false
+                graph: line
+                extrema: false
+
+        - type: horizontal-stack
+          cards:
+            - type: custom:mini-graph-card
+              entities: 
                 - sensor.gismeteo_temperature
               name: Температура на улице
               align_state: center
@@ -338,23 +346,9 @@ cards:
                 graph: line
                 extrema: false
         
-      - type: markdown  # КЛИМАТ
-        style: |
-          ha-card {
-            font-size: 20px;
-            font-family: var(--primary-font-family) # Quicksand;
-            height: 30px;
-            background: none;
-            margin-top: 0em;
-            margin-left: 8px;
-            margin-bottom: 0em;
-            box-shadow: none;
-          }
-          ha-markdown {
-            padding: 0px 0px 0px 8px !important;
-            # border-left: 3px solid var(--accent-color);
-          }
-        content: КЛИМАТ
+      - !include
+        - ../includes/titles.yaml
+        - title: КЛИМАТ
       
       - type: custom:mini-humidifier # Карточка увлажнителя
         entity: fan.xiaomi_air_humidifier_2
@@ -400,23 +394,10 @@ cards:
   - type: vertical-stack
     cards:
 
-      - type: markdown  # СТАСУС СЕТИ ИНТЕРНЕТ
-        style: |
-          ha-card {
-            font-size: 20px;
-            font-family: var(--primary-font-family) # Quicksand;
-            height: 30px;
-            background: none;
-            margin-top: 0em;
-            margin-left: 8px;
-            margin-bottom: 0em;
-            box-shadow: none;
-          }
-          ha-markdown {
-            padding: 0px 0px 0px 8px !important;
-            # border-left: 3px solid var(--accent-color);
-          }
-        content: СТАСУС СЕТИ ИНТЕРНЕТ
+      - !include
+        - ../includes/titles.yaml
+        - title: ИНТЕРНЕТ
+
         
       - type: custom:stack-in-card  # Карточка Статус сети
         cards: 
@@ -576,7 +557,7 @@ cards:
           cards:
             - type: custom:mini-graph-card
               entities: 
-                - entity: sensor.asuswrt_download_speed
+                - entity: sensor.keenetic_mb_received_speed
               name: Download
               align_state: center
               # align_icon: {{ align_icon, default('right') }}
@@ -598,7 +579,7 @@ cards:
               
             - type: custom:mini-graph-card
               entities: 
-                - entity: sensor.asuswrt_upload_speed
+                - entity: sensor.keenetic_mb_sent_speed
               name: Upload
               align_state: center
               # align_icon: {{ align_icon, default('right') }}
@@ -628,5 +609,5 @@ cards:
           #    padding-bottom: 0px;
           #  }
           entities:
-            - sensor.asuswrt_download
-            - sensor.asuswrt_upload
+            - sensor.keenetic_mb_received
+            - sensor.keenetic_mb_sent

@@ -17,5 +17,5 @@ cards:
       entity: weather.met_norway
 
     - type: iframe
-      url: https://embed.windy.com/embed2.html?lat=56.170&lon=47.285&detailLat=56.175&detailLon=47.286&width=1300&height=450&zoom=5&level=surface&overlay=radar&product=radar&menu=&message=true&marker=&calendar=12&pressure=true&type=map&location=coordinates&detail=&metricWind=m%2Fs&metricTemp=%C2%B0C&radarRange=-1
-      aspect_ratio: 100%
+      url: https://embed.windy.com/embed2.html?lat=56.097&lon=47.276&zoom=8&level=surface&overlay=rain&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=56.097&detailLon=47.276&metricWind=default&metricTemp=default&radarRange=-1
+      aspect_ratio: 120%

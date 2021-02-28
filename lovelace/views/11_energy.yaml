@@ -3,5 +3,5 @@ icon: mdi:lightning-bolt
 cards:
   - type: sensor
     name: 'Напряжение в сети'
-    entity: sensor.0x588e81fffed38d60_voltage
+    entity: sensor.socket_bathroom_voltage
     graph: line

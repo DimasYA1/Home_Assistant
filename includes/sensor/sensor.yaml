@@ -9,6 +9,20 @@
   state_topic: "tele/pzem/SENSOR"
   value_template: "{{ value_json['ENERGY'].Voltage}}"
   unit_of_measurement: "В"
+
+# - platform: mitemp_bt
+#   rounding: True
+#   decimals: 1
+#   period: 60
+#   log_spikes: False
+#   use_median: False
+#   active_scan: False
+#   hci_interface: 0
+#   batt_entities: False
+#   encryptors:
+#     'A4:C1:38:C5:00:75': '18259270c507649dee9b94480a98f5b5'
+#   sensor_names:
+#     'A4:C1:38:C5:00:75': 'Балкон'
   
   # - platform: mqtt 
   #   name: "Ток"
