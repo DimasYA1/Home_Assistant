@@ -3,12 +3,15 @@
 .storage
 .vscode
 .ssh
+custom_components
 deps
+image
 tts
 www/community
 
 # Ignore files
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
+.HA_VERSION
 home-assistant.log
 home-assistant_v2.db
 secrets.yaml
