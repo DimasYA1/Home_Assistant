@@ -30,7 +30,7 @@ cards:
                 #  .flex {
                 #    padding-bottom: 10px;
                 #  }
-                entities: 
+                entities:
                   - sensor.processor_use
                   # - entity: sensor.solar_elevation
                   #   color: 'rgba(0,0,0,0.3)'
@@ -58,9 +58,9 @@ cards:
                   icon: true # {{ show_icon|default('true') }}
                   name: true # {{ show_name|default('true') }}
                   labels: false
-              
+
               - type: custom:mini-graph-card # Температура процессора
-                entities: 
+                entities:
                   - sensor.processor_temp
                 name: Температура
                 align_state: center
@@ -77,7 +77,7 @@ cards:
                   graph: line  # {{ graph|default('line') }}
                   extrema: false  # {{ extrema|default('false') }}
                   labels: false
-              
+
               - type: custom:mini-graph-card # Использование памяти
                 entities:
                   - sensor.memory_use_percent
@@ -96,7 +96,7 @@ cards:
                   graph: line  # {{ graph|default('line') }}
                   extrema: false  # {{ extrema|default('false') }}
                   labels: false
-          
+
           - type: vertical-stack
             cards:
               - type: entities
@@ -187,7 +187,7 @@ cards:
               #  .flex {
               #    padding-bottom: 10px;
               #  }
-              entities: 
+              entities:
                 - entity: sensor.0x00158d0004acb510_temperature
                   name: Aqara
                 - entity: sensor.smartmi_temperature
@@ -217,7 +217,7 @@ cards:
                 fill: false
                 graph: line
                 extrema: false
-              
+
             - type: custom:mini-graph-card
               #style: |
               #  ha-card {
@@ -236,7 +236,7 @@ cards:
               #  .flex {
               #    padding-bottom: 10px;
               #  }
-              entities: 
+              entities:
                 - entity: sensor.mean_humidity
                   name: Среднее
                 - entity: sensor.0x00158d0004acb510_humidity
@@ -269,11 +269,11 @@ cards:
                 fill: false
                 graph: line
                 extrema: false
-        
+
         - type: horizontal-stack
           cards:
             - type: custom:mini-graph-card
-              entities: 
+              entities:
                 - sensor.ble_temperature_kukhnia
               name: Температура на кухне
               align_state: center
@@ -281,7 +281,7 @@ cards:
               font_size: 60
               font_size_header: 11
               hours_to_show: 24
-              line_color: rgba(247,53,67,1) 
+              line_color: rgba(247,53,67,1)
               line_width: 4
               animate: true
               points_per_hour: 2
@@ -289,9 +289,9 @@ cards:
                 fill: false
                 graph: line
                 extrema: false
-            
+
             - type: custom:mini-graph-card
-              entities: 
+              entities:
                 - sensor.ble_humidity_kukhnia
               name: Влажность на кухне
               align_state: center
@@ -311,15 +311,15 @@ cards:
         - type: horizontal-stack
           cards:
             - type: custom:mini-graph-card
-              entities: 
-                - sensor.gismeteo_temperature
+              entities:
+                - sensor.gismeteo_weather_temperature
               name: Температура на улице
               align_state: center
               align_icon: right
               font_size: 60
               font_size_header: 11
               hours_to_show: 24
-              line_color: rgba(247,53,67,1) 
+              line_color: rgba(247,53,67,1)
               line_width: 4
               animate: true
               points_per_hour: 2
@@ -327,10 +327,10 @@ cards:
                 fill: false
                 graph: line
                 extrema: false
-            
+
             - type: custom:mini-graph-card
-              entities: 
-                - sensor.gismeteo_humidity
+              entities:
+                - sensor.gismeteo_weather_humidity
               name: Влажность на улице
               align_state: center
               align_icon: right
@@ -345,11 +345,11 @@ cards:
                 fill: false
                 graph: line
                 extrema: false
-        
+
       - !include
         - ../includes/titles.yaml
         - title: КЛИМАТ
-      
+
       - type: custom:mini-humidifier # Карточка увлажнителя
         entity: fan.xiaomi_air_humidifier_2
         model: 'zhimi.humidifier.cb1'

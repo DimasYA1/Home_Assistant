@@ -2,7 +2,7 @@ icon: mdi:home-assistant
 title: Dashboard
 id: Dash
 popup_cards:
-  sensor.andre_status:
+  sensor.dimitriy_status:
     title: Andre
     card:
       type: custom:stack-in-card
@@ -11,21 +11,21 @@ popup_cards:
         - type: history-graph
           style: !include ../includes/style_entities_popup.yaml
           entities:
-            - sensor.andre_status
+            - sensor.dimitriy_status
         - type: entities
           style: !include ../includes/style_entities_popup.yaml
           entities:
-            - device_tracker.andre_mi9t_app
-            - device_tracker.andre_mi9t
-  device_tracker.andre_mi9t_app:
-    title: Karte
+            - device_tracker.oneplus_5t
+
+  device_tracker.oneplus_5t:
+    title: Карта
     card:
       type: map
       aspect_ratio: 16:9
       default_zoom: 12
       hours_to_show: 24
       entities:
-        - device_tracker.andre_mi9t_app
+        - device_tracker.oneplus_5t
   weather.gismeteo:
     title: Weather
     large: true
@@ -520,7 +520,7 @@ cards:
                   #states > * {
                     margin-top: 0;
                   }
-                entity: sensor.mi_9t_battery_level
+                entity: sensor.oneplus_5t_uroven_zariada_akkumuliatora
                 positions:
                   icon: 'off'
                   indicator: 'off'
@@ -535,19 +535,19 @@ cards:
                   ## ANDRE PERSON STATUS ##
                   - type: custom:button-card
                     template: people_state
-                    entity: sensor.andre_status
+                    entity: sensor.dimitriy_status
                     entity_picture: /local/presence/andre.png
                   - type: vertical-stack
                     cards:                                             
                       ## ANDRE BATTERY ##
                       - type: custom:button-card
                         template: people_button
-                        entity: sensor.andre_mi9t_battery_level
+                        entity: sensor.oneplus_5t_uroven_zariada_akkumuliatora
                         show_state: true
                       ## ANDRE MAP ICON ##
                       - type: custom:button-card
                         template: people_button
-                        entity: device_tracker.andre_mi9t_app
+                        entity: device_tracker.oneplus_5t
                         name: Map
                         show_name: true
                         hold_action:
@@ -556,7 +556,7 @@ cards:
                       ## ANDRE LAST CHANGED ##
                       - type: custom:button-card
                         template: people_button
-                        entity: sensor.andre_status
+                        entity: sensor.dimitriy_status
                         show_last_changed: true
       
           
@@ -682,46 +682,115 @@ cards:
       
       
       
-      - type: horizontal-stack
+#      - type: horizontal-stack
+#        cards:
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.0x00158d0004acb510_temperature
+#              name: Гостинная
+#              line_color: var(--custom_graph_color_1)
+#              hours_to_show: 48
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.ble_temperature_kukhnia
+#              name: Кухня
+#              line_color: var(--custom_graph_color_2)
+#              hours_to_show: 48
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.gismeteo_temperature
+#              name: Улица
+#              line_color: var(--custom_graph_color_3)
+#              hours_to_show: 48
+#      - type: horizontal-stack
+#        cards:
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.0x00158d0004acb510_humidity
+#              name: Гостинная
+#              line_color: var(--custom_graph_color_1)
+#              hours_to_show: 48
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.ble_humidity_kukhnia
+#              name: Кухня
+#              line_color: var(--custom_graph_color_2)
+#              hours_to_show: 48
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.gismeteo_humidity
+#              name: Улица
+#              line_color: var(--custom_graph_color_3)
+#              hours_to_show: 48
+
+      - type: custom:stack-in-card
         cards:
           - !include
-            - ../includes/graphs.yaml
-            - entity: sensor.0x00158d0004acb510_temperature
-              name: Гостинная
-              line_color: var(--custom_graph_color_1)
-              hours_to_show: 48
-          - !include
-            - ../includes/graphs.yaml
-            - entity: sensor.ble_temperature_kukhnia
-              name: Кухня
-              line_color: var(--custom_graph_color_2)
-              hours_to_show: 48
-          - !include
-            - ../includes/graphs.yaml
-            - entity: sensor.gismeteo_temperature
-              name: Улица
-              line_color: var(--custom_graph_color_3)
-              hours_to_show: 48
-      - type: horizontal-stack
+            - ../includes/titles_dash.yaml
+            - title: Гостинная
+          - type: horizontal-stack
+            cards:
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.0x00158d0004acb510_temperature
+                  name: Температура
+                  line_color: var(--custom_graph_color_1)
+                  align_icon: left
+                  hours_to_show: 12
+                  points_per_hour: 4
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.0x00158d0004acb510_humidity
+                  name: Влажность
+                  line_color: var(--custom_graph_color_3)
+                  hours_to_show: 12
+                  points_per_hour: 4
+
+      - type: custom:stack-in-card
         cards:
           - !include
-            - ../includes/graphs.yaml
-            - entity: sensor.0x00158d0004acb510_humidity
-              name: Гостинная
-              line_color: var(--custom_graph_color_1)
-              hours_to_show: 48
+            - ../includes/titles_dash.yaml
+            - title: Кухня
+          - type: horizontal-stack
+            cards:
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.ble_temperature_kukhnia
+                  name: Температура
+                  line_color: var(--custom_graph_color_1)
+                  align_icon: left
+                  hours_to_show: 12
+                  points_per_hour: 4
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.ble_humidity_kukhnia
+                  name: Влажность
+                  line_color: var(--custom_graph_color_3)
+                  hours_to_show: 12
+                  points_per_hour: 4
+
+      - type: custom:stack-in-card
+        cards:
           - !include
-            - ../includes/graphs.yaml
-            - entity: sensor.ble_humidity_kukhnia
-              name: Кухня
-              line_color: var(--custom_graph_color_2)
-              hours_to_show: 48
-          - !include
-            - ../includes/graphs.yaml
-            - entity: sensor.gismeteo_humidity
-              name: Улица
-              line_color: var(--custom_graph_color_3)
-              hours_to_show: 48
+            - ../includes/titles_dash.yaml
+            - title: Улица
+          - type: horizontal-stack
+            cards:
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.gismeteo_weather_temperature
+                  name: Температура
+                  line_color: var(--custom_graph_color_1)
+                  align_icon: left
+                  hours_to_show: 12
+                  points_per_hour: 4
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.gismeteo_weather_humidity
+                  name: Влажность
+                  line_color: var(--custom_graph_color_3)
+                  hours_to_show: 12
+                  points_per_hour: 4
 
       ## DOWNLOAD / UPLOAD ## 
       - type: horizontal-stack
@@ -740,56 +809,59 @@ cards:
               hours_to_show: 12
               points_per_hour: 4
 
-      - type: horizontal-stack
-        cards:
-          - type: custom:stack-in-card  # Карточка Сенсоры 
-            cards:
-              - type: vertical-stack
-                cards:
-                  - !include
-                    - ../includes/graphs.yaml
-                    - entity: sensor.0x00158d0004acb510_temperature
-                      name: Гостинная
-                      line_color: var(--custom_graph_color_1)
-                      hours_to_show: 48
-                  - !include
-                    - ../includes/graphs.yaml
-                    - entity: sensor.0x00158d0004acb510_humidity
-                      name: Гостинная
-                      line_color: var(--custom_graph_color_1)
-                      hours_to_show: 48
-
-
-          - type: custom:stack-in-card 
-            cards:  
-              - type: vertical-stack
-                cards:
-                  - !include
-                    - ../includes/graphs.yaml
-                    - entity: sensor.ble_temperature_kukhnia
-                      name: Кухня
-                      line_color: var(--custom_graph_color_2)
-                      hours_to_show: 48
-                  - !include
-                    - ../includes/graphs.yaml
-                    - entity: sensor.ble_humidity_kukhnia
-                      name: Кухня
-                      line_color: var(--custom_graph_color_2)
-                      hours_to_show: 48
-
-          - type: custom:stack-in-card 
-            cards:  
-              - type: vertical-stack
-                cards:
-                  - !include
-                    - ../includes/graphs.yaml
-                    - entity: sensor.gismeteo_temperature
-                      name: Кухня
-                      line_color: var(--custom_graph_color_3)
-                      hours_to_show: 48
-                  - !include
-                    - ../includes/graphs.yaml
-                    - entity: sensor.gismeteo_humidity
-                      name: Кухня
-                      line_color: var(--custom_graph_color_3)
-                      hours_to_show: 48
+#      - type: horizontal-stack
+#        cards:
+#          - type: custom:stack-in-card  # Карточка Сенсоры 
+#            cards:
+#              - type: vertical-stack
+#                cards:
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.0x00158d0004acb510_temperature
+#                      name: Гостинная
+#                      line_color: var(--custom_graph_color_1)
+#                      hours_to_show: 48
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.0x00158d0004acb510_humidity
+#                      name: false
+#                      line_color: var(--custom_graph_color_1)
+#                      hours_to_show: 48
+#
+#
+#          - type: custom:stack-in-card 
+#            cards:  
+#              - type: vertical-stack
+#                cards:
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.ble_temperature_kukhnia
+#                      name: Кухня
+#                      line_color: var(--custom_graph_color_2)
+#                      hours_to_show: 48
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.ble_humidity_kukhnia
+#                      name: false
+#                      line_color: var(--custom_graph_color_2)
+#                      hours_to_show: 48
+#
+#          - type: custom:stack-in-card 
+#            cards:  
+#              - type: vertical-stack
+#                cards:
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.gismeteo_temperature
+#                      name: Кухня
+#                      align_header: center
+#                      align_icon: state
+#                      line_color: var(--custom_graph_color_3)
+#                      hours_to_show: 48
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.gismeteo_humidity
+#                      name: false
+#                      align_icon: state
+#                      line_color: var(--custom_graph_color_3)
+#                      hours_to_show: 48

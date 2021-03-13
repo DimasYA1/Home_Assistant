@@ -8,20 +8,21 @@ style: |
     margin-bottom: 0px;
   }
   .graph {
-    padding-top: 15px;
-    padding-bottom: 0px;
+    padding-top: 5px;
+    padding-bottom: -5px;
   }
   .info {
     padding-bottom: 0px;
   }
   .flex {
-    padding-bottom: 5px;
+    padding-bottom: 0px;
   }
 entities:
   - {{ entity }}
 name: {{ name }}
 align_state: center
 align_icon: {{ align_icon|default('right') }}
+align_header: {{ align_header|default('default') }}
 font_size: 60
 font_size_header: {{ font_size_header|default('11') }}
 hours_to_show: {{ hours_to_show|default('24') }}
@@ -31,6 +32,8 @@ animate: true
 points_per_hour: {{ points_per_hour|default('0.5') }}
 lower_bound_secondary: 0
 show:
-  fill: fade
+  fill: false
   graph: {{ graph|default('line') }}
   extrema: {{ extrema|default('false') }}
+  labels: {{ labels|default('false') }}
+  name: {{ name|default('false') }}

@@ -1,2 +1,99 @@
+button_card_templates:
+  people_state:
+    show_state: true
+    show_icon: true
+    show_name: false
+    show_entity_picture: true
+    tap_action:
+      action: more-info
+    styles:
+      card:
+        - font-size: 14px
+    style: |
+      img {
+        width: 100% !important;
+      }
+      #img-cell {
+        border-radius: 50px;
+        height: 50px !important;
+        width: 50px !important;
+      }
+      #state {
+        padding-top: 5px;
+      }
+
+  people_button:
+    show_state: false
+    show_icon: false
+    show_name: false
+    size: 16px
+    tap_action:
+      action: more-info
+    styles:
+      card:
+        - height: 30x
+        - font-size: 12px
+        - box-shadow: unset
+
+  dash_button:
+    size: 25px
+    color_type: card
+    tap_action:
+      action: more-info
+    hold_action:
+      action: toggle
+    styles:
+      card:
+        - height: 70px
+        - font-size: 11px
+        - margin: 0px
+        - background: >
+            [[[
+            if (entity.state == "on") return "var(--accent-color)";
+            else return "var(--ha-card-background)"; 
+            ]]]
+    style: !include lovelace/includes/style.yaml
+
+  popup_button:
+    size: 25px
+    color_type: card
+    tap_action:
+      action: more-info
+    styles:
+      card:
+        - height: 70px
+        - font-size: 11px
+        - background: >
+            [[[
+            if (entity.state == "on") return "var(--accent-color)";
+            else return "var(--ha-card-background)";
+            ]]]
+    style: !include lovelace/includes/style.yaml
+
+  power:
+    styles:
+      card:
+        - height: 40px
+        - font-size: 13.5px
+      name:
+        - color: var(--secondary-text-color)
+        - font-size: 10px
+    show_name: true
+    show_icon: false
+    show_state: true
+
+  timer:
+    color_type: card
+    color: "var(--color-red-bright-1)"
+    size: 25px
+    show_icon: false
+    show_name: false
+    show_state: true
+    styles:
+      card:
+        - height: 20px
+        - font-size: 11px
+        - font-weight: bold
+
 title: ""
 views: !include_dir_list lovelace/views/

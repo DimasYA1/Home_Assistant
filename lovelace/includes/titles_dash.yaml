@@ -1,12 +1,12 @@
 # lovelace_gen
-type: markdown 
+type: markdown  
 style: |
   ha-card {
     font-size: 20px;
     font-family: var(--primary-font-family) # Quicksand;
-    line-height: 20px;
+    line-height:15px;
     background: none;
-    margin-top: 0.4em;
+    margin-top: 0.5em;
     margin-left: 8px;
     margin-bottom: 0em;
     box-shadow: none;
@@ -14,6 +14,6 @@ style: |
   }
   ha-markdown {
     padding: 0px 0px 0px 8px !important;
-    border-left: 3px solid var(--accent-color);
+    # border-left: 3px solid var(--accent-color);
   }
 content: {{ title }}
