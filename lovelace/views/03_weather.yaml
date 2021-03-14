@@ -1,21 +1,22 @@
 title: Погода  # вкладка ПОГОДА
 icon: mdi:weather-partly-snowy-rainy
-
-cards: 
+cards:
+  - type: vertical-stack
+    cards:
 #    - type: weather-forecast
 #      entity: weather.home_assistant
-      
-    - type: weather-forecast
-      entity: weather.openweathermap
-    # - type: iframe
-    #   url: https://www.windy.com
-    #   aspect_ratio: 75%
-    - type: weather-forecast
-      entity: weather.gismeteo
 
-    - type: weather-forecast
-      entity: weather.met_norway
+#    - type: weather-forecast
+#      entity: weather.openweathermap
+#    # - type: iframe
+#    #   url: https://www.windy.com
+#    #   aspect_ratio: 75%
+      - type: weather-forecast
+        entity: weather.gismeteo
 
-    - type: iframe
-      url: https://embed.windy.com/embed2.html?lat=56.097&lon=47.276&zoom=8&level=surface&overlay=rain&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=56.097&detailLon=47.276&metricWind=default&metricTemp=default&radarRange=-1
-      aspect_ratio: 120%
+#    - type: weather-forecast
+#      entity: weather.met_norway
+
+      - type: iframe
+        url: https://embed.windy.com/embed2.html?lat=56.097&lon=47.276&zoom=8&level=surface&overlay=rain&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=56.097&detailLon=47.276&metricWind=default&metricTemp=default&radarRange=-1
+        aspect_ratio: 120%
