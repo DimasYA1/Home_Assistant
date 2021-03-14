@@ -108,20 +108,6 @@ notify:
 #     new_device_defaults:
 #       track_new_devices: false
 
-# asuswrt:
-#   host: 192.168.1.1
-#   username: !secret asuswrt_login
-#   password: !secret asuswrt_pass 
-# #  protocol: telnet
-#   interface: eth2.2
-#   dnsmasq: /tmp
-#   sensors:
-#   - devices
-#   - upload
-#   - download
-#   - upload_speed
-#   - download_speed
-
 weather:
   - platform: gismeteo
     mode: daily
@@ -169,10 +155,6 @@ ble_monitor:
 #################################################
 
 # Вынос во внешние файлы
-timer: !include includes/timer.yaml
-input_boolean: !include includes/input_boolean.yaml
-group: !include includes/groups.yaml
-script: !include includes/scripts.yaml
 scene: !include includes/scenes.yaml
 recorder: !include includes/recorder.yaml
 
@@ -181,10 +163,14 @@ fan: !include includes/fan.yaml
 
 utility_meter: !include includes/utility_meter.yaml
 
-#Вынос во внешние папки
-sensor: !include_dir_merge_list includes/sensor
-binary_sensor: !include_dir_merge_list includes/bin_sensor
-automation: !include_dir_merge_list includes/automation
+group: !include groups.yaml
+automation: !include_dir_merge_list automations
+script: !include_dir_merge_named scripts
+sensor: !include_dir_merge_list entities/sensors
+binary_sensor: !include_dir_merge_list entities/binary_sensors
+input_boolean: !include_dir_merge_named entities/input_boolean
+timer: !include_dir_merge_named entities/timer.yaml
+
 
 # switch: !include_dir_merge_list includes/switches
 # script: !include_dir_merge_named includes/scripts
