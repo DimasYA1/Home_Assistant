@@ -8,6 +8,7 @@ deps
 image
 tts
 www/community
+www/presence
 
 # Ignore files
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
@@ -18,3 +19,12 @@ secrets.yaml
 /.vscode/settings.json
 known_devices.yaml
 SERVICE_ACCOUNT.json
+core.*
+*gitignore*
+core
+*.token
+*.db
+*.log
+*.jpg
+*.mp4
+*.png

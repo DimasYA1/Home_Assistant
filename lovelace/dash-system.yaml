@@ -1,0 +1,3 @@
+title: 'System Tools'
+views:
+  - !include views/vi_system.yaml

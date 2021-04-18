@@ -15,7 +15,7 @@ aqara:
       climate_report:
         alias: Отчет о погоде
         sequence:
-          - service: notify.telegram_id_1
+          - service: notify.telegram_id_dimasya1
             data:
               message: | 
                   {{"\U0001F3E0"}} Климат отчет за {{ states('sensor.time_date') }}

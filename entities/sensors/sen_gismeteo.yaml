@@ -1,0 +1,29 @@
+#################################################
+# Gismeteo sensors
+#################################################
+
+- platform: gismeteo
+  forecast: true
+  monitored_conditions:
+    - weather
+    - temperature
+    - wind_speed
+    - wind_bearing
+    - humidity
+    - clouds
+    - pressure
+    - rain
+    - snow
+    - storm
+    - geomagnetic
+- platform: template
+  sensors:
+    gismeteo_temperature:
+      unit_of_measurement: °C
+      value_template: '{{ state_attr("weather.gismeteo", "temperature") }}'
+    gismeteo_pressure:
+      unit_of_measurement: hPa
+      value_template: '{{ state_attr("weather.gismeteo", "pressure") }}'
+    gismeteo_pressure_mmhg:
+      unit_of_measurement: mmHg
+      value_template: '{{ (state_attr("weather.gismeteo", "pressure") / 1.333) | round(2) }}'

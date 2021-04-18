@@ -1,0 +1,137 @@
+#################################################
+# Miscellaneous sensors
+#################################################
+
+# - platform: sql
+#   db_url: !secret mysql_url
+#   queries:
+#     - name: HASS DB Size
+#       query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 2) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+#       column: 'value'
+#       unit_of_measurement: MB
+# - platform: influxdb
+#   host: a0d7b954-influxdb
+#   port: 8086
+#   username: !secret influxdb_user
+#   password: !secret influxdb_pass
+#   queries:
+#       - name: InfluxDB Database Size
+#         unit_of_measurement: MB
+#         value_template: '{{ (value | float / 1024 /1024) | round(1) }}'
+#         group_function: sum
+#         measurement: '"monitor"."shard"'
+#         database: _internal
+#         where: 'time > now() - 10s'
+#         field: diskBytes
+# - platform: sauresha
+#   email: !secret saures_user
+#   password: !secret saures_pass
+#   flat_id: !secret saures_flat_id
+#   controllers:
+#     "1113513":
+#       name: ""
+#   counters:
+#     "13193152":
+#       name: ""
+#     "09-104476":
+#       name: ""
+#   scan_interval:
+#     minutes: 90
+# - platform: time_date
+#   display_options:
+#     - 'time'
+#     - 'date'
+#     - 'date_time_iso'
+- platform: moon
+# - platform: version
+#   source: local
+# - platform: version
+#   source: hassio
+#   image: intel-nuc
+# - platform: command_line
+#   name: Supervisor updates
+#   command: 'curl -s http://supervisor/supervisor/info -H "Authorization: Bearer $(printenv SUPERVISOR_TOKEN)" | jq ''{"newest_version":.data.version_latest,"current_version":.data.version,"addons":[.data.addons[] | select(.version != .version_latest)]}'''
+#   value_template: "{{ value_json.addons | length }}"
+#   json_attributes:
+#     - newest_version
+#     - current_version
+#     - addons
+#   unit_of_measurement: pending update(s)
+# - platform: uptime
+# - platform: template
+#   sensors:
+#     date_formatted:
+#       friendly_name: 'Date (DD.MM.YYYY)'
+#       value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%d.%m.%Y') }}"
+#       icon_template: mdi:calendar
+#       attribute_templates:
+#         day_of_week: >-
+#           {% set day_num = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"] %}
+#           {% set day_of_week = day_num[now().weekday()] %}
+#           {{ day_of_week }}
+#     ha_supervisor_current_version:
+#       friendly_name: HA Supervisor Current Version
+#       value_template: "{{state_attr('sensor.supervisor_updates','current_version')}}"
+#     ha_supervisor_latest_version:
+#       friendly_name: HA Supervisor Latest Version
+#       value_template: "{{state_attr('sensor.supervisor_updates','newest_version')}}"
+#     entrance_door_status:
+#       value_template: >
+#         {% if is_state('binary_sensor.0x158d00031c790f_contact', "on") %}Открыта
+#         {% elif is_state('binary_sensor.0x158d00031c790f_contact', "off") %}Закрыта
+#         {% else %}Unavailable
+#         {% endif %}
+#     local_pressure_mmhg:
+#       value_template: >
+#         {% set pressure = states('sensor.0x158d0003230618_pressure') | float(default=-1) %}
+#         {% if pressure != -1 and (((states('sensor.0x158d0003230618_pressure') | float) / 1.333) | round(2)) > 500 %}
+#         {{ ((states('sensor.0x158d0003230618_pressure') | float) / 1.333) | round(2) }}
+#         {% else %}
+#         {{ states('sensor.local_pressure_mmhg') }}
+#         {% endif %}
+#       unit_of_measurement: mmHg
+#     boiler_status:
+#       friendly_name: "Electrolux Centurio IQ Status"
+#       value_template: >
+#         {% if (states('sensor.tplinksmartplug01_amps') | float) > 4 %}On{% else %}Off{% endif %}
+#     xiaomi_gas_density:
+#       value_template: "{{ state_attr('sensor.0x158d000413b210_gas_density', 'Density') }}"
+#     ha_uptime:
+#       friendly_name: HA Uptime
+#       icon_template: mdi:clock
+#       value_template: "{{ ((as_timestamp(now()) | int - as_timestamp(states('sensor.uptime')) | int) / 60) | int }}"
+#       unit_of_measurement: minutes
+#     # Temperature sensors for use in ESPHome firmwares
+#     for_esphome_temp_in_livingroom:
+#       friendly_name: Температура в гостиной
+#       unit_of_measurement: °C
+#       device_class: temperature
+#       value_template: "{{ states('sensor.0x158d0003230618_temperature') }}"
+#     for_esphome_temp_in_bedroom:
+#       friendly_name: Температура в спальне
+#       unit_of_measurement: °C
+#       device_class: temperature
+#       value_template: "{{ states('sensor.0x158d0003931b0e_temperature') }}"
+#     for_esphome_temp_in_nursery:
+#       friendly_name: Температура в детской
+#       unit_of_measurement: °C
+#       device_class: temperature
+#       value_template: "{{ states('sensor.0x158d0003931aec_temperature') }}"
+# - platform: min_max
+#   name: Average Temperature In Flat
+#   type: median
+#   entity_ids:
+#     - sensor.0x158d0003931aec_temperature
+#     - sensor.0x158d0003230618_temperature
+#     - sensor.0x158d0003931b0e_temperature
+#     - sensor.0x158d00039e2ecb_temperature
+#     - sensor.a4c138414e9a_temperature
+# - platform: min_max
+#   name: Average Humidity In Flat
+#   type: median
+#   entity_ids:
+#     - sensor.0x158d0003931aec_humidity
+#     - sensor.0x158d0003230618_humidity
+#     - sensor.0x158d0003931b0e_humidity
+#     - sensor.0x158d00039e2ecb_humidity
+#     - sensor.a4c138414e9a_humidity

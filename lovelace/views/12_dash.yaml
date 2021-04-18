@@ -1,0 +1,867 @@
+icon: mdi:home-assistant
+title: Dashboard
+id: Dash
+popup_cards:
+  sensor.dimitriy_status:
+    title: Andre
+    card:
+      type: custom:stack-in-card
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+        - type: history-graph
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - sensor.dimitriy_status
+        - type: entities
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - device_tracker.oneplus_5t
+
+  device_tracker.oneplus_5t:
+    title: Карта
+    card:
+      type: map
+      aspect_ratio: 16:9
+      default_zoom: 12
+      hours_to_show: 24
+      entities:
+        - device_tracker.oneplus_5t
+  weather.gismeteo:
+    title: Weather
+    large: true
+    card:
+      type: iframe
+      style: !include ../includes/style_entities_popup.yaml
+      url: https://embed.windy.com/embed2.html?lat=56.097&lon=47.276&zoom=10&level=surface&overlay=rain&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=56.097&detailLon=47.276&metricWind=default&metricTemp=default&radarRange=-1
+  input_boolean.guest_mode:
+    title: Guest Mode
+    card:
+      type: entities
+      style: !include ../includes/style_entities_popup.yaml
+      entities:
+        - input_boolean.guest_mode
+        - input_datetime.guest_mode
+#  light.flur:
+#    title: Flur
+#    card:
+#      type: custom:stack-in-card
+#      style: !include ../includes/style_entities_popup.yaml
+#      cards:
+#        - type: horizontal-stack
+#          cards:
+#            - !include
+#              - ../includes/graphs_popup.yaml
+#              - entity: sensor.bewegungsmelder_flur_temperature
+#                name: Temperatur
+#                font_size_header: 12
+#                line_color: var(--custom_graph_color_1)
+#            - !include
+#              - ../includes/graphs_popup.yaml
+#              - entity: sensor.bewegungsmelder_flur_light_level
+#                name: Helligkeit
+#                font_size_header: 12
+#                line_color: var(--custom_graph_color_2)
+#        - !include
+#          - ../includes/graphs_popup.yaml
+#          - entity: sensor.mi_wohnzimmer_humidity
+#            name: Luftfeuchtigkeit
+#            font_size_header: 12
+#            line_color: var(--custom_graph_color_3)
+#            line_width: 2
+        # - !include
+        #   - ../includes/titles.yaml
+        #   - title: TÜRE & KLINGEL
+        # - type: entities
+        #   show_header_toggle: false
+        #   style: !include ../includes/style_entities_popup.yaml
+        #   entities:
+        #     - entity: binary_sensor.klingel
+        #       secondary_info: last-changed
+        #     - input_number.klingel_volume
+        #     - switch.summer
+        #     - entity: input_boolean.open_door
+        #       name: Türe öffnen
+        #       icon: mdi:door-open
+        - !include
+          - ../includes/titles.yaml
+          - title: LICHT & BEWEGUNG
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: light.fl_spot_1
+              name: Spot 1
+              icon: mdi:track-light
+              type: custom:slider-entity-row
+            - entity: light.fl_spot_2
+              name: Spot 2
+              icon: mdi:track-light
+              type: custom:slider-entity-row
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: binary_sensor.bewegungsmelder_flur_motion
+              name: Bewegungsmelder
+              secondary_info: last-changed
+            - entity: binary_sensor.zha_flur_door_contact
+              secondary_info: last-changed
+  light.bad:
+    title: Bad
+    card:
+      type: custom:stack-in-card
+      style: !include ../includes/style_entities_popup.yaml
+      cards:
+        - type: horizontal-stack
+          cards:
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.bewegungsmelder_bad_temperature
+                name: Temperatur
+                font_size_header: 12
+                line_color: var(--custom_graph_color_1)
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.bewegungsmelder_bad_light_level
+                name: Helligkeit
+                font_size_header: 12
+                line_color: var(--custom_graph_color_2)
+        - !include
+          - ../includes/graphs_popup.yaml
+          - entity: sensor.zha_bad_multisensor_humidity
+            name: Luftfeuchtigkeit
+            font_size_header: 12
+            line_color: var(--custom_graph_color_3)
+            line_width: 2
+        - !include
+          - ../includes/titles.yaml
+          - title: LICHT & BEWEGUNG
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: light.bd_spot_1
+              name: Spot 1
+              icon: mdi:track-light
+              type: custom:slider-entity-row
+            - entity: light.bd_spot_2
+              name: Spot 2
+              icon: mdi:track-light
+              type: custom:slider-entity-row
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: binary_sensor.bewegungsmelder_bad_motion
+              name: Bewegungsmelder
+              secondary_info: last-changed
+            - entity: binary_sensor.zha_bad_window_contact
+              secondary_info: last-changed
+  light.kuche:
+    title: Küche
+    card:
+      type: custom:stack-in-card
+      style: !include ../includes/style_entities_popup.yaml
+      cards: 
+        - type: horizontal-stack
+          cards:
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.bewegungsmelder_kuche_temperature
+                name: Temperatur
+                font_size_header: 12
+                line_color: var(--custom_graph_color_1)
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.bewegungsmelder_kuche_light_level
+                name: Helligkeit
+                font_size_header: 12
+                line_color: var(--custom_graph_color_2)
+        - !include
+          - ../includes/graphs_popup.yaml
+          - entity: sensor.mi_kuche_humidity
+            name: Luftfeuchtigkeit
+            font_size_header: 12
+            line_color: var(--custom_graph_color_3)
+            line_width: 2
+        - !include
+          - ../includes/titles.yaml
+          - title: LICHT & BEWEGUNG
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: light.kuchenzeile
+              name: Decke
+              icon: mdi:ceiling-light
+              type: custom:slider-entity-row
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: binary_sensor.bewegungsmelder_kuche_motion
+              name: Bewegungsmelder
+              secondary_info: last-changed
+  light.wohnzimmer:
+    title: Wohnzimmer
+    card:
+      type: custom:stack-in-card
+      style: !include ../includes/style_entities_popup.yaml
+      cards:  
+        - type: horizontal-stack
+          cards:
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.bewegungsmelder_wohnzimmer_temperature
+                name: Temperatur
+                font_size_header: 12
+                line_color: var(--custom_graph_color_1)
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.bewegungsmelder_wohnzimmer_light_level
+                name: Helligkeit
+                font_size_header: 12
+                line_color: var(--custom_graph_color_2)
+        - !include
+          - ../includes/graphs_popup.yaml
+          - entity: sensor.mi_wohnzimmer_humidity
+            name: Luftfeuchtigkeit
+            font_size_header: 12
+            line_color: var(--custom_graph_color_3)
+            line_width: 2
+        - !include
+          - ../includes/titles.yaml
+          - title: LICHT & BEWEGUNG
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: light.wz_decke_1
+              name: Decke
+              icon: mdi:ceiling-light
+              type: custom:slider-entity-row
+            - entity: light.wz_decke_2
+              name: Decke
+              icon: mdi:ceiling-light
+              type: custom:slider-entity-row
+            - entity: light.wz_decke_3
+              name: Decke
+              icon: mdi:ceiling-light
+              type: custom:slider-entity-row
+            - entity: light.schreibtischleuchte
+              name: Schreibtisch
+              icon: mdi:lightbulb
+              type: custom:slider-entity-row
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: binary_sensor.bewegungsmelder_wohnzimmer_motion
+              name: Bewegungsmelder
+              secondary_info: last-changed
+  light.schlafzimmer:
+    title: Schlafzimmer
+    card:
+      type: custom:stack-in-card
+      style: !include ../includes/style_entities_popup.yaml
+      cards:     
+        - type: horizontal-stack
+          cards:
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.bewegungsmelder_schlafzimmer_temperature
+                name: Temperatur
+                font_size_header: 12
+                line_color: var(--custom_graph_color_1)
+            - !include
+              - ../includes/graphs_popup.yaml
+              - entity: sensor.bewegungsmelder_schlafzimmer_light_level
+                name: Helligkeit
+                font_size_header: 12
+                line_color: var(--custom_graph_color_2)
+        - !include
+          - ../includes/graphs_popup.yaml
+          - entity: sensor.mi_schlafzimmer_humidity
+            name: Luftfeuchtigkeit
+            font_size_header: 12
+            line_color: var(--custom_graph_color_3)
+            line_width: 2
+        - !include
+          - ../includes/titles.yaml
+          - title: LICHT & BEWEGUNG
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: light.sz_spot_1
+              name: Spot 1
+              icon: mdi:track-light
+              type: custom:slider-entity-row
+            - entity: light.sz_spot_2
+              name: Spot 2
+              icon: mdi:track-light
+              type: custom:slider-entity-row
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - entity: binary_sensor.bewegungsmelder_schlafzimmer_motion
+              name: Bewegungsmelder
+              secondary_info: last-changed
+        - !include
+          - ../includes/titles.yaml
+          - title: BETT
+        - type: entities
+          show_header_toggle: false
+          style: !include ../includes/style_entities_popup.yaml
+          entities:
+            - sensor.bed_people
+            - sensor.bed_weight_filtered
+  sensor.temperature_mean:
+    title: Temperaturen
+    card:
+      type: entities
+      style: !include ../includes/style_entities_popup.yaml
+      entities:
+        - entity: sensor.bewegungsmelder_flur_temperature
+          name: Flur
+        - entity: sensor.bewegungsmelder_bad_temperature
+          name: Bad
+        - entity: sensor.bewegungsmelder_kuche_temperature
+          name: Küche
+        - entity: sensor.bewegungsmelder_wohnzimmer_temperature
+          name: Wohnzimmer
+        - entity: sensor.bewegungsmelder_schlafzimmer_temperature
+          name: Schlafzimmer
+  sensor.light_level_mean:
+    title: Helligkeit
+    card:
+      type: entities
+      style: !include ../includes/style_entities_popup.yaml
+      entities:
+        - entity: sensor.bewegungsmelder_flur_light_level
+          name: Flur
+        - entity: sensor.bewegungsmelder_bad_light_level
+          name: Bad
+        - entity: sensor.bewegungsmelder_kuche_light_level
+          name: Küche
+        - entity: sensor.bewegungsmelder_wohnzimmer_light_level
+          name: Wohnzimmer
+        - entity: sensor.bewegungsmelder_schlafzimmer_light_level
+          name: Schlafzimmer
+  sensor.humidity_mean:
+    title: Luftfeuchtigkeit
+    card:
+      type: entities
+      style: !include ../includes/style_entities_popup.yaml
+      entities:
+        - entity: sensor.mi_wohnzimmer_humidity
+          name: Flur
+        - entity: sensor.zha_bad_multisensor_humidity
+          name: Bad
+        - entity: sensor.mi_kuche_humidity
+          name: Küche
+        - entity: sensor.mi_wohnzimmer_humidity
+          name: Wohnzimmer
+        - entity: sensor.mi_schlafzimmer_humidity
+          name: Schlafzimmer
+  input_select.media_player_selection:
+    title: Media
+    card:
+      type: entities
+      style: !include ../includes/style_entities_popup.yaml
+      entities:
+        - input_select.media_player_selection
+        - input_select.media_player_playlist
+        - type: divider
+        - type: 'custom:mini-media-player'
+          entity: media_player.uberall
+          group: true
+          hide:
+            name: true
+            controls: true
+            progress: true
+            info: true
+            icon: true
+            mute: true
+            power: true
+        - type: 'custom:mini-media-player'
+          entity: media_player.echo_dot_bad
+          group: true
+          hide:
+            controls: true
+            progress: true
+            info: true
+            icon: true
+            power_state: false
+        - type: 'custom:mini-media-player'
+          entity: media_player.echo_kuche
+          group: true
+          hide:
+            controls: true
+            progress: true
+            info: true
+            icon: true
+            power_state: false
+        - type: 'custom:mini-media-player'
+          entity: media_player.echo_show_wohnzimmer
+          group: true
+          hide:
+            controls: true
+            progress: true
+            info: true
+            icon: true
+            power_state: false
+        - type: 'custom:mini-media-player'
+          entity: media_player.echo_schlafzimmer
+          group: true
+          hide:
+            controls: true
+            progress: true
+            info: true
+            icon: true
+            power_state: false
+  input_boolean.enable_charge:
+    title: NIU
+    card:
+      type: 'custom:time-picker-card'
+      style: |
+        .time-picker-row {
+          padding: 0px !important;
+        }
+      entity: input_datetime.charge_time
+      name: 'Ladezeit'
+      hour_mode: 24
+      hour_step: 1
+      minute_step: 5
+      hide:
+        name: false
+
+cards:
+
+  ## ROW 1 ###################################################################################################################
+  - type: vertical-stack
+    cards: 
+      
+      - !include
+        - ../includes/titles.yaml
+        - title: QUICK LINKS & INFOS
+
+      ## SHORTCUTS ##        
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            template: dash_button
+            entity: input_boolean.guest_mode
+          - type: "custom:button-card"
+            template: dash_button
+            entity: binary_sensor.remote_ui
+          - type: "custom:button-card"
+            template: dash_button
+            entity: input_boolean.cinema_lights
+          - type: "custom:button-card"
+            template: dash_button
+            entity: input_boolean.enable_charge 
+            name: Charge NIU
+            icon: mdi:motorbike
+            show_name: false
+            show_label: true
+            label: >
+              [[[
+                return states['input_datetime.charge_time'].state;
+              ]]]
+          - type: "custom:button-card"
+            template: dash_button
+            entity: input_select.media_player_selection
+            icon: mdi:play
+            show_state: true
+            show_name: false
+            color_type: icon
+            hold_action:
+              action: call-service
+              service: input_boolean.toggle
+              service_data:
+                entity_id: input_boolean.play_media
+            styles:
+              card:
+                - background-color: '[[[ if (states["media_player.uberall"].state == "playing") return "var(--accent-color)";
+                                    if (states["media_player.echo_kuche"].state == "playing") return "var(--accent-color)";
+                                    if (states["media_player.echo_schlafzimmer"].state == "playing") return "var(--accent-color)";
+                                    if (states["media_player.echo_show_wohnzimmer"].state == "playing") return "var(--accent-color)";
+                                    if (states["media_player.echo_dot_bad"].state == "playing") return "var(--accent-color)";
+                                    else return "var(--custom_card_background)"; ]]]'
+              icon:
+                - color: '[[[ if (states["media_player.uberall"].state == "playing") return "var(--custom_icon_light)";
+                          if (states["media_player.echo_kuche"].state == "playing") return "var(--custom_icon_light)";
+                          if (states["media_player.echo_schlafzimmer"].state == "playing") return "var(--custom_icon_light)";
+                          if (states["media_player.echo_show_wohnzimmer"].state == "playing") return "var(--custom_icon_light)";
+                          if (states["media_player.echo_dot_bad"].state == "playing") return "var(--custom_icon_light)";
+                          else return "var(--custom_icon_dark)"; ]]]'
+              state:
+                - color: '[[[ if (states["media_player.uberall"].state == "playing") return "var(--custom_icon_light)";
+                          if (states["media_player.echo_kuche"].state == "playing") return "var(--custom_icon_light)";
+                          if (states["media_player.echo_schlafzimmer"].state == "playing") return "var(--custom_icon_light)";
+                          if (states["media_player.echo_show_wohnzimmer"].state == "playing") return "var(--custom_icon_light)";
+                          if (states["media_player.echo_dot_bad"].state == "playing") return "var(--custom_icon_light)";
+                          else return "var(--custom_icon_dark)"; ]]]'
+        
+      ## PEOPLE STATUS ##
+      - type: horizontal-stack
+        style: !include ../includes/style.yaml
+        cards:
+          - type: custom:stack-in-card
+            cards:
+              ## ANDRE CHARGING ##
+              - type: custom:bar-card
+                style: |
+                  .card-content {
+                    padding: 0px;
+                  }
+                  #states > * {
+                    margin-top: 0;
+                  }
+                entity: sensor.oneplus_5t_uroven_zariada_akkumuliatora
+                positions:
+                  icon: 'off'
+                  indicator: 'off'
+                  name: 'off'
+                  value: 'off'
+                color: 'var(--accent-color)'
+                height: 2px
+                animation:
+                  state: 'on'
+              - type: horizontal-stack
+                cards:
+                  ## ANDRE PERSON STATUS ##
+                  - type: custom:button-card
+                    template: people_state
+                    entity: sensor.dimitriy_status
+                    entity_picture: /local/presense/dimasya1.png
+                  - type: vertical-stack
+                    cards:                                             
+                      ## ANDRE BATTERY ##
+                      - type: custom:button-card
+                        template: people_button
+                        entity: sensor.oneplus_5t_uroven_zariada_akkumuliatora
+                        show_state: true
+                      ## ANDRE MAP ICON ##
+                      - type: custom:button-card
+                        template: people_button
+                        entity: device_tracker.oneplus_5t
+                        name: Map
+                        show_name: true
+                        hold_action:
+                          action: navigate
+                          navigation_path: /lovelace/5/
+                      ## ANDRE LAST CHANGED ##
+                      - type: custom:button-card
+                        template: people_button
+                        entity: sensor.dimitriy_status
+                        show_last_changed: true
+      
+          
+  ## ROW 2 ###################################################################################################################
+  - type: vertical-stack
+    cards: 
+      
+      - !include
+        - ../includes/titles.yaml
+        - title: LICHTER & RÄUME
+
+      ## LICHTER ##
+      - type: horizontal-stack
+        cards:
+          - !include
+            - ../includes/dash_lights.yaml
+            - light: light.flur
+              icon: mdi:broom
+              motion_sensor: binary_sensor.bewegungsmelder_flur_motion
+              motion_sensor_toggle: input_boolean.motion_sensor_flur_toggle
+              media_player: light.flur
+              motion_sensor_timer: timer.bewegungsmelder_flur
+    
+          - !include
+            - ../includes/dash_lights.yaml
+            - light: light.bad
+              icon: mdi:shower-head
+              motion_sensor: binary_sensor.bewegungsmelder_bad_motion
+              motion_sensor_toggle: input_boolean.motion_sensor_bad_toggle
+              media_player: media_player.echo_dot_bad
+              motion_sensor_timer: timer.bewegungsmelder_bad
+    
+          - !include
+            - ../includes/dash_lights.yaml
+            - light: light.kuche
+              icon: mdi:food-fork-drink
+              motion_sensor: binary_sensor.bewegungsmelder_kuche_motion
+              motion_sensor_toggle: input_boolean.motion_sensor_kuche_toggle
+              media_player: media_player.echo_kuche
+              motion_sensor_timer: timer.bewegungsmelder_kuche
+          
+          - !include
+            - ../includes/dash_lights.yaml
+            - light: light.wohnzimmer
+              icon: mdi:sofa
+              motion_sensor: binary_sensor.bewegungsmelder_wohnzimmer_motion
+              motion_sensor_toggle: input_boolean.motion_sensor_wohnzimmer_toggle
+              media_player: media_player.echo_show_wohnzimmer
+              motion_sensor_timer: timer.bewegungsmelder_wohnzimmer
+    
+          - !include
+            - ../includes/dash_lights.yaml
+            - light: light.schlafzimmer
+              icon: mdi:bed-empty
+              motion_sensor: binary_sensor.bewegungsmelder_schlafzimmer_motion
+              motion_sensor_toggle: input_boolean.motion_sensor_schlafzimmer_toggle
+              media_player: media_player.echo_schlafzimmer
+              motion_sensor_timer: timer.bewegungsmelder_schlafzimmer
+
+      ## WEATHER
+      - !include
+        - ../includes/titles.yaml
+        - title: WETTER
+
+      - type: custom:weather-card
+        entity: weather.gismeteo
+        current: true
+        details: false
+        forecast: true
+        style: |
+          ha-card {
+            border: solid 1px var(--border-color);
+            font-family: Raleway;
+            margin-top: 5px !important;
+            margin-bottom: 5px !important;
+          }
+          .spacer {
+          padding-top: 0em !important;
+          }
+          .current {
+          padding-top: 0em !important;
+          padding-left: 0em !important;
+          margin-top: 0.5em !important;
+          margin-bottom: 0em !important;
+          }
+          .temp {
+          font-size: 3.2em !important;
+          position: sticky !important;
+          }
+          .tempc {
+          font-size: 1.5em !important;
+          position: sticky !important;
+          }
+          .forecast {
+          margin-top: -4.5em !important;
+          margin-bottom: -0.7em !important;
+          }
+          .forecast .day:first-child {
+          margin-left: 8em !important;
+          }
+          .day {
+          border-right: none !important;
+          line-height: 2 !important;
+          }
+          .precipitation {
+          display: none !important;
+          }
+          .icon {
+          width: 40px !important;
+          height: 40px !important;
+          }
+          .icon.bigger {
+          width: 4.5em !important;
+          height: 4.5em !important;
+          left: 2.5em !important;
+          top: 8em !important;
+          }
+      
+      - !include
+        - ../includes/titles.yaml
+        - title: SENSOREN
+      ## TEMPERATUR / LICHT / LUFTFEUCHTIGKEIT ##
+      
+      
+      
+#      - type: horizontal-stack
+#        cards:
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.0x00158d0004acb510_temperature
+#              name: Гостинная
+#              line_color: var(--custom_graph_color_1)
+#              hours_to_show: 48
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.ble_temperature_kukhnia
+#              name: Кухня
+#              line_color: var(--custom_graph_color_2)
+#              hours_to_show: 48
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.gismeteo_temperature
+#              name: Улица
+#              line_color: var(--custom_graph_color_3)
+#              hours_to_show: 48
+#      - type: horizontal-stack
+#        cards:
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.0x00158d0004acb510_humidity
+#              name: Гостинная
+#              line_color: var(--custom_graph_color_1)
+#              hours_to_show: 48
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.ble_humidity_kukhnia
+#              name: Кухня
+#              line_color: var(--custom_graph_color_2)
+#              hours_to_show: 48
+#          - !include
+#            - ../includes/graphs.yaml
+#            - entity: sensor.gismeteo_humidity
+#              name: Улица
+#              line_color: var(--custom_graph_color_3)
+#              hours_to_show: 48
+
+      - type: custom:stack-in-card
+        cards:
+          - !include
+            - ../includes/titles_dash.yaml
+            - title: Гостинная
+          - type: horizontal-stack
+            cards:
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.0x00158d0004acb510_temperature
+                  name: Температура
+                  line_color: var(--custom_graph_color_1)
+                  align_icon: left
+                  hours_to_show: 12
+                  points_per_hour: 4
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.0x00158d0004acb510_humidity
+                  name: Влажность
+                  line_color: var(--custom_graph_color_3)
+                  hours_to_show: 12
+                  points_per_hour: 4
+
+      - type: custom:stack-in-card
+        cards:
+          - !include
+            - ../includes/titles_dash.yaml
+            - title: Кухня
+          - type: horizontal-stack
+            cards:
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.ble_temperature_kukhnia
+                  name: Температура
+                  line_color: var(--custom_graph_color_1)
+                  align_icon: left
+                  hours_to_show: 12
+                  points_per_hour: 4
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.ble_humidity_kukhnia
+                  name: Влажность
+                  line_color: var(--custom_graph_color_3)
+                  hours_to_show: 12
+                  points_per_hour: 4
+
+      - type: custom:stack-in-card
+        cards:
+          - !include
+            - ../includes/titles_dash.yaml
+            - title: Улица
+          - type: horizontal-stack
+            cards:
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.gismeteo_weather_temperature
+                  name: Температура
+                  line_color: var(--custom_graph_color_1)
+                  align_icon: left
+                  hours_to_show: 12
+                  points_per_hour: 4
+              - !include
+                - ../includes/graphs.yaml
+                - entity: sensor.gismeteo_weather_humidity
+                  name: Влажность
+                  line_color: var(--custom_graph_color_3)
+                  hours_to_show: 12
+                  points_per_hour: 4
+
+      ## DOWNLOAD / UPLOAD ## 
+      - type: horizontal-stack
+        cards:
+          - !include
+            - ../includes/graphs.yaml
+            - entity: sensor.keenetic_mb_received_speed
+              name: Приём
+              align_icon: left
+              hours_to_show: 12
+              points_per_hour: 4
+          - !include
+            - ../includes/graphs.yaml
+            - entity: sensor.keenetic_mb_sent_speed
+              name: Передача
+              hours_to_show: 12
+              points_per_hour: 4
+
+#      - type: horizontal-stack
+#        cards:
+#          - type: custom:stack-in-card  # Карточка Сенсоры 
+#            cards:
+#              - type: vertical-stack
+#                cards:
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.0x00158d0004acb510_temperature
+#                      name: Гостинная
+#                      line_color: var(--custom_graph_color_1)
+#                      hours_to_show: 48
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.0x00158d0004acb510_humidity
+#                      name: false
+#                      line_color: var(--custom_graph_color_1)
+#                      hours_to_show: 48
+#
+#
+#          - type: custom:stack-in-card 
+#            cards:  
+#              - type: vertical-stack
+#                cards:
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.ble_temperature_kukhnia
+#                      name: Кухня
+#                      line_color: var(--custom_graph_color_2)
+#                      hours_to_show: 48
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.ble_humidity_kukhnia
+#                      name: false
+#                      line_color: var(--custom_graph_color_2)
+#                      hours_to_show: 48
+#
+#          - type: custom:stack-in-card 
+#            cards:  
+#              - type: vertical-stack
+#                cards:
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.gismeteo_temperature
+#                      name: Кухня
+#                      align_header: center
+#                      align_icon: state
+#                      line_color: var(--custom_graph_color_3)
+#                      hours_to_show: 48
+#                  - !include
+#                    - ../includes/graphs.yaml
+#                    - entity: sensor.gismeteo_humidity
+#                      name: false
+#                      align_icon: state
+#                      line_color: var(--custom_graph_color_3)
+#                      hours_to_show: 48

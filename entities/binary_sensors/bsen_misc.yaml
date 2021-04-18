@@ -1,3 +1,7 @@
+#################################################
+# Miscellaneous binary sensors
+#################################################
+
 - platform: template
   sensors:
 
@@ -6,8 +10,12 @@
       device_class: problem
       value_template: "{{ state_attr('sensor.supervisor_updates', 'current_version') != state_attr('sensor.supervisor_updates', 'newest_version') }}"
       availability_template: "{{ (states('sensor.supervisor_updates') | int(-1)) > -1 }}"
-  
+
     updater_addons:
       friendly_name: 'Updater - Addons'
       device_class: problem
       value_template: "{{ states('sensor.supervisor_updates') | int > 0 }}"
+
+    humidifier_nursery_status:
+      device_class: power
+      value_template: "{{ is_state('fan.zhimi_humidifier_cb1_gostinnaya', 'on') }}"

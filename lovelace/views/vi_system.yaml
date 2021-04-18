@@ -1,0 +1,159 @@
+title: System
+icon: mdi:desktop-classic
+cards:
+
+  - type: vertical-stack
+    cards:
+      - !include
+        - ../includes/titles.yaml
+        - title: RPi & HA
+
+      - type: custom:stack-in-card
+        cards:
+
+          - type: horizontal-stack
+            cards:
+
+              - type: custom:mini-graph-card # Загружка процессора
+                #style: |
+                #  ha-card {
+                #    font-family: var(--primary-font-family);
+                #    border-bottom: 2px solid var(--background-color);
+                #  }
+                #  .graph {
+                #    padding-top: 15px;
+                #    padding-bottom: 0px;
+                #  }
+                #  .info {
+                #    padding-bottom: 0px;
+                #  }
+                #  .flex {
+                #    padding-bottom: 10px;
+                #  }
+                entities:
+                  - sensor.processor_use
+                  # - entity: sensor.solar_elevation
+                  #   color: 'rgba(0,0,0,0.3)'
+                  #   line_width: 1
+                  #   show_line: false
+                  #   show_legend: false
+                  #   show_state: false
+                  #   show_points: false
+                  #   y_axis: secondary
+                name: CPU
+                align_state: center
+                align_icon: right  # {{ align_icon|default('right') }}
+                font_size: 60
+                font_size_header: 11  # {{ font_size_header|default('11') }}
+                hours_to_show: 24  # {{ hours_to_show|default('24') }}
+                line_color: 'rgba(247,53,67,1)'  # {{ line_color|default('var(--accent-color)') }}
+                line_width: 4  # {{ line_width|default('4') }}
+                animate: true
+                points_per_hour: 2  # {{ points_per_hour|default('0.5') }}
+                # lower_bound_secondary: 0
+                show:
+                  fill: false
+                  graph: line  # {{ graph|default('line') }}
+                  extrema: false  # {{ extrema|default('false') }}
+                  icon: true # {{ show_icon|default('true') }}
+                  name: true # {{ show_name|default('true') }}
+                  labels: false
+
+              - type: custom:mini-graph-card # Температура процессора
+                entities:
+                  - sensor.processor_temp
+                name: Температура
+                align_state: center
+                align_icon: right  # {{ align_icon|default('right') }}
+                font_size: 60
+                font_size_header: 11  # {{ font_size_header|default('11') }}
+                hours_to_show: 24  # {{ hours_to_show|default('24') }}
+                line_color: 'rgba(0,202,139,1)'  # {{ line_color|default('var(--accent-color)') }}
+                line_width: 4  # {{ line_width|default('4') }}
+                animate: true
+                points_per_hour: 2
+                show:
+                  fill: false
+                  graph: line  # {{ graph|default('line') }}
+                  extrema: false  # {{ extrema|default('false') }}
+                  labels: false
+
+              - type: custom:mini-graph-card # Использование памяти
+                entities:
+                  - sensor.memory_use_percent
+                name: Память
+                align_state: center
+                align_icon: right  # {{ align_icon|default('right') }}
+                font_size: 60
+                font_size_header: 11  # {{ font_size_header|default('11') }}
+                hours_to_show: 24  # {{ hours_to_show|default('24') }}
+                line_color: 'rgba(222,176,107,1)'  # {{ line_color|default('var(--accent-color)') }}
+                line_width: 4  # {{ line_width|default('4') }}
+                animate: true
+                points_per_hour: 2  # {{ points_per_hour|default('0.5') }}
+                show:
+                  fill: false
+                  graph: line  # {{ graph|default('line') }}
+                  extrema: false  # {{ extrema|default('false') }}
+                  labels: false
+
+          - type: vertical-stack
+            cards:
+              - type: entities
+                #style: |
+                #  ha-card {
+                #    font-family: var(--primary-font-family);
+                #  }
+                #  .card-content {
+                #    padding-top: 0px;
+                #    padding-bottom: 0px;
+                #  }
+                entities:
+                  # - sensor.cpu_get_throttled
+                  # - sensor.processor_temp
+                  - sensor.disk_use_percent
+                  - sensor.home_assistant_v2_db
+                  - binary_sensor.rpi_power_status
+                  - sensor.ha_uptime
+                  - sensor.rpi_uptime
+                  - entity: sensor.ha_version_latest
+                    type: custom:multiple-entity-row
+                    styles: 
+                      # div:nth-child(3) {
+                        color: > # div:nth-child(3) {
+                          {% if states('sensor.ha_version_latest') > states('sensor.ha_version_current') %}
+                            var(--rgba(222,176,107,1))
+                          {% elif states('sensor.ha_version_latest') < states('sensor.ha_version_current') %}
+                            var(--rgba(222,100,107,1))
+                          {% else %}
+                            var(--rgba(222,176,107,1))
+                          {% endif %};
+                          # }
+                    name: Home Assistant Core
+                    state_header: Доступно
+                    # toggle: true 
+                    entities:
+                      - entity: sensor.ha_version_current
+                        name: Установлено
+                  - entity: sensor.ha_supervisor_latest_version
+                    type: custom:multiple-entity-row
+                    style: |
+                      div:nth-child(3) {
+                        color:
+                          {% if states('sensor.ha_docker_version') > states('sensor.ha_local_version') %}
+                            var(rgba(247,53,67,1))
+                          {% elif states('sensor.ha_docker_version') < states('sensor.ha_local_version') %}
+                            var(--google-red-500)
+                          {% else %}
+                            var(--primary-text-color)
+                          {% endif %}
+                          ;
+                      }
+                    name: Home Assistant Supervisor
+                    state_header: Доступно
+                    # toggle: true 
+                    entities:
+                      - entity: sensor.ha_supervisor_version_current
+                        name: Установлено
+                  - sensor.hacs
+

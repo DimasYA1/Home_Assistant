@@ -96,4 +96,9 @@ button_card_templates:
         - font-weight: bold
 
 title: ""
-views: !include_dir_list lovelace/views/
+views:
+  # - !include lovelace/views/vi_home.yaml
+  - !include lovelace/views/vi_climate.yaml
+  - !include lovelace/views/vi_water.yaml
+  - !include lovelace/views/vi_weather.yaml
+  - !include lovelace/views/vi_internet.yaml

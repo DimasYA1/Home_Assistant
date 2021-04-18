@@ -1,0 +1,114 @@
+title: Монитор сети Интернет
+path: internet
+icon: mdi:web
+cards:
+  # Скорость сети
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          ### Системный монитор:
+#       - type: horizontal-stack
+#         cards:
+#           - type: sensor
+#             entity: sensor.aqara_gostinnaya_temperature
+#             name: Температура
+#             graph: line
+#           - type: sensor
+#             entity: sensor.aqara_gostinnaya_humidity
+#             name: Влажность
+#             graph: line
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: markdown
+            content: >
+              #### Интернет
+          - type: horizontal-stack
+            cards:
+              - type: custom:bar-card
+                style: |
+                  .card-content {
+                    padding: 0px;
+                    padding-left: 10px;
+                    padding-right: 5px;
+                    padding-top: 0px;
+                    padding-bottom: 10px;
+                  }
+                entity: sensor.speedtest_download
+                color: 'var(--accent-color)'
+                height: 30px
+                positions:
+                  icon: inside
+                  indicator: 'off'
+                  title: inside
+                  value: inside
+                # target: 100
+                max: 100
+              - type: custom:bar-card
+                style: |
+                  .card-content {
+                    padding: 0px;
+                    padding-left: 5px;
+                    padding-right: 10px;
+                    padding-top: 0px;
+                    padding-bottom: 10px;
+                  }
+                  #states > * {
+                    margin-top: 1;
+                  }
+                entity: sensor.speedtest_upload
+                color: 'var(--accent-color)'
+                height: 30px
+                positions:
+                  icon: inside
+                  indicator: 'off'
+                  title: inside
+                  value: inside
+                # target: 100
+                max: 100
+          - type: custom:mini-graph-card
+            style: |
+              ha-card {
+                border: solid 1px var(--border-color);
+                font-family: var(--primary-font-family);
+                margin-top: 0px;
+                margin-bottom: 0px;
+              }
+              .graph {
+                padding-top: -100px;
+                padding-bottom: 10px;
+              }
+              .flex {
+                padding-bottom: 0px;
+              }
+            entities:
+            - entity: sensor.speedtest_ping
+            name: Пинг
+            font_size: 75
+            font_size_header: 15
+            show:
+              graph: bar
+              icon: false
+      - type: horizontal-stack
+        cards:
+          - type: sensor
+            entity: sensor.keenetic_mb_received_speed
+            name: Прием
+            graph: line
+            detail: 2
+          - type: sensor
+            entity: sensor.keenetic_mb_sent_speed
+            name: Передача
+            graph: line
+            detail: 2
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: markdown
+            content: >
+              #### Траффик
+          - type: entities
+            entities:
+            - entity: sensor.net_received_monthly_single
+              name: Принято
+            - entity: sensor.net_sent_monthly_single
+              name: Отправлено

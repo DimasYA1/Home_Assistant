@@ -70,7 +70,7 @@
   
 - platform: template
   sensors:
-    ha_supervisor_current_version:
+    ha_supervisor_version_current:
       friendly_name: HA Supervisor Current Version
       value_template: "{{state_attr('sensor.supervisor_updates','current_version')}}"
 

@@ -5,7 +5,7 @@ telegramm:
       send_message_1:
         alias: Отправка через сервис уведомлений
         sequence:
-        - service: notify.telegram_id_1
+        - service: notify.telegram_id_dimasya1
           data:
             message: "Текущее время - {{ states('sensor.time') }} . Все в порядке"
 
@@ -18,7 +18,7 @@ telegramm:
     #          - platform: homeassistant
     #            event: start          
     #       action:          
-    #          - service: notify.telegram_id_1
+    #          - service: notify.telegram_id_dimasya1
     #            data:
     #              message: | 
     #                  {{"\U0001F4AC"}} Основной сервер Raspberry Pi 

@@ -43,3 +43,11 @@ resources:
     type: css
   - url: 'https://fonts.googleapis.com/css?family=Quicksand'
     type: css
+dashboards:
+  dash-system:
+    mode: yaml
+    filename: lovelace/dash-system.yaml
+    title: System Tools
+    icon: mdi:tools
+    show_in_sidebar: true
+    require_admin: true

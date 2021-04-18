@@ -1,0 +1,65 @@
+title: Климат
+path: climate
+icon: mdi:home-thermometer-outline
+cards:
+  - type: vertical-stack
+    cards:
+      # Гостинная
+      - type: markdown
+        content: >
+          ### Гостинная:
+      - type: horizontal-stack
+        cards:
+          - type: sensor
+            entity: sensor.aqara_gostinnaya_temperature
+            name: Температура
+            graph: line
+          - type: sensor
+            entity: sensor.aqara_gostinnaya_humidity
+            name: Влажность
+            graph: line
+      # Кухня
+      - type: markdown
+        content: >
+          ### Кухня:
+      - type: horizontal-stack
+        cards:
+          - type: sensor
+            entity: sensor.ble_temperature_kukhnia
+            name: Температура
+            graph: line
+          - type: sensor
+            entity: sensor.ble_humidity_kukhnia
+            name: Влажность
+            graph: line
+
+  - type: custom:vertical-stack-in-card
+    cards:
+      - type: markdown
+        content: >
+          ### Увлажнитель в гостинной
+      - type: glance
+        #show_name: false
+        entities:
+          - entity: fan.zhimi_humidifier_cb1_gostinnaya
+            name: "Статус"
+            tap_action:
+              action: call-service
+              service: fan.toggle
+              service_data:
+                entity_id: fan.zhimi_humidifier_cb1_gostinnaya
+          - entity: sensor.smartmi_humidifier_water_level
+            name: "Вода"
+          - entity: sensor.smartmi_humidifier_speed
+            name: "Режим"
+            icon: mdi:speedometer
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - entity: input_select.smartmi_humidifier_speed
+          - type: section
+            label: Контроль влажности
+          - entity: input_boolean.smartmi_humidifier_autocontrol
+            name: "Авто:"
+          - entity: input_number.target_humidity
+            name: "Цель:"

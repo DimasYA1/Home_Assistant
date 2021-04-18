@@ -1,0 +1,11 @@
+net_received_monthly:
+  source: sensor.keenetic_mb_received
+  cycle: monthly
+  tariffs:
+    - single
+
+net_sent_monthly:
+  source: sensor.keenetic_mb_sent
+  cycle: monthly
+  tariffs:
+    - single

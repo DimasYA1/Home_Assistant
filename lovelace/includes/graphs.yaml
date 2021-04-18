@@ -32,7 +32,7 @@ animate: true
 points_per_hour: {{ points_per_hour|default('0.5') }}
 lower_bound_secondary: 0
 show:
-  fill: false
+  fill: {{ fill|default('false') }}
   graph: {{ graph|default('line') }}
   extrema: {{ extrema|default('false') }}
   labels: {{ labels|default('false') }}

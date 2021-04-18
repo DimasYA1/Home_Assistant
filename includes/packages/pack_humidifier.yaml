@@ -4,11 +4,11 @@
 
 humidifiers_pack:
   # Devices
-  fan:
-    - platform: xiaomi_miio
-      host: !secret xiaomi_air_humidifier_ip
-      name: Smartmi Humidifier (Гостинная)
-      token: !secret xiaomi_air_humidifier_token
+#   fan:
+#     - platform: xiaomi_miio
+#       host: !secret xiaomi_air_humidifier_ip
+#       name: Smartmi Humidifier (Гостинная)
+#       token: !secret xiaomi_air_humidifier_token
 
   # Input Boolean
   input_boolean:
@@ -45,26 +45,26 @@ humidifiers_pack:
         smartmi_humidifier_temperature:
           friendly_name: "Температура"
           value_template: >
-            {{ state_attr('fan.smartmi_humidifier_gostinnaia', 'temperature') | float }}
+            {{ state_attr('fan.zhimi_humidifier_cb1_gostinnaya', 'temperature') | float }}
           unit_of_measurement: °C
           device_class: temperature
         smartmi_humidifier_humidity:
           friendly_name: "Влажность"
           value_template: >
-            {{ state_attr('fan.smartmi_humidifier_gostinnaia', 'humidity') | int }}
+            {{ state_attr('fan.zhimi_humidifier_cb1_gostinnaya', 'humidity') | int }}
           unit_of_measurement: "%"
           device_class: humidity
         smartmi_humidifier_water_level:
           friendly_name: "Остаток воды"
           value_template: >
-            {% if state_attr('fan.smartmi_humidifier_gostinnaia', 'depth') %}
-              {{ ((state_attr('fan.smartmi_humidifier_gostinnaia', 'depth') | float ) * 100.0 / 125.0) | round(0) }}
+            {% if state_attr('fan.zhimi_humidifier_cb1_gostinnaya', 'depth') %}
+              {{ ((state_attr('fan.zhimi_humidifier_cb1_gostinnaya', 'depth') | float ) * 100.0 / 125.0) | round(0) }}
             {% else %}
               0
             {% endif %}
           unit_of_measurement: "%"
           icon_template: >-
-            {% if ((state_attr('fan.smartmi_humidifier_gostinnaia', 'depth') | float ) * 100.0 / 125.0) | round(0) >= 10 %}
+            {% if ((state_attr('fan.zhimi_humidifier_cb1_gostinnaya', 'depth') | float ) * 100.0 / 125.0) | round(0) >= 10 %}
             mdi:cup-water
             {% else %}
             mdi:cup-off-outline
@@ -72,7 +72,7 @@ humidifiers_pack:
         smartmi_humidifier_speed:
           friendly_name: "Скорость работы"
           value_template: >
-            {{ state_attr('fan.smartmi_humidifier_gostinnaia', 'speed') }}
+            {{ state_attr('fan.zhimi_humidifier_cb1_gostinnaya', 'speed') }}
 
   # Scripts
   script:
@@ -80,7 +80,7 @@ humidifiers_pack:
       fields:
         fan_entity:
           description: "entity_id увлажнителя"
-          example: "fan.smartmi_humidifier_gostinnaia"
+          example: "fan.zhimi_humidifier_cb1_gostinnaya"
         fan_speed:
           description: "Скорость работы увлажнителя"
           example: "Silent"
@@ -105,7 +105,7 @@ humidifiers_pack:
         condition: template
         value_template: "{{ (trigger.to_state.state | int) != 0 }}"
       action:
-        - service: notify.telegram_stall
+        - service: notify.telegram_id_dimasya1
           data_template:
             message: >-
               {% if '_01_' in trigger.entity_id -%}
@@ -126,9 +126,9 @@ humidifiers_pack:
           data:
             entity_id: >-
               {% if '_01_' in trigger.entity_id -%}
-              fan.smartmi_humidifier_gostinnaia
+              fan.zhimi_humidifier_cb1_gostinnaya
               {% endif -%}
-        - service: notify.telegram_stall
+        - service: notify.telegram_id_dimasya1
           data:
             message: >-
               {% if '_01_' in trigger.entity_id -%}
@@ -144,7 +144,7 @@ humidifiers_pack:
       action:
         service: script.set_smartmi_humidifier_speed
         data_template:
-          fan_entity: fan.smartmi_humidifier_gostinnaia
+          fan_entity: fan.zhimi_humidifier_cb1_gostinnaya
           fan_speed: "{{ trigger.to_state.state }}"
 
     - alias: "Увлажнение гостинной - Старт [время]"
@@ -153,7 +153,7 @@ humidifiers_pack:
         at: "20:00:00"
       condition:
         - condition: state
-          entity_id: fan.smartmi_humidifier_gostinnaia
+          entity_id: fan.zhimi_humidifier_cb1_gostinnaya
           state: "off"
         - condition: numeric_state
           entity_id: sensor.0x00158d0004acb510_humidity
@@ -163,7 +163,7 @@ humidifiers_pack:
           above: 25
       action:
         service: fan.turn_on
-        entity_id: fan.smartmi_humidifier_gostinnaia
+        entity_id: fan.zhimi_humidifier_cb1_gostinnaya
 
     - alias: "Увлажнение гостинной - Стоп [время]"
       trigger:
@@ -171,14 +171,14 @@ humidifiers_pack:
         at: "07:00:00"
       condition:
         - condition: state
-          entity_id: fan.smartmi_humidifier_gostinnaia
+          entity_id: fan.zhimi_humidifier_cb1_gostinnaya
           state: "on"
         - condition: state
           entity_id: input_boolean.smartmi_humidifier_autocontrol
           state: "off"
       action:
         service: fan.turn_off
-        entity_id: fan.smartmi_humidifier_gostinnaia
+        entity_id: fan.zhimi_humidifier_cb1_gostinnaya
 
     - alias: "Увлажнение гостинной - Старт [Влажность]"
       trigger:
@@ -195,15 +195,15 @@ humidifiers_pack:
           value_template: >
             {{ (states('sensor.0x00158d0004acb510_humidity') | round(0)) < (states('input_number.target_humidity') | int) }}
         - condition: state
-          entity_id: fan.smartmi_humidifier_gostinnaia
+          entity_id: fan.zhimi_humidifier_cb1_gostinnaya
           state: "off"
         - condition: numeric_state
           entity_id: sensor.smartmi_humidifier_water_level
           above: 15
       action:
         - service: fan.turn_on
-          entity_id: fan.smartmi_humidifier_gostinnaia
-        - service: notify.telegram_stall
+          entity_id: fan.zhimi_humidifier_cb1_gostinnaya
+        - service: notify.telegram_id_dimasya1
           data:
             message: |
               В *Гостинной* включен увлажнитель, текущая влажность {{ states('sensor.0x00158d0004acb510_humidity') }}%
@@ -211,7 +211,7 @@ humidifiers_pack:
       trigger:
         platform: state
         entity_id:
-          - sensor.0x00158d0004acb510_humidity
+          - sensor.aqara_gostinnaya_humidity
           - input_number.target_humidity
           - input_boolean.smartmi_humidifier_autocontrol
       condition:
@@ -220,14 +220,14 @@ humidifiers_pack:
           state: "on"
         - condition: template
           value_template: >
-            {{ (states('sensor.0x00158d0004acb510_humidity') | round(0)) >= (states('input_number.target_humidity') | int) }}
+            {{ (states('sensor.aqara_gostinnaya_humidity') | round(0)) >= (states('input_number.target_humidity') | int) }}
         - condition: state
-          entity_id: fan.smartmi_humidifier_gostinnaia
+          entity_id: fan.zhimi_humidifier_cb1_gostinnaya
           state: "on"
       action:
         - service: fan.turn_off
-          entity_id: fan.smartmi_humidifier_gostinnaia
-        - service: notify.telegram_stall
+          entity_id: fan.zhimi_humidifier_cb1_gostinnaya
+        - service: notify.telegram_id_dimasya1
           data:
             message: |
-              В *Гостинной* выключен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931aec_humidity') }}%
+              В *Гостинной* выключен увлажнитель, текущая влажность {{ states('sensor.aqara_gostinnaya_humidity') }}%

@@ -41,7 +41,7 @@ sensor.ha_version_latest:
   friendly_name: Поcледняя версия HA Core
   icon: mdi:alpha-c-circle
 
-sensor.ha_supervisor_current_version:
+sensor.ha_supervisor_version_current:
   friendly_name: Текущая версия HA Supervisor
   icon: mdi:alpha-s-circle-outline
 

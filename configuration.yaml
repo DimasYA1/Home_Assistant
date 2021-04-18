@@ -35,48 +35,7 @@ mqtt:
   username: !secret mqtt_username
   password: !secret mqtt_password
 
-lovelace: # !include lovelace\lovelace.yaml
-  mode: yaml
-  resources:
-    - url: /hacsfiles/lovelace-card-mod/card-mod.js
-      type: module
-    - url: /hacsfiles/button-card/button-card.js
-      type: module
-    - url: /hacsfiles/bar-card/bar-card.js
-      type: module
-    - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
-      type: module
-    - url: /hacsfiles/stack-in-card/stack-in-card.js
-      type: module
-    - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
-      type: module
-    - url: /hacsfiles/lovelace-layout-card/layout-card.js
-      type: module
-    - url: /hacsfiles/lovelace-hui-element/hui-element.js
-      type: module
-    - url: /hacsfiles/mini-humidifier/mini-humidifier-bundle.js
-      type: module
-    - url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
-      type: module
-    - url: /hacsfiles/weather-card/weather-card.js
-      type: module
-    - url: /hacsfiles/light-popup-card/light-popup-card.js
-      type: module
-
-    # Custom
-    - url: /local/layout-card.js
-      type: module
-    - url: /local/stack-in-card.js
-      type: module
-    - url: /local/custom_icons.js
-      type: module
-
-    - url: 'https://fonts.googleapis.com/css?family=Raleway'
-      type: css
-    - url: 'https://fonts.googleapis.com/css?family=Oswald'
-      type: css
-    - url: 'https://fonts.googleapis.com/css?family=Quicksand'
-      type: css
+lovelace: !include lovelace/lovelace.yaml
 
 lovelace_gen:
 
@@ -84,29 +43,20 @@ browser_mod:
   disable:
     - all
 
-
+start_time:
 
 # Платформа телеграмм бота -
 telegram_bot:
-  - platform: polling
-    api_key: !secret api_key_bot 
+  - platform: polling # or "webhooks"
+    api_key: !secret telegram_bot_token
     allowed_chat_ids:
-      - !secret telegram_id_1
-  
-# Платформа телеграмм уведомлений - 
-notify:
-  - name: telegram_id_1
-    platform: telegram
-    chat_id: !secret telegram_id_1
+      - !secret telegram_id_dimasya1
 
-# device_tracker:
-#   - platform: keenetic_ndms2
-#     host: !secret keenetic_host
-#     username: !secret keenetic_user
-#     password: !secret keenetic_pass
-#     consider_home: 60
-#     new_device_defaults:
-#       track_new_devices: false
+# Платформа телеграмм уведомлений -
+notify:
+  - name: telegram_id_dimasya1
+    platform: telegram
+    chat_id: !secret telegram_id_dimasya1
 
 weather:
   - platform: gismeteo
@@ -125,30 +75,22 @@ google_assistant:
     - fan 
     - script 
 
-ble_monitor:
+# ble_monitor:
 #   hci_interface: 0
 #   discovery: True
 #   active_scan: False
 #   report_unknown: False
-#   batt_entities: False
+#   batt_entities: True
 #   decimals: 1
 #   period: 60
 #   log_spikes: False
 #   use_median: False
 #   restore_state: False
-  devices:
-    - mac: 'A4:C1:38:C5:00:75'
-      name: 'Кухня'
-      encryption_key: 'a2c8838e1ca1eb339558e9e7ebe59304'
-      temperature_unit: C
-#       decimals: 2
-#       use_median: False
-#       restore_state: default
-#     - mac: 'C4:3C:4D:6B:4F:F3'
-#       name: 'Bedroom'
-#       temperature_unit: F
-#     - mac: 'B4:7C:8D:6D:4C:D3'
-#       reset_timer: 35
+#   devices:
+#     - mac: 'A4:C1:38:C5:00:75'
+#       name: 'Кухня'
+#       encryption_key: 'a2c8838e1ca1eb339558e9e7ebe59304'
+#       temperature_unit: C
 
 #################################################
 # Inclusions
@@ -161,7 +103,7 @@ recorder: !include includes/recorder.yaml
 # Подключение увлажнителя
 fan: !include includes/fan.yaml
 
-utility_meter: !include includes/utility_meter.yaml
+
 
 group: !include groups.yaml
 automation: !include_dir_merge_list automations
@@ -169,8 +111,5 @@ script: !include_dir_merge_named scripts
 sensor: !include_dir_merge_list entities/sensors
 binary_sensor: !include_dir_merge_list entities/binary_sensors
 input_boolean: !include_dir_merge_named entities/input_boolean
-timer: !include_dir_merge_named entities/timer.yaml
-
-
-# switch: !include_dir_merge_list includes/switches
-# script: !include_dir_merge_named includes/scripts
+timer: !include_dir_merge_named entities/timer
+utility_meter: !include_dir_merge_named entities/utility_meter
