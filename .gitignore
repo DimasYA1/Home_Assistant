@@ -17,7 +17,7 @@ home-assistant.log
 home-assistant_v2.db
 secrets.yaml
 /.vscode/settings.json
-known_devices.yaml
+known_devices.yaml.old
 SERVICE_ACCOUNT.json
 core.*
 *gitignore*
