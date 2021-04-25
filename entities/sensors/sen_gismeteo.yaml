@@ -5,25 +5,27 @@
 - platform: gismeteo
   forecast: true
   monitored_conditions:
-    - weather
+    - condition
     - temperature
-    - wind_speed
-    - wind_bearing
+    - temperature_feels_like
     - humidity
-    - clouds
     - pressure
+    - weather
     - rain
     - snow
     - storm
     - geomagnetic
-- platform: template
-  sensors:
-    gismeteo_temperature:
-      unit_of_measurement: °C
-      value_template: '{{ state_attr("weather.gismeteo", "temperature") }}'
-    gismeteo_pressure:
-      unit_of_measurement: hPa
-      value_template: '{{ state_attr("weather.gismeteo", "pressure") }}'
-    gismeteo_pressure_mmhg:
-      unit_of_measurement: mmHg
-      value_template: '{{ (state_attr("weather.gismeteo", "pressure") / 1.333) | round(2) }}'
+    - wind_speed
+    - wind_bearing
+    - clouds
+# platform: template
+# sensors:
+#   gismeteo_temperature:
+#     unit_of_measurement: °C
+#     value_template: '{{ state_attr("weather.gismeteo", "temperature") }}'
+#   gismeteo_pressure:
+#     unit_of_measurement: hPa
+#     value_template: '{{ state_attr("weather.gismeteo", "pressure") }}'
+#   gismeteo_pressure_mmhg:
+#     unit_of_measurement: mmHg
+#     value_template: '{{ (state_attr("weather.gismeteo", "pressure") / 1.333) | round(2) }}'
