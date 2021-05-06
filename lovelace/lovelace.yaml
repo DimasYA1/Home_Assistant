@@ -28,6 +28,8 @@ resources:
     type: module
   - url: /hacsfiles/light-popup-card/light-popup-card.js
     type: module
+  - url: /hacsfiles/uptime-card/uptime-card.js
+    type: module
 
   # Custom
   - url: /local/layout-card.js
@@ -37,12 +39,13 @@ resources:
   - url: /local/custom_icons.js
     type: module
 
-  - url: 'https://fonts.googleapis.com/css?family=Raleway'
+  - url: "https://fonts.googleapis.com/css?family=Raleway"
     type: css
-  - url: 'https://fonts.googleapis.com/css?family=Oswald'
+  - url: "https://fonts.googleapis.com/css?family=Oswald"
     type: css
-  - url: 'https://fonts.googleapis.com/css?family=Quicksand'
+  - url: "https://fonts.googleapis.com/css?family=Quicksand"
     type: css
+
 dashboards:
   dash-system:
     mode: yaml
