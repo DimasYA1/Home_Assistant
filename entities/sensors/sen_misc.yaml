@@ -58,29 +58,30 @@
 #     - addons
 #   unit_of_measurement: pending update(s)
 # - platform: uptime
-# - platform: template
-#   sensors:
-#     date_formatted:
-#       friendly_name: 'Date (DD.MM.YYYY)'
-#       value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%d.%m.%Y') }}"
-#       icon_template: mdi:calendar
-#       attribute_templates:
-#         day_of_week: >-
-#           {% set day_num = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"] %}
-#           {% set day_of_week = day_num[now().weekday()] %}
-#           {{ day_of_week }}
-#     ha_supervisor_current_version:
-#       friendly_name: HA Supervisor Current Version
-#       value_template: "{{state_attr('sensor.supervisor_updates','current_version')}}"
-#     ha_supervisor_latest_version:
-#       friendly_name: HA Supervisor Latest Version
-#       value_template: "{{state_attr('sensor.supervisor_updates','newest_version')}}"
-#     entrance_door_status:
-#       value_template: >
-#         {% if is_state('binary_sensor.0x158d00031c790f_contact', "on") %}Открыта
-#         {% elif is_state('binary_sensor.0x158d00031c790f_contact', "off") %}Закрыта
-#         {% else %}Unavailable
-#         {% endif %}
+- platform: template
+  sensors:
+    #     date_formatted:
+    #       friendly_name: 'Date (DD.MM.YYYY)'
+    #       value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%d.%m.%Y') }}"
+    #       icon_template: mdi:calendar
+    #       attribute_templates:
+    #         day_of_week: >-
+    #           {% set day_num = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"] %}
+    #           {% set day_of_week = day_num[now().weekday()] %}
+    #           {{ day_of_week }}
+    #     ha_supervisor_current_version:
+    #       friendly_name: HA Supervisor Current Version
+    #       value_template: "{{state_attr('sensor.supervisor_updates','current_version')}}"
+    #     ha_supervisor_latest_version:
+    #       friendly_name: HA Supervisor Latest Version
+    #       value_template: "{{state_attr('sensor.supervisor_updates','newest_version')}}"
+    entrance_door_status:
+      value_template: >
+        {% if is_state('binary_sensor.0x00158d0003538bb9_contact', "on") %}Открыта
+        {% elif is_state('binary_sensor.0x00158d0003538bb9_contact', "off") %}Закрыта
+        {% else %}Unavailable
+        {% endif %}
+
 #     local_pressure_mmhg:
 #       value_template: >
 #         {% set pressure = states('sensor.0x158d0003230618_pressure') | float(default=-1) %}
