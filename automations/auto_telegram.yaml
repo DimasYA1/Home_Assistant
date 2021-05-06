@@ -3,7 +3,7 @@
 #################################################
 
 # ---- Mirror all text messages
-- alias: 'Telegram Bot - Mirror text'
+- alias: "Telegram Bot - Mirror text"
   trigger:
     platform: event
     event_type: telegram_text
@@ -14,28 +14,28 @@
         *{{ trigger.event.data.from_first }} {{ trigger.event.data.from_last }} [{{ trigger.event.data.user_id }}] пишет:*
         {{ trigger.event.data.text }}
 # ---- /start
-- alias: 'Telegram Bot - Start'
+- alias: "Telegram Bot - Start"
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
-      command: '/start'
+      command: "/start"
   action:
     service: telegram_bot.send_message
     data_template:
-      target: '{{ trigger.event.data.user_id }}'
-      message: 'Привет! Помощь - /help'
+      target: "{{ trigger.event.data.user_id }}"
+      message: "Привет! Помощь - /help"
 # ---- /help
-- alias: 'Telegram Bot - Help'
+- alias: "Telegram Bot - Help"
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
-      command: '/help'
+      command: "/help"
   action:
     service: telegram_bot.send_message
     data_template:
-      target: '{{ trigger.event.data.user_id }}'
+      target: "{{ trigger.event.data.user_id }}"
       message: |
         Доступные комманды:
         /status - Текущий статус устройств
@@ -43,64 +43,65 @@
         /weather - Погода за окном
         /ping - Проверить доступность сервиса HASS
 # ---- /ping
-- alias: 'Telegram Bot - Ping'
+- alias: "Telegram Bot - Ping"
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
-      command: '/ping'
+      command: "/ping"
   action:
     service: telegram_bot.send_message
     data_template:
-      target: '{{ trigger.event.data.user_id }}'
+      target: "{{ trigger.event.data.user_id }}"
       message: |
         Pong! _{{ now().strftime("%d.%m.%Y %H:%M:%S") }}_
         Current version: {{ states('sensor.ha_version_current') }}
         DB Size: {{ states('sensor.home_assistant_v2_db') }} {{ state_attr('sensor.home_assistant_v2_db','unit_of_measurement') }}
         Uptime: {{ states('sensor.ha_uptime') }}
 # ---- /whoishome
-- alias: 'Telegram Bot - Who is home?'
+- alias: "Telegram Bot - Who is home?"
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
-      command: '/whoishome'
+      command: "/whoishome"
   action:
     service: telegram_bot.send_message
     data_template:
-      target: '{{ trigger.event.data.user_id }}'
+      target: "{{ trigger.event.data.user_id }}"
       message: |
         Сейчас дома:
         {%- set entites = expand('group.family_persons') %}{% for prs in entites %}{% if prs.state == "home" %}
         {{ prs.attributes.friendly_name }}{% endif %}{% endfor %}
         {% if is_state("group.family_persons", "not_home") %}Никого нет{% endif %}
 # ---- /weather
-- alias: 'Telegram Bot - Weather'
+- alias: "Telegram Bot - Weather"
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
-      command: '/weather'
+      command: "/weather"
   action:
     - service: telegram_bot.send_photo
       data_template:
-        target: '{{ trigger.event.data.user_id }}'
+        target: "{{ trigger.event.data.user_id }}"
         file: '/config/www/weather_icons/{{ states("weather.gismeteo") }}.webp'
         caption: |
-          Температура {{ state_attr('weather.gismeteo', 'temperature') }}°C
-          Влажность {{ state_attr('weather.gismeteo', 'humidity') }}%
-          Давление {{ state_attr('weather.gismeteo', 'pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)
+          Температура {{ states('sensor.gismeteo_temperature') }}°C
+          Ощущается как {{ states('sensor.gismeteo_temperature_feels_like') }}°C
+          Влажность {{ states('sensor.gismeteo_humidity') }}%
+          Давление {{ states('sensor.gismeteo_pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)
 # ---- /status
-- alias: 'Telegram Bot - Status'
+- alias: "Telegram Bot - Status"
   trigger:
     platform: event
     event_type: telegram_command
     event_data:
-      command: '/status'
+      command: "/status"
   action:
     service: telegram_bot.send_message
     data_template:
-      target: '{{ trigger.event.data.user_id }}'
+      target: "{{ trigger.event.data.user_id }}"
       message: |
         *Климат*
         Гостинная: *{{ states('sensor.aqara_gostinnaya_temperature') }}°C*, {{ states('sensor.aqara_gostinnaya_humidity') }}%
@@ -108,45 +109,16 @@
 
         *Статус устройств*
         # `-= Датчики протечки =-`
-        # Нептун (кладовая, туалет, ванна, кухня): *{{ states('binary_sensor.neptun_water_leakage') }}*
-        # Aqara кладовая: *{{ states('binary_sensor.0x158d000400e77d_moisture') }}*
-        # Aqara под ванной (слева): *{{ states('binary_sensor.0x158d0004030d84_moisture') }}*
         `-= Увлажнитель =-`
-        # Детская: *{{ states('binary_sensor.0x158d00039cf974_contact') }}*
         Гостинная: *{{ states('binary_sensor.humidifier_nursery_status') }}*
-        # Спальня: *{{ states('binary_sensor.0x158d0004073b67_contact') }}*
-        # `-= Свет =-`
-        # Споты в прихожей: *{{ states('light.sonoff_1000f2f14a') }}*
-        # Лампа в спальне: *{{ states('light.spalnia_stol') }}*
-        # Люстра в детской: *{{ states('light.detskaia') }}*
-        # Подсветка окна в детской: *{{ states('light.detskaia_podsvetka_na_okne') }}*
-        # Споты в коридоре: *{{ states('light.sonoff_1000f2a500') }}*
-        # Споты на кухне: *{{ states('light.sonoff_1000b72483') }}*
-        # Подсветка кухни: *{{ states('light.kukhnia_lenta') }}*
-        # Люстра на кухне: *{{ states('light.kukhnia_liustra') }}*
-        # Свет в кладовой: *{{ states('light.sonoff_1000b6831b') }}*
-        # Лампа на столе в гостиной: *{{ states('light.0x86bd7fffe616b72_light') }}*
-        # Бра в гостиной: *{{ states('light.sonoff_1000ab3c28') }}*
-        # Подсветка онка в гостиной: *{{ states('light.gostinaia_podsvetka_na_okne') }}*
         `-= Розетки =-`
         Розетка TP-Link SmartPlug 01: *{{ states('switch.tplink_smartplug_01') }}*
-        Розетка TP-Link SmartPlug 02: *{{ states('switch.tplink_smartplug_02') }}*
-        Розетка Xiaomi ZigBee Plug 01: *{{ states('switch.0x158d00033b702e_switch') }}*
-        Розетка Xiaomi ZigBee Plug 02: *{{ states('switch.0x158d000391fb00_switch') }}*
-        Розетка Xiaomi WiFi Plug 01: *{{ states('switch.mi_smartplugwifi_01') }}*
-        Розетка Xiaomi WiFi Plug 02: *{{ states('switch.mi_smartplugwifi_02') }}*
-        # `-= ТВ =-`
-        # Спальня: *{{ states('media_player.samsungtv_ue43ru7470') }}*
+        `-= ТВ =-`
         # Гостинная: *{{ states('media_player.samsungtv_ue46es5507') }}*
-        # Кухня: *{{ states('media_player.samsungtv_ue32es5500') }}*
-        # Детская: *{{ states('media_player.samsungtv_ue40c5100') }}*
         `-= Chromecast =-`
         Гостинная: *{{ states('media_player.shield') }}*
-        # Гостинная (Home Mini): *{{ states('media_player.googlehome9967') }}*
-        # Детская: *{{ states('media_player.detskaia') }}*
-        # Детская: (Home Mini): *{{ states('media_player.googlehome3792') }}*
         `-= Разное =-`
-        # Входная дверь: *{{ states('sensor.entrance_door_status') }}*
+        Входная дверь: *{{ states('sensor.entrance_door_status') }}*
         # Mi Robot: *{{ states('vacuum.xiaomi_vacuum_cleaner') }}*
         # Водонагреватель: *{{ states('sensor.boiler_status') }}* ({{ states('sensor.tplinksmartplug01_watts') }} W)
         Transmission Status: *{{ states('sensor.transmission_status') }}*
