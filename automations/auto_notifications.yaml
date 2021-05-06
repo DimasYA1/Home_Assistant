@@ -192,7 +192,11 @@
   action:
     - service: notify.telegram_id_dimasya1
       data_template:
-        message: "_INFO:_ Доступны новые версии Add-ons (Supervisor) (кол-во: {{ states('sensor.supervisor_updates') }})"
+        message: |
+          _INFO:_ Доступны новые версии Add-ons (Supervisor) ({{ states('sensor.supervisor_updates') }}):
+          {%- for repo in state_attr('sensor.supervisor_updates', 'addons') %}
+          {{ repo.name }} (_{{ repo.version }}_ -> _{{ repo.version_latest }}_){% if not loop.last %}, {% endif %}
+          {%- endfor -%}
 
 - alias: "HASSIO: New Supervisor Version Available [notify to stall]"
   initial_state: true
@@ -217,7 +221,11 @@
   action:
     service: notify.telegram_id_dimasya1
     data_template:
-      message: "_INFO:_ Доступны новые версии Custom Components (HACS) (кол-во: {{ states('sensor.hacs') }})"
+      message: |
+        _INFO:_ Доступны новые версии Custom Components (HACS) ({{ states('sensor.hacs') }}):
+        {%- for repo in state_attr('sensor.hacs', 'repositories') %}
+        {{ repo.display_name }} (_{{ repo.installed_version }}_ -> _{{ repo.available_version }}_){% if not loop.last %}, {% endif %}
+        {%- endfor -%}
 
 # - alias: "Low Battery Alert [notify to stall]"
 #   trigger:
@@ -239,6 +247,7 @@
 #         message: |
 #           *Внимание, низкий заряд батареи!*
 #           {{ trigger.event.data.new_state.attributes.friendly_name }}: {{ trigger.event.data.new_state.state }}%!
+
 - alias: "Torrent Completed [notify to stall]"
   initial_state: true
   trigger:
@@ -260,29 +269,29 @@
     data_template:
       message: "Сегодня полнолуние!"
 
-# - alias: Entrance Door - Opened
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.0x158d00031c790f_contact
-#     from: "off"
-#     to: "on"
-#   action:
-#     service: notify.telegram_id_dimasya1
-#     data:
-#       message: Открыта входная дверь!
+- alias: Entrance Door - Opened
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.0x00158d0003538bb9_contact
+    from: "off"
+    to: "on"
+  action:
+    service: notify.telegram_id_dimasya1
+    data:
+      message: Открыта входная дверь!
 
-# - alias: Entrance Door - Closed
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.0x158d00031c790f_contact
-#     from: "on"
-#     to: "off"
-#   action:
-#     service: notify.telegram_id_dimasya1
-#     data:
-#       message: Входная дверь закрыта.
+- alias: Entrance Door - Closed
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.0x00158d0003538bb9_contact
+    from: "on"
+    to: "off"
+  action:
+    service: notify.telegram_id_dimasya1
+    data:
+      message: Входная дверь закрыта.
 
 # - alias: Gas Alert
 #   initial_state: true
