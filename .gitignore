@@ -23,7 +23,7 @@ core.*
 *gitignore*
 core
 *.token
-*.db
+*.db*
 *.log
 *.jpg
 *.mp4
