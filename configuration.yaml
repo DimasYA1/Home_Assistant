@@ -1,5 +1,7 @@
 homeassistant:
   name: Home
+  external_url: !secret main_external_url
+  internal_url: !secret main_internal_url
   time_zone: !secret home_timezone
   unit_system: metric
   latitude: !secret home_latitude
@@ -75,23 +77,6 @@ google_assistant:
     - fan 
     - script 
 
-# ble_monitor:
-#   hci_interface: 0
-#   discovery: True
-#   active_scan: False
-#   report_unknown: False
-#   batt_entities: True
-#   decimals: 1
-#   period: 60
-#   log_spikes: False
-#   use_median: False
-#   restore_state: False
-#   devices:
-#     - mac: 'A4:C1:38:C5:00:75'
-#       name: 'Кухня'
-#       encryption_key: 'a2c8838e1ca1eb339558e9e7ebe59304'
-#       temperature_unit: C
-
 #################################################
 # Inclusions
 #################################################
@@ -107,6 +92,7 @@ fan: !include includes/fan.yaml
 
 group: !include groups.yaml
 automation: !include_dir_merge_list automations
+automation gui: !include automations.yaml
 script: !include_dir_merge_named scripts
 sensor: !include_dir_merge_list entities/sensors
 binary_sensor: !include_dir_merge_list entities/binary_sensors
