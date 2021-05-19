@@ -1,7 +1,7 @@
 homeassistant:
   name: Home
-  external_url: !secret main_external_url
-  internal_url: !secret main_internal_url
+  #  external_url: !secret main_external_url
+  #  internal_url: !secret main_internal_url
   time_zone: !secret home_timezone
   unit_system: metric
   latitude: !secret home_latitude
@@ -12,9 +12,9 @@ homeassistant:
   packages: !include_dir_merge_named includes/packages
 
   allowlist_external_dirs:
-      - /config
-      - /tmp
-      - /share
+    - /config
+    - /tmp
+    - /share
 
 default_config:
 
@@ -26,11 +26,11 @@ frontend:
 # Text to speech
 tts:
   - platform: google_translate
-    language: 'ru'
+    language: "ru"
 
 mqtt:
-## Выбрать один из вариантов для брокера!
-  broker: core-mosquitto  # Локальный брокер
+  ## Выбрать один из вариантов для брокера!
+  broker: core-mosquitto # Локальный брокер
   ##broker: IP adress  # Внешний брокер
   discovery: true
   discovery_prefix: homeassistant
@@ -72,10 +72,10 @@ google_assistant:
     - light
     - climate
     - media_player
-    - sensor 
-    - humidifier 
-    - fan 
-    - script 
+    - sensor
+    - humidifier
+    - fan
+    - script
 
 #################################################
 # Inclusions
@@ -87,8 +87,6 @@ recorder: !include includes/recorder.yaml
 
 # Подключение увлажнителя
 fan: !include includes/fan.yaml
-
-
 
 group: !include groups.yaml
 automation: !include_dir_merge_list automations
